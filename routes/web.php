@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WebsiteCotroller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/Admin/dashboard', function () {
+    return redirect('/admin/dashboard', 301);
+});
 
 // Home page
 Route::get('/', [WebsiteCotroller::class, 'index']);
@@ -66,37 +71,96 @@ Route::get('/lab-details', [WebsiteCotroller::class, 'labDetails']);
 
 
 
-// Admin routes
-Route::get('/admin/login', [AdminController::class, 'LoginAdmin'])->name('admin.login');
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+// admin routes
+
+Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm']);
+Route::post('/admin/login', [AdminAuthController::class, 'login']);
+
+
+// Route::post('/admin/login', [AdminAuthController::class, 'login']);
+Route::get('/admin/dashboard', [AdminAuthController::class, 'dashboard'])->middleware('admin');
+Route::get('/admin/logout', [AdminAuthController::class, 'logout']);
+//register page
+Route::get('/admin/register', [AdminAuthController::class, 'showRegisterForm']);
+Route::post('/admin/register', [AdminAuthController::class, 'register']);
 //Doctor page
-Route::get('/admin/doctor', [AdminController::class, 'referredby']);
+// Route::get('/admin/doctor', [AdminController::class, 'referredby']);
+Route::get('/admin/doctor', [AdminController::class, 'showreferredby']);
+Route::post('/admin/adddoctor', [AdminController::class, 'addreferredby']);
+Route::get('/admin/editdoctor/{id}', [AdminController::class, 'editreferredby']);
+Route::post('/admin/updatedoctor', [AdminController::class, 'updatereferredby']);
+Route::delete('/admin/deletedoctor/{id}', [AdminController::class, 'deletereferredby']);
+Route::post('/admin/statusdoctor/{id}', [AdminController::class, 'statusreferredby']);
 //Booking page 
 Route::get('/admin/booking', [AdminController::class, 'BookingPage']);
 //Announcement page
 Route::get('/admin/home-announcement', [AdminController::class, 'HomeAnnouncementPage']);
-Route::get('/admin/website-announcement', [AdminController::class, 'WebsiteAnnouncementPage']);
+Route::post('/admin/addhome/announcement', [AdminController::class, 'addHomeAnnouncementPage']);
+Route::get('/admin/edithome-announcement/{id}', [AdminController::class, 'editHomeAnnouncementPage']);
+Route::post('/admin/updatehome-announcement', [AdminController::class, 'updateHomeAnnouncement']);
+Route::delete('/admin/deletehome-announcement/{id}', [AdminController::class, 'deleteHomeAnnouncementPage']);
+Route::post('/admin/statushome-announcement/{id}', [AdminController::class, 'statusHomeAnnouncementPage']);
+
+//WebsiteAnnouncementPage page
+Route::get('/admin/website-announcement', [AdminController::class, 'showWebsiteAnnouncement']);
+Route::post('/admin/addwebsite/announcement', [AdminController::class, 'addwebsiteannouncemen']);
+Route::post('/admin/savewebsite/announcement', [AdminController::class, 'saveWebsiteAnnouncement']);
 
 //prescription page
 Route::get('/admin/prescription', [AdminController::class, 'prescriptionPage']);
 
+//----------------------------------------------------------------------master setup start----------------------------------------------------------------------
 //Master setup page
-Route::get('/admin/master-setup', [AdminController::class, 'MasterSetup']);
+Route::get('/admin/master-setup', [AdminController::class, 'MasterSetup']); // routes/web.php
 
+//countries
+Route::post('/admin/countries/store', [AdminController::class, 'MasterSetupstore'])->name('countries.store');
+Route::get('/admin/countries/edit/{id}', [AdminController::class, 'MasterSetupedit'])->name('countries.edit');
+Route::delete('/admin/countries/delete/{id}', [AdminController::class, 'MasterSetupdestroy'])->name('countries.delete');
+//states
+Route::post('/admin/state/store', [AdminController::class, 'statestore'])->name('state.store');
+Route::get('/admin/state/edit/{id}', [AdminController::class, 'stateedit'])->name('state.edit');
+Route::delete('/admin/state/delete/{id}', [AdminController::class, 'statedestroy'])->name('state.delete');
+//cities
+Route::post('/admin/city/store', [AdminController::class, 'citystore'])->name('city.store');
+Route::get('/admin/city/edit/{id}', [AdminController::class, 'cityedit'])->name('city.edit');
+Route::delete('/admin/city/delete/{id}', [AdminController::class, 'citydestroy'])->name('city.delete');
+//----------------------------------------------------------------------master setup end----------------------------------------------------------------------
 //phone book
 Route::get('/admin/phone-book', [AdminController::class, 'phoneBook']);
 
 //FAQ's
-Route::get('/admin/faq', [AdminController::class, 'addFaq']);
+Route::get('/admin/faq', [AdminController::class, 'addFaq'])->name('admin.faq');
+Route::post('/admin/faq/store', [AdminController::class, 'storeFaq'])->name('admin.faq.store');
+Route::get('/admin/faq/edit/{id}', [AdminController::class, 'editFaq'])->name('admin.faq.edit');
+Route::post('/admin/faq/update/{id}', [AdminController::class, 'updateFaq'])->name('admin.faq.update');
+Route::delete('/admin/faq/delete/{id}', [AdminController::class, 'deleteFaq'])->name('admin.faq.delete');
+
 
 //review page
-Route::get('/admin/review', [AdminController::class, 'Review']);
+Route::prefix('admin')->group(function () {
+    Route::get('/review', [AdminController::class, 'Review']);
+    Route::post('/review/store', [AdminController::class, 'store']);
+    Route::get('/review/edit/{id}', [AdminController::class, 'edit']);
+    Route::delete('/review/delete/{id}', [AdminController::class, 'destroy']);
+});
+
 
 //blogs page
-Route::get('/admin/blog', [AdminController::class, 'Blogs']);
+Route::get('/admin/blog', [AdminController::class, 'Blogs'])->name('admin.blog');
+Route::post('/admin/blog/store', [AdminController::class, 'storeBlog'])->name('admin.blog.store');
+Route::get('/admin/blog/edit/{id}', [AdminController::class, 'editBlog'])->name('admin.blog.edit');
+Route::post('/admin/blog/update/{id}', [AdminController::class, 'updateBlog'])->name('admin.blog.update');
+Route::delete('/admin/blog/delete/{id}', [AdminController::class, 'deleteBlog'])->name('admin.blog.delete');
 
 //SEO Management page
-Route::get('/admin/seo-management', [AdminController::class, 'SEOManagement']);
+Route::get('/admin/seo-management', [AdminController::class, 'SEOManagement'])->name('seo.management');
+Route::post('/admin/seo-management/store', [AdminController::class, 'storeSEO'])->name('seo.store');
+Route::post('/admin/seo-management/update/{id}', [AdminController::class, 'updateSEO'])->name('seo.update');
+Route::delete('/admin/seo-management/delete/{id}', [AdminController::class, 'deleteSEO'])->name('seo.delete');
+Route::get('/admin/seo-management/edit/{id}', [AdminController::class, 'editSEO'])->name('seo.edit');
+Route::post('/admin/seo-management/status/{id}', [AdminController::class, 'toggleStatus'])->name('seo.status');
+
 
 // CareerEnquiry
 Route::get('/admin/career-enquiry', [AdminController::class, 'CareerEnquiry']);
@@ -114,7 +178,12 @@ Route::get('/admin/subscription', [AdminController::class, 'Subscription']);
 Route::get('/admin/contact', [AdminController::class, 'Contact']);
 
 //Call-Center-Enquiry
-Route::get('/admin/call-center-enquiry', [AdminController::class, 'CallCenterEnquiry']);
+Route::get('/admin/call-center-enquiry', [AdminController::class, 'CallCenterEnquiry'])->name('callcenter.index');
+Route::post('/admin/call-center-enquiry/store', [AdminController::class, 'storeEnquiry'])->name('callcenter.store');
+Route::get('/admin/call-center-enquiry/edit/{id}', [AdminController::class, 'editEnquiry'])->name('callcenter.edit');
+Route::delete('/admin/call-center-enquiry/delete/{id}', [AdminController::class, 'deleteEnquiry'])->name('callcenter.delete');
+
+
 
 //BillingReport
 Route::get('/admin/biling-report', [AdminController::class, 'BillingReport']);
@@ -126,11 +195,20 @@ Route::get('/admin/patient-report', [AdminController::class, 'PatientReport']);
 Route::get('/admin/query-report', [AdminController::class, 'QueryReport']);
 
 // Business
-Route::get('/admin/business', [AdminController::class, 'Business']);
-
+Route::get('/admin/business', [AdminController::class, 'business']);
+Route::post('/admin/addbusiness', [AdminController::class, 'addbusiness']);
+Route::get('/admin/editbusiness/{id}', [AdminController::class, 'editbusiness']);
+Route::post('/admin/updatebusiness', [AdminController::class, 'updatebusiness']);
+Route::delete('/admin/deletebusiness/{id}', [AdminController::class, 'deletebusiness']);
+Route::post('/admin/statusbusiness/{id}', [AdminController::class, 'statusbusiness']);
 // labpartner
 Route::get('/admin/lab-partner', [AdminController::class, 'labpartner']);
-
+// Route::get('/admin/labpartner', [AdminController::class, 'labpartner']);
+Route::post('/admin/addlabpartner', [AdminController::class, 'addlabpartner']);
+Route::get('/admin/editlabpartner/{id}', [AdminController::class, 'editlabpartner']);
+Route::post('/admin/updatelabpartner', [AdminController::class, 'updatelabpartner']);
+Route::delete('/admin/deletelabpartner/{id}', [AdminController::class, 'deletelabpartner']);
+Route::post('/admin/statuslabpartner/{id}', [AdminController::class, 'statuslabpartner']);
 // AllTestPartner
 Route::get('/admin/all-test', [AdminController::class, 'AllTestPartner']);
 
@@ -143,5 +221,5 @@ Route::get('/admin/category', [AdminController::class, 'Category']);
 //Package
 Route::get('/admin/package', [AdminController::class, 'Package']);
 
-
-
+//settings
+Route::get('/admin/setting', [AdminController::class, 'Settings']);

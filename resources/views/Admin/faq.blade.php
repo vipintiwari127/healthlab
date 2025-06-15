@@ -1,12 +1,21 @@
 @extends('Admin.layout.admin')
+
 @section('admin-content')
-    <!--start wrapper-->
+    <!-- Toastr CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    @if (session('success'))
+        <script>
+            toastr.success("{{ session('success') }}");
+        </script>
+    @endif
+
     <div class="wrapper">
-        <!-- start page content wrapper-->
         <div class="page-content-wrapper">
-            <!-- start page content-->
             <div class="page-content">
-                <!--start breadcrumb-->
+
                 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                     <div class="breadcrumb-title pe-3">Health Care</div>
                     <div class="ps-3">
@@ -16,17 +25,18 @@
                                     <a href="javascript:;"><ion-icon name="home-outline"></ion-icon></a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                   FAQ's
+                                    FAQ's
                                 </li>
                             </ol>
                         </nav>
                     </div>
                 </div>
-                <!--end breadcrumb-->
 
-                {{-- <h6 class="mb-0 text-uppercase">DataTable Import</h6> --}}
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#exampleLargeModal">Add FAQ's</button>
+                <button type="button" class="btn btn-primary addBtn" data-bs-toggle="modal" data-bs-target="#faqModal">
+                    Add FAQ's
+                </button>
+
+
                 <hr />
                 <div class="card">
                     <div class="card-body">
@@ -35,50 +45,60 @@
                                 <thead>
                                     <tr>
                                         <th>Sr.no</th>
-                                        <th>Review By</th>
-                                        <th>Date</th>
-                                        <th>Salary</th>
+                                        <th>Question</th>
+                                        <th>Answer</th>
+                                        <th>Update Date</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>$320,800</td>
-                                    </tr>
+                                    @foreach ($faqs as $index => $faq)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $faq->question }}</td>
+                                            <td>{{ $faq->answer }}</td>
+                                            <td>{{ $faq->updated_at->format('d-m-Y') }}</td>
+                                            <td>
+                                                <button class="btn btn-warning btn-sm editBtn" data-id="{{ $faq->id }}"
+                                                    data-question="{{ $faq->question }}" data-answer="{{ $faq->answer }}">
+                                                    Edit
+                                                </button>
+                                                <button class="btn btn-danger btn-sm deleteBtn"
+                                                    data-id="{{ $faq->id }}">
+                                                    Delete
+                                                </button>
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                {{-- add doctor referral modal --}}
 
-                <div class="modal fade" id="exampleLargeModal" tabindex="-1" aria-hidden="true">
+                <!-- FAQ Modal -->
+                <div class="modal fade" id="faqModal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Add FAQ's</h5>
+                                <h5 class="modal-title">FAQ's</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="card-body p-4">
-                                <form class="row g-3 needs-validation" novalidate="">
+                                <form method="POST" action="{{ route('admin.faq.store') }}"
+                                    class="row g-3 needs-validation" novalidate>
+                                    @csrf
                                     <div class="col-md-12">
-                                        <label for="bsValidation1" class="form-label">Question</label>
-                                        <input type="text" class="form-control" id="bsValidation1" placeholder="Question"
-                                            required="">
-                                       <div class="invalid-feedback">
-                                            Please choose a Question.
-                                        </div>
+                                        <label for="question" class="form-label">Question</label>
+                                        <input type="text" name="question" class="form-control" id="question" required>
+                                        <div class="invalid-feedback">Please enter a question.</div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="bsValidation1" class="form-label">Answer</label>
-                                        <input type="text" class="form-control" id="bsValidation1" placeholder="Answer"
-                                            required="">
-                                       <div class="invalid-feedback">
-                                            Please choose a Answer.
-                                        </div>
+                                        <label for="answer" class="form-label">Answer</label>
+                                        <input type="text" name="answer" class="form-control" id="answer" required>
+                                        <div class="invalid-feedback">Please enter an answer.</div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="d-md-flex d-grid align-items-center gap-3">
@@ -87,12 +107,69 @@
                                         </div>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- End Modal -->
+
             </div>
-            <!-- end page content-->
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            // Open modal in edit mode
+            $('.editBtn').on('click', function() {
+                const id = $(this).data('id');
+                const question = $(this).data('question');
+                const answer = $(this).data('answer');
+
+                $('#faqModal form').attr('action', '/admin/faq/update/' + id);
+                $('#faqModal input[name="question"]').val(question);
+                $('#faqModal input[name="answer"]').val(answer);
+                $('#faqModal').modal('show');
+            });
+
+            // Reset form on open for add
+            $('.addBtn').on('click', function() {
+                $('#faqModal form').attr('action', '{{ route('admin.faq.store') }}');
+                $('#faqModal input[name="question"]').val('');
+                $('#faqModal input[name="answer"]').val('');
+            });
+
+            // Delete with SweetAlert Confirmation
+            $('.deleteBtn').on('click', function() {
+                const id = $(this).data('id');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This FAQ will be deleted!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/admin/faq/delete/' + id,
+                            type: 'DELETE',
+                            data: {
+                                "_token": "{{ csrf_token() }}"
+                            },
+                            success: function(response) {
+                                toastr.success("FAQ deleted successfully!");
+                                setTimeout(() => location.reload(), 1000);
+                            },
+                            error: function() {
+                                toastr.error("Something went wrong!");
+                            }
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
 @endsection

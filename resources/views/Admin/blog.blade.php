@@ -1,30 +1,33 @@
 @extends('Admin.layout.admin')
 @section('admin-content')
-    <!--start wrapper-->
+    <!-- Toastr CSS/JS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        @if (session('success'))
+            toastr.success("{{ session('success') }}");
+        @endif
+    </script>
+
     <div class="wrapper">
-        <!-- start page content wrapper-->
         <div class="page-content-wrapper">
-            <!-- start page content-->
             <div class="page-content">
-                <!--start breadcrumb-->
                 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                     <div class="breadcrumb-title pe-3">Health Care</div>
                     <div class="ps-3">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb mb-0 p-0 align-items-center">
                                 <li class="breadcrumb-item">
-                                    <a href="javascript:;"><ion-icon name="home-outline"></ion-icon></a>
+                                    <a href="#"><ion-icon name="home-outline"></ion-icon></a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                 Blogs
-                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Blogs</li>
                             </ol>
                         </nav>
                     </div>
                 </div>
-                <!--end breadcrumb-->
 
-                {{-- <h6 class="mb-0 text-uppercase">DataTable Import</h6> --}}
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                     data-bs-target="#exampleLargeModal">Add Blogs</button>
                 <hr />
@@ -35,25 +38,41 @@
                                 <thead>
                                     <tr>
                                         <th>Sr.no</th>
+                                        <th>Blog Image</th>
                                         <th>Blog Title</th>
-                                        <th> Posting Date</th>
+                                        <th>Blog Url</th>
+                                        <th>Blog Description</th>
+                                        <th>Posting Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>$320,800</td>
-                                    </tr>
+                                    @foreach ($blogs as $index => $blog)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>
+                                                <img src="{{ asset('uploads/blogs/' . $blog->image) }}" alt="Blog Image"
+                                                    width="80" height="60">
+                                            </td>
+                                            <td>{{ $blog->title }}</td>
+                                            <td>{{ $blog->url }}</td>
+                                            <td>{{ $blog->description }}</td>
+                                            <td>{{ $blog->posting_date }}</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-info"
+                                                    onclick="editBlog({{ $blog->id }})">Edit</button>
+                                                <button class="btn btn-sm btn-danger delete-btn"
+                                                    data-id="{{ $blog->id }}">Delete</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                {{-- add doctor referral modal --}}
 
+                <!-- Blog Modal -->
                 <div class="modal fade" id="exampleLargeModal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -63,47 +82,40 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="card-body p-4">
-                                <form class="row g-3 needs-validation" novalidate="">
+                                <form class="row g-3 needs-validation" novalidate method="POST"
+                                    enctype="multipart/form-data" id="blogForm" action="{{ route('admin.blog.store') }}">
+                                    @csrf
                                     <div class="col-md-6">
-                                        <label for="bsValidation1" class="form-label">Blog Posting Date </label>
-                                        <input type="date" class="form-control" id="bsValidation1" placeholder="Blog Posting Date "
-                                            required="">
-                                       <div class="invalid-feedback">
-                                            Please choose a Blog Posting Date .
-                                        </div>
+                                        <label for="posting_date" class="form-label">Blog Posting Date</label>
+                                        <input type="date" class="form-control" name="posting_date" id="posting_date"
+                                            required>
+                                        <div class="invalid-feedback">Please choose a Blog Posting Date.</div>
                                     </div>
+
                                     <div class="col-md-6">
-                                        <label for="bsValidation1" class="form-label">Blog Image </label>
-                                        <input type="file" class="form-control" id="bsValidation1" placeholder="Blog Image "
-                                            required="">
-                                       <div class="invalid-feedback">
-                                            Please choose a Blog Image .
-                                        </div>
+                                        <label for="image" class="form-label">Blog Image</label>
+                                        <input type="file" class="form-control" name="image" id="image" required>
+                                        <div class="invalid-feedback">Please choose a Blog Image.</div>
                                     </div>
+
                                     <div class="col-md-12">
-                                        <label for="bsValidation1" class="form-label">Blog Title </label>
-                                        <input type="text" class="form-control" id="bsValidation1" placeholder="Blog Title "
-                                            required="">
-                                       <div class="invalid-feedback">
-                                            Please choose a Blog Title .
-                                        </div>
+                                        <label for="title" class="form-label">Blog Title</label>
+                                        <input type="text" class="form-control" name="title" id="title" required>
+                                        <div class="invalid-feedback">Please enter a Blog Title.</div>
                                     </div>
+
                                     <div class="col-md-12">
-                                        <label for="bsValidation1" class="form-label">Blog URL</label>
-                                        <input type="text" class="form-control" id="bsValidation1" placeholder="Blog URL"
-                                            required="">
-                                       <div class="invalid-feedback">
-                                            Please choose a Blog URL.
-                                        </div>
+                                        <label for="url" class="form-label">Blog URL</label>
+                                        <input type="text" class="form-control" name="url" id="url" required>
+                                        <div class="invalid-feedback">Please enter a Blog URL.</div>
                                     </div>
+
                                     <div class="col-md-12">
-                                        <label for="bsValidation1" class="form-label">Full Description </label>
-                                        <input type="text" class="form-control" id="bsValidation1" placeholder="Blog URL"
-                                            required="">
-                                       <div class="invalid-feedback">
-                                            Please choose a Full Description.
-                                        </div>
+                                        <label for="description" class="form-label">Full Description</label>
+                                        <textarea class="form-control" name="description" id="description" rows="4" required></textarea>
+                                        <div class="invalid-feedback">Please enter a Full Description.</div>
                                     </div>
+
                                     <div class="col-md-12">
                                         <div class="d-md-flex d-grid align-items-center gap-3">
                                             <button type="submit" class="btn btn-primary px-4">Submit</button>
@@ -115,8 +127,55 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- JS Functions -->
+                <script>
+                    function editBlog(id) {
+                        $.get('/admin/blog/edit/' + id, function(data) {
+                            $('#exampleLargeModal').modal('show');
+                            $('#blogForm').attr('action', '/admin/blog/update/' + id);
+                            $('#posting_date').val(data.posting_date);
+                            $('#title').val(data.title);
+                            $('#url').val(data.url);
+                            $('#description').val(data.description);
+                            $('#image').removeAttr('required');
+                        });
+                    }
+
+
+                    // Delete with SweetAlert Confirmation
+                    $('.delete-btn').on('click', function() {
+                        const id = $(this).data('id');
+
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "This Blog will be deleted!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#6c757d',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    url: '/admin/blog/delete/' + id,
+                                    type: 'DELETE',
+                                    data: {
+                                        "_token": "{{ csrf_token() }}"
+                                    },
+                                    success: function(response) {
+                                        toastr.success("Blog deleted successfully!");
+                                        setTimeout(() => location.reload(), 1000);
+                                    },
+                                    error: function() {
+                                        toastr.error("Something went wrong!");
+                                    }
+                                });
+                            }
+                        });
+                    });
+                </script>
             </div>
-            <!-- end page content-->
         </div>
     </div>
 @endsection
