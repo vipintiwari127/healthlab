@@ -58,7 +58,7 @@
 {{-- jQuery CDN --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
+{{-- <script>
 $(document).ready(function() {
     $('#addWebsiteAnnouncementForm').on('submit', function(e) {
         e.preventDefault();
@@ -92,5 +92,39 @@ $(document).ready(function() {
         });
     });
 });
+</script> --}}
+<script>
+$(document).ready(function() {
+    $('#addWebsiteAnnouncementForm').on('submit', function(e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+
+        $.ajax({
+            url: "{{ url('/admin/savewebsite/announcement') }}",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                toastr.success('Announcement saved successfully!');
+                setTimeout(() => location.reload(), 1500);
+            },
+            error: function(xhr) {
+                let errors = xhr.responseJSON?.errors;
+                if (errors) {
+                    $.each(errors, function(key, value) {
+                        toastr.error(value[0]);
+                    });
+                } else {
+                    toastr.error('Something went wrong. Please try again.');
+                }
+            }
+        });
+    });
+});
 </script>
+
 @endsection

@@ -264,7 +264,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
+{{-- <script>
     $(document).ready(function() {
         $('#home-announcementForm').on('submit', function(e) {
             e.preventDefault();
@@ -379,5 +379,142 @@
         });
     });
     });
+</script> --}}
+<script>
+    $(document).ready(function () {
+
+        // Add Home Announcement
+        $('#home-announcementForm').on('submit', function (e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+
+            $.ajax({
+                url: "{{ url('admin/addhome/announcement') }}",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    toastr.success('Home announcement added successfully!');
+                    $('#home-announcementForm')[0].reset();
+                    $('#exampleLargeModal').modal('hide');
+                    setTimeout(() => location.reload(), 1500);
+                },
+                error: function (xhr) {
+                    let errors = xhr.responseJSON.errors;
+                    if (errors) {
+                        $.each(errors, function (key, value) {
+                            toastr.error(value[0]);
+                        });
+                    } else {
+                        toastr.error('Something went wrong. Please try again.');
+                    }
+                }
+            });
+        });
+
+        // Delete with SweetAlert
+        $('.delete-btn').click(function () {
+            let id = $(this).data('id');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This home announcement will be deleted.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/admin/deletehome-announcement/' + id,
+                        type: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (response) {
+                            toastr.success('Home announcement deleted successfully.');
+                            setTimeout(() => location.reload(), 1500);
+                        },
+                        error: function () {
+                            toastr.error('Failed to delete home announcement.');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Toggle Status
+        $('.status-toggle').change(function () {
+            let id = $(this).data('id');
+            $.post('/admin/statushome-announcement/' + id, {}, function (response) {
+                toastr.success('Status updated.');
+                setTimeout(() => location.reload(), 1500);
+            }).fail(function () {
+                toastr.error('Failed to update status.');
+            });
+        });
+
+        // Load Edit Modal
+        $('.edit-btn').on('click', function () {
+            let id = $(this).data('id');
+
+            $.ajax({
+                url: "/admin/edithome-announcement/" + id,
+                type: "GET",
+                success: function (data) {
+                    $('#edit_home_announcement_id').val(data.id);
+                    $('#edit_title').val(data.title);
+                    $('#edit_button_name').val(data.button_name);
+                    $('#edit_link').val(data.link);
+                    $('#edit_message').val(data.message);
+                    $('#edit_display_announcement').prop('checked', data.display_announcement);
+                    $('#edit_display_query_form').prop('checked', data.display_query_form);
+                    $('#edit_show_name_field').prop('checked', data.show_name_field);
+                    $('#edit_show_email_field').prop('checked', data.show_email_field);
+                    $('#edit_show_phone_field').prop('checked', data.show_phone_field);
+                    $('#edit_show_message_field').prop('checked', data.show_message_field);
+
+                    $('#editModal').modal('show');
+                },
+                error: function () {
+                    toastr.error('Failed to fetch home announcement data.');
+                }
+            });
+        });
+
+        // Update Home Announcement
+        $('#editHomeAnnouncementForm').on('submit', function (e) {
+            e.preventDefault();
+            let formData = $(this).serialize();
+
+            $.ajax({
+                url: "{{ url('/admin/updatehome-announcement') }}",
+                type: "POST",
+                data: formData,
+                success: function (response) {
+                    toastr.success('Home announcement updated successfully!');
+                    $('#editModal').modal('hide');
+                    setTimeout(() => location.reload(), 1500);
+                },
+                error: function (xhr) {
+                    let errors = xhr.responseJSON.errors;
+                    if (errors) {
+                        $.each(errors, function (key, value) {
+                            toastr.error(value[0]);
+                        });
+                    } else {
+                        toastr.error('Something went wrong. Please try again.');
+                    }
+                }
+            });
+        });
+
+    });
 </script>
+
 @endsection

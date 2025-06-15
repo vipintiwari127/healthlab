@@ -153,7 +153,7 @@
 
 <!-- JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+{{-- <script>
 $(document).ready(function () {
 
     // Add
@@ -241,5 +241,119 @@ $('#editLogoPreview').attr('src', '/' + data.logo);
     });
 
 });
+</script> --}}
+<script>
+$(document).ready(function () {
+
+    // Add
+    $('#businesspartnersForm').on('submit', function (e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+        $.ajax({
+            url: "{{ url('admin/addbusiness') }}",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: { 'X-CSRF-TOKEN': $('input[name="_token"]').val() },
+            success: function () {
+                toastr.success('Business Partner added!');
+                $('#businesspartnersForm')[0].reset();
+                $('#exampleLargeModal').modal('hide');
+                setTimeout(() => location.reload(), 1500);
+            },
+            error: function (xhr) {
+                let errors = xhr.responseJSON.errors;
+                if (errors) {
+                    $.each(errors, function (key, value) {
+                        toastr.error(value[0]);
+                    });
+                } else {
+                    toastr.error('Something went wrong!');
+                }
+            }
+        });
+    });
+
+    // Edit Button Click
+    $('.edit-btn').click(function () {
+        let id = $(this).data('id');
+        $.ajax({
+            url: "/admin/editbusiness/" + id,
+            type: "GET",
+            success: function (data) {
+                $('#edit_id').val(data.id);
+                $('#editname').val(data.name);
+                $('#editprimary_email').val(data.primary_email);
+                $('#editsecondary_email').val(data.secondary_email);
+                $('#editredirect_to').val(data.redirect_to);
+                $('#editLogoPreview').attr('src', '/' + data.logo);
+                $('#editModal').modal('show');
+            },
+            error: function () {
+                toastr.error('Failed to fetch data.');
+            }
+        });
+    });
+
+    // Update
+    $('#businesspartnersEditForm').submit(function (e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+        $.ajax({
+            url: "{{ url('admin/updatebusiness') }}",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function () {
+                toastr.success('Updated successfully!');
+                $('#editModal').modal('hide');
+                setTimeout(() => location.reload(), 1500);
+            },
+            error: function (xhr) {
+                let errors = xhr.responseJSON.errors;
+                if (errors) {
+                    $.each(errors, function (key, value) {
+                        toastr.error(value[0]);
+                    });
+                } else {
+                    toastr.error('Update failed!');
+                }
+            }
+        });
+    });
+
+    // Delete with SweetAlert
+    $('.delete-btn').click(function () {
+        let id = $(this).data('id');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This will permanently delete the record.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "/admin/deletebusiness/" + id,
+                    type: "DELETE",
+                    data: { _token: '{{ csrf_token() }}' },
+                    success: function () {
+                        toastr.success('Deleted successfully!');
+                        setTimeout(() => location.reload(), 1500);
+                    },
+                    error: function () {
+                        toastr.error('Delete failed!');
+                    }
+                });
+            }
+        });
+    });
+
+});
 </script>
+
 @endsection
