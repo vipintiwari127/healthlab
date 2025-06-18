@@ -85,6 +85,14 @@
                                             Please choose a Rating.
                                         </div>
                                     </div>
+                                    <div class="col-md-2">
+                                        <label for="bsValidation1" class="form-label">Rating</label>
+                                        <input type="number" class="form-control" id="rating" placeholder="Rating"
+                                            required="">
+                                        <div class="invalid-feedback">
+                                            Please choose a Rating.
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <label for="bsValidation1" class="form-label">Review Message</label>
                                         <input type="text" class="form-control" id="message"
