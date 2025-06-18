@@ -9,6 +9,7 @@ use App\Models\Doctor;
 use App\Models\HomeAnnouncement;
 use App\Models\Announcement;
 use App\Models\BusinessPartner;
+use App\Models\LabTest;
 use App\Models\PartnerLab;
 use App\Models\State;
 use App\Models\City;
@@ -17,7 +18,7 @@ use App\Models\Review;
 use App\Models\CallCenterEnquiry;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class adminController extends Controller
 {
     function dashboard()
     {
@@ -927,9 +928,70 @@ class AdminController extends Controller
     {
         return view('admin.all-test');
     }
+
     function LabTest()
     {
-        return view('admin.lab-test');
+        $labtestData = LabTest::latest()->get();
+        return view('admin.lab-test', compact('labtestData'));
+    }
+    public function storelabtest(Request $request)
+    {
+        $validated = $request->validate([
+            'lab_partner_id' => 'required|integer',
+            'test_id' => 'nullable|integer',
+            'category' => 'required|string',
+            'lab_mrp_price' => 'required|numeric|min:0',
+            'lab_net_price' => 'nullable|numeric|min:0',
+            'offer_price' => 'nullable|numeric|min:0',
+            'reporting_time' => 'nullable|string',
+            'specimen_requirement' => 'nullable|string',
+            'service_type' => 'required|in:Lab,Home,Both',
+            'description' => 'nullable|string',
+        ]);
+
+        LabTest::create($validated);
+        return response()->json(['status' => 'success', 'message' => 'Lab test  Data Added Successfully']);
+    }
+
+    public function updatelabtest(Request $request, $id)
+    {
+        $seo = LabTest::findOrFail($id);
+        $validated = $request->validate([
+            'target_url' => 'required',
+            'meta_keyword' => 'nullable',
+            'meta_description' => 'nullable',
+            'meta_title' => 'nullable',
+            'alt_tag' => 'nullable',
+            'canonical_code' => 'nullable',
+            'extra_meta' => 'nullable',
+        ]);
+
+        $seo->update($validated);
+        return response()->json(['status' => 'success', 'message' => 'SEO Data Updated Successfully']);
+    }
+
+    public function editlabtest($id)
+    {
+        $labtest = LabTest::findOrFail($id);
+        return response()->json($labtest);
+    }
+
+    public function deletelabtest($id)
+    {
+        LabTest::findOrFail($id)->delete();
+        return response()->json(['status' => 'success', 'message' => 'Labtest Data Deleted Successfully']);
+    }
+    public function labtesttoggleStatus($id)
+    {
+        $labtest = LabTest::findOrFail($id);
+        $labtest->status = $labtest->status == 1 ? 0 : 1;
+        $labtest->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'labtest status updated successfully',
+            'new_status' => $labtest->status
+        ]);
     }
     function Category()
     {

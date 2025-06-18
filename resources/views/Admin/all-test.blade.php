@@ -67,7 +67,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="card-body p-4">
-                                <form id="csv-form" method="post" class="form-horizontal"
+                                <form id="csv-form"  method="post" class="form-horizontal"
                                     action=""
                                     data-bv-message="This value is not valid"
                                     data-bv-feedbackicons-validating="glyphicon glyphicon-refresh"
@@ -146,4 +146,100 @@
             <!-- end page content-->
         </div>
     </div>
+
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+
+        // Add or Update Form Submission
+        $('#seoForm').on('submit', function(e) {
+            e.preventDefault();
+            let id = $('#seo_id').val();
+            let url = id ? `/admin/seo-management/update/${id}` : `/admin/seo-management/store`;
+            let method = id ? 'POST' : 'POST';
+
+            $.ajax({
+                url: url,
+                method: method,
+                data: $(this).serialize(),
+                success: function(res) {
+                    toastr.success(res.message);
+                    $('#seoForm')[0].reset();
+                    $('#seo_id').val('');
+                    $('#exampleLargeModal').modal('hide');
+                    location.reload();
+                }
+            });
+        });
+
+        // Edit
+        function editSEO(id) {
+            $.get(`/admin/seo-management/edit/${id}`, function(data) {
+                $('#seo_id').val(data.id);
+                $('[name="target_url"]').val(data.target_url);
+                $('[name="meta_keyword"]').val(data.meta_keyword);
+                $('[name="meta_description"]').val(data.meta_description);
+                $('[name="meta_title"]').val(data.meta_title);
+                $('[name="alt_tag"]').val(data.alt_tag);
+                $('[name="canonical_code"]').val(data.canonical_code);
+                $('[name="extra_meta"]').val(data.extra_meta);
+                $('#exampleLargeModal').modal('show');
+            });
+        }
+
+
+        $(document).ready(function() {
+            // Delete with SweetAlert confirmation
+            $(document).on('click', '.delete-btn', function() {
+                const id = $(this).data('id');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This SEO Data will be deleted!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/admin/seo-management/delete/${id}`,
+                            type: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(response) {
+                                toastr.success(response.message);
+                                setTimeout(() => location.reload(), 1000);
+                            },
+                            error: function(xhr) {
+                                toastr.error("Something went wrong!");
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+
+        function toggleStatus(id) {
+            $.ajax({
+                url: '/admin/seo-management/status/' + id,
+                type: 'POST',
+                success: function(res) {
+                    toastr.success(res.message);
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                    toastr.error("Status update failed.");
+                }
+            });
+        }
+    </script>
 @endsection

@@ -1,679 +1,671 @@
 @extends('website.layout.header')
 @section('main-content')
-    <!-- Hero Area -->
-    <section class="vs-hero-wrapper position-relative">
-        <div class="row g-0 d-md-flex align-items-stretch">
-            <!-- Slider -->
-            <div class="col-md-8 order-1 order-md-2 d-flex">
-                <div class="vs-hero-carousel flex-grow-1" data-navprevnext="true" data-height="800" data-container="1900"
-                    data-slidertype="responsive">
-                    <!-- Slide 1 -->
-                    <div class="ls-slide" data-ls="duration: 13000; transition2d: 5;">
-                        <img src="{{ asset('website/assets/img/hero/h-bg-3-1.jpg') }}" alt="Hero Image" class="ls-bg" />
-                        <h1 class="text-title ls-l ls-responsive"
-                            data-ls="delayin: 600; easingin: easeInOutSine; texttransitionin: true; textstartatin: transitioninstart; textdurationin: 2000; texttypein: words_asc; textshiftin: 200; textoffsetyin: -100; offsetyout: -100; durationout: 2000;"
-                            style="left: 335px; top: 208px; font-size: 82px; font-weight: 700">We always put the</h1>
-                        <h1 class="text-white ls-l ls-responsive"
-                            data-ls="delayin: 0; easingin: easeInOutSine; texttransitionin: true; textstartatin: transitioninstart; textdurationin: 2000; texttypein: words_asc; textshiftin: 200; textoffsetyin: -100; offsetyout: -100; durationout: 2000;"
-                            style="left: 335px; top: 290px; font-size: 82px; font-weight: 700">patients first</h1>
-                        <p class="ls-l text-white ls-responsive ls-hide-sm"
-                            data-ls="delayin: 800; texttransitionin: true; textstartatin: transitioninstart; texttypein: lines_asc; textshiftin: 100; textoffsetyin: 100; textdurationin: 2000; offsetyout: 100; durationout: 2000;"
-                            style="left: 335px; top: 400px; width: 605px; font-size: 16px; font-weight: 400; white-space: normal; letter-spacing: 0.02em; line-height: 28px;">
-                            Conveniently drive go forward architectures with future-proof growth strategies. Energistically
-                            supply low-risk high-yield process improvements for mission-critical testing procedures</p>
-                    </div>
-                    <!-- Slide 2 -->
-                    <div class="ls-slide" data-ls="duration: 13000; transition2d: 5;">
-                        <img src="{{ asset('website/assets/img/hero/h-bg-3-2.jpg') }}" alt="Hero Image" class="ls-bg" />
-                        <h1 class="text-title ls-l ls-responsive"
-                            data-ls="delayin: 600; easingin: easeInOutSine; texttransitionin: true; textstartatin: transitioninstart; textdurationin: 2000; texttypein: words_asc; textshiftin: 200; textoffsetyin: -100; offsetyout: -100; durationout: 2000;"
-                            style="left: 335px; top: 208px; font-size: 82px; font-weight: 700">Best Treatment for</h1>
-                        <h1 class="text-white ls-l ls-responsive"
-                            data-ls="delayin: 0; easingin: easeInOutSine; texttransitionin: true; textstartatin: transitioninstart; textdurationin: 2000; texttypein: words_asc; textshiftin: 200; textoffsetyin: -100; offsetyout: -100; durationout: 2000;"
-                            style="left: 335px; top: 290px; font-size: 82px; font-weight: 700">healthy life</h1>
-                        <p class="ls-l text-white ls-responsive ls-hide-sm"
-                            data-ls="delayin: 800; texttransitionin: true; textstartatin: transitioninstart; texttypein: lines_asc; textshiftin: 100; textoffsetyin: 100; textdurationin: 2000; offsetyout: 100; durationout: 2000;"
-                            style="left: 335px; top: 400px; width: 605px; font-size: 16px; font-weight: 400; white-space: normal; letter-spacing: 0.02em; line-height: 28px;">
-                            Conveniently drive go forward architectures with future-proof growth strategies. Energistically
-                            supply low-risk high-yield process improvements for mission-critical testing procedures</p>
-                    </div>
-                    <!-- Slide 3 -->
-                    <div class="ls-slide" data-ls="duration: 13000; transition2d: 5;">
-                        <img src="{{ asset('website/assets/img/hero/h-bg-3-3.jpg') }}" alt="Hero Image" class="ls-bg" />
-                        <h1 class="text-title ls-l ls-responsive"
-                            data-ls="delayin: 600; easingin: easeInOutSine; texttransitionin: true; textstartatin: transitioninstart; textdurationin: 2000; texttypein: words_asc; textshiftin: 200; textoffsetyin: -100; offsetyout: -100; durationout: 2000;"
-                            style="left: 335px; top: 208px; font-size: 82px; font-weight: 700">Best Medics, Doctors</h1>
-                        <h1 class="text-white ls-l ls-responsive"
-                            data-ls="delayin: 0; easingin: easeInOutSine; texttransitionin: true; textstartatin: transitioninstart; textdurationin: 2000; texttypein: words_asc; textshiftin: 200; textoffsetyin: -100; offsetyout: -100; durationout: 2000;"
-                            style="left: 335px; top: 290px; font-size: 82px; font-weight: 700">and physicians</h1>
-                        <p class="ls-l text-white ls-responsive ls-hide-sm"
-                            data-ls="delayin: 800; texttransitionin: true; textstartatin: transitioninstart; texttypein: lines_asc; textshiftin: 100; textoffsetyin: 100; textdurationin: 2000; offsetyout: 100; durationout: 2000;"
-                            style="left: 335px; top: 400px; width: 605px; font-size: 16px; font-weight: 400; white-space: normal; letter-spacing: 0.02em; line-height: 28px;">
-                            Conveniently drive go forward architectures with future-proof growth strategies. Energistically
-                            supply low-risk high-yield process improvements for mission-critical testing procedures</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Search Section -->
-            <div class="col-md-4 order-2 order-md-1 d-flex">
-                <header class="header-section flex-grow-1">
-                    <div class="container">
-                        <h1 class="header-title hide-on-mobile" style="color: red;"><span>Drive</span> Your Health</h1>
-                        <div class="search-card">
-                            <div class="search-options">
-                                <div class="row g-3">
-                                    <div class="col-md-12">
-                                        <h5 style="margin-bottom: -29px;">The Best Labs & all your Health Need, All under
-                                            One Place</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-3 mt-3">
-                                <div class="col-md-8">
-                                    <input type="text" class="search-input form-control" placeholder="Search..."
-                                        id="searchInput">
-                                </div>
-                                <div class="col-md-4">
-                                    <button class="continue-btn w-100" id="continueBtn" disabled>Continue</button>
-                                </div>
+<!-- Hero Area -->
+<section class="vs-hero-wrapper position-relative">
+    <div class="row g-0 d-md-flex align-items-stretch" style="background-color: var(--primary-color);">
+        <div class="col-lg-4 my-auto">
+            <div class="container">
+                <h1 class="header-title hide-on-mobile" style="color: red;"><span>Drive</span> Your Health</h1>
+                <div class="search-card">
+                    <div class="search-options">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <h5 style="margin-bottom: -29px;">The Best Labs & all your Health Need, All under
+                                    One Place</h5>
                             </div>
                         </div>
                     </div>
-                </header>
-            </div>
-        </div>
-        <div class="d-flex d-md-none justify-content-between px-2 py-3">
-            <div class="card text-center mx-1" style="flex: 1;">
-                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube-removebg-preview.png') }}" class="card-img-top"
-                    alt="Image 1">
-                <div class="card-body">
-                    <p class="card-text">Labs</p>
-                </div>
-            </div>
-            <div class="card text-center mx-1" style="flex: 1;">
-                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube-removebg-preview.png') }}" class="card-img-top"
-                    alt="Image 2">
-                <div class="card-body">
-                    <p class="card-text">Health Package</p>
-                </div>
-            </div>
-            <div class="card text-center mx-1" style="flex: 1;">
-                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube-removebg-preview.png') }}" class="card-img-top"
-                    alt="Image 3">
-                <div class="card-body">
-                    <p class="card-text">Medical package</p>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-8">
+                            <input type="text" class="search-input form-control" placeholder="Search..."
+                                id="searchInput">
+                        </div>
+                        <div class="col-md-4">
+                            <button class="continue-btn w-100" id="continueBtn" disabled>Continue</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="col-lg-8">
+            <div class="vs-hero-carousel flex-grow-1" data-navprevnext="true" data-height="800" data-container="1900"
+                data-slidertype="responsive">
+                <!-- Slide 1 -->
+                <div class="ls-slide" data-ls="duration: 13000; transition2d: 5;">
+                    <img src="{{ asset('website/assets/img/hero/h-bg-3-1.jpg') }}" alt="Hero Image" class="ls-bg" />
+                    <h1 class="text-title ls-l ls-responsive"
+                        data-ls="delayin: 600; easingin: easeInOutSine; texttransitionin: true; textstartatin: transitioninstart; textdurationin: 2000; texttypein: words_asc; textshiftin: 200; textoffsetyin: -100; offsetyout: -100; durationout: 2000;"
+                        style="left: 335px; top: 208px; font-size: 82px; font-weight: 700">We always put the</h1>
+                    <h1 class="text-white ls-l ls-responsive"
+                        data-ls="delayin: 0; easingin: easeInOutSine; texttransitionin: true; textstartatin: transitioninstart; textdurationin: 2000; texttypein: words_asc; textshiftin: 200; textoffsetyin: -100; offsetyout: -100; durationout: 2000;"
+                        style="left: 335px; top: 290px; font-size: 82px; font-weight: 700">patients first</h1>
+                    <p class="ls-l text-white ls-responsive ls-hide-sm"
+                        data-ls="delayin: 800; texttransitionin: true; textstartatin: transitioninstart; texttypein: lines_asc; textshiftin: 100; textoffsetyin: 100; textdurationin: 2000; offsetyout: 100; durationout: 2000;"
+                        style="left: 335px; top: 400px; width: 605px; font-size: 16px; font-weight: 400; white-space: normal; letter-spacing: 0.02em; line-height: 28px;">
+                        Conveniently drive go forward architectures with future-proof growth strategies. Energistically
+                        supply low-risk high-yield process improvements for mission-critical testing procedures</p>
+                </div>
+                <!-- Slide 2 -->
+                <div class="ls-slide" data-ls="duration: 13000; transition2d: 5;">
+                    <img src="{{ asset('website/assets/img/hero/h-bg-3-2.jpg') }}" alt="Hero Image" class="ls-bg" />
+                    <h1 class="text-title ls-l ls-responsive"
+                        data-ls="delayin: 600; easingin: easeInOutSine; texttransitionin: true; textstartatin: transitioninstart; textdurationin: 2000; texttypein: words_asc; textshiftin: 200; textoffsetyin: -100; offsetyout: -100; durationout: 2000;"
+                        style="left: 335px; top: 208px; font-size: 82px; font-weight: 700">Best Treatment for</h1>
+                    <h1 class="text-white ls-l ls-responsive"
+                        data-ls="delayin: 0; easingin: easeInOutSine; texttransitionin: true; textstartatin: transitioninstart; textdurationin: 2000; texttypein: words_asc; textshiftin: 200; textoffsetyin: -100; offsetyout: -100; durationout: 2000;"
+                        style="left: 335px; top: 290px; font-size: 82px; font-weight: 700">healthy life</h1>
+                    <p class="ls-l text-white ls-responsive ls-hide-sm"
+                        data-ls="delayin: 800; texttransitionin: true; textstartatin: transitioninstart; texttypein: lines_asc; textshiftin: 100; textoffsetyin: 100; textdurationin: 2000; offsetyout: 100; durationout: 2000;"
+                        style="left: 335px; top: 400px; width: 605px; font-size: 16px; font-weight: 400; white-space: normal; letter-spacing: 0.02em; line-height: 28px;">
+                        Conveniently drive go forward architectures with future-proof growth strategies. Energistically
+                        supply low-risk high-yield process improvements for mission-critical testing procedures</p>
+                </div>
+                <!-- Slide 3 -->
+                <div class="ls-slide" data-ls="duration: 13000; transition2d: 5;">
+                    <img src="{{ asset('website/assets/img/hero/h-bg-3-3.jpg') }}" alt="Hero Image" class="ls-bg" />
+                    <h1 class="text-title ls-l ls-responsive"
+                        data-ls="delayin: 600; easingin: easeInOutSine; texttransitionin: true; textstartatin: transitioninstart; textdurationin: 2000; texttypein: words_asc; textshiftin: 200; textoffsetyin: -100; offsetyout: -100; durationout: 2000;"
+                        style="left: 335px; top: 208px; font-size: 82px; font-weight: 700">Best Medics, Doctors</h1>
+                    <h1 class="text-white ls-l ls-responsive"
+                        data-ls="delayin: 0; easingin: easeInOutSine; texttransitionin: true; textstartatin: transitioninstart; textdurationin: 2000; texttypein: words_asc; textshiftin: 200; textoffsetyin: -100; offsetyout: -100; durationout: 2000;"
+                        style="left: 335px; top: 290px; font-size: 82px; font-weight: 700">and physicians</h1>
+                    <p class="ls-l text-white ls-responsive ls-hide-sm"
+                        data-ls="delayin: 800; texttransitionin: true; textstartatin: transitioninstart; texttypein: lines_asc; textshiftin: 100; textoffsetyin: 100; textdurationin: 2000; offsetyout: 100; durationout: 2000;"
+                        style="left: 335px; top: 400px; width: 605px; font-size: 16px; font-weight: 400; white-space: normal; letter-spacing: 0.02em; line-height: 28px;">
+                        Conveniently drive go forward architectures with future-proof growth strategies. Energistically
+                        supply low-risk high-yield process improvements for mission-critical testing procedures</p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-flex d-md-none justify-content-between px-2 py-3">
+        <div class="card text-center mx-1" style="flex: 1;">
+            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube-removebg-preview.png') }}" class="card-img-top"
+                alt="Image 1">
+            <div class="card-body">
+                <p class="card-text">Labs</p>
+            </div>
+        </div>
+        <div class="card text-center mx-1" style="flex: 1;">
+            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube-removebg-preview.png') }}" class="card-img-top"
+                alt="Image 2">
+            <div class="card-body">
+                <p class="card-text">Health Package</p>
+            </div>
+        </div>
+        <div class="card text-center mx-1" style="flex: 1;">
+            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube-removebg-preview.png') }}" class="card-img-top"
+                alt="Image 3">
+            <div class="card-body">
+                <p class="card-text">Medical package</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Location Selection Modal -->
-    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="locationModalLabel">Select Your Location</h5>
-                    <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"
-                        style="font-size: 24px; line-height: 1;">&times;</button>
+<!-- Location Selection Modal -->
+<div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="locationModalLabel">Select Your Location</h5>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"
+                    style="font-size: 24px; line-height: 1;">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-2 d-flex gap-2">
+                    <input type="text" class="form-control" id="currentLocationInput"
+                        placeholder="Enter your current location" />
+                    <button class="btn btn-primary">Current location</button>
                 </div>
-                <div class="modal-body">
-                    <div class="mb-2 d-flex gap-2">
-                        <input type="text" class="form-control" id="currentLocationInput"
-                            placeholder="Enter your current location" />
-                        <button class="btn btn-primary">Current location</button>
+                <br>
+                <!-- Location Options -->
+                <h5>Popular City</h5>
+                <div class="d-flex justify-content-start">
+                    <div class="location-card">
+                        <img src="{{ asset('website/assets/img/logo.svg') }}" alt="" class="img-fluid"
+                            style="width: 60px; height: 60px;" />
+                        <h6>Delhi</h6>
                     </div>
-                    <br>
-                    <!-- Location Options -->
-                    <h5>Popular City</h5>
-                    <div class="d-flex justify-content-start">
-                        <div class="location-card">
-                            <img src="{{ asset('website/assets/img/logo.svg') }}" alt="" class="img-fluid"
-                                style="width: 60px; height: 60px;" />
-                            <h6>Delhi</h6>
-                        </div>
-                        <div class="location-card">
-                            <img src="{{ asset('website/assets/img/logo.svg') }}" alt="" class="img-fluid"
-                                style="width: 60px; height: 60px;" />
-                            <h6>Delhi</h6>
-                        </div>
-                        <div class="location-card">
-                            <img src="{{ asset('website/assets/img/logo.svg') }}" alt="" class="img-fluid"
-                                style="width: 60px; height: 60px;" />
-                            <h6>Delhi</h6>
-                        </div>
-                        <div class="location-card">
-                            <img src="{{ asset('website/assets/img/logo.svg') }}" alt="" class="img-fluid"
-                                style="width: 60px; height: 60px;" />
-                            <h6>Delhi</h6>
-                        </div>
-                        <div class="location-card">
-                            <img src="{{ asset('website/assets/img/logo.svg') }}" alt="" class="img-fluid"
-                                style="width: 60px; height: 60px;" />
-                            <h6>Delhi</h6>
-                        </div>
-                        <div class="location-card">
-                            <img src="{{ asset('website/assets/img/logo.svg') }}" alt="" class="img-fluid"
-                                style="width: 60px; height: 60px;" />
-                            <h6>Delhi</h6>
-                        </div>
+                    <div class="location-card">
+                        <img src="{{ asset('website/assets/img/logo.svg') }}" alt="" class="img-fluid"
+                            style="width: 60px; height: 60px;" />
+                        <h6>Delhi</h6>
                     </div>
-                    <br>
-                    <!-- Suggested Locations -->
-                    <h5>All City</h5>
-                    <div class="mt-4 d-flex flex-wrap gap-3">
-                        <p class="mb-0">Brooklyn, New York</p>
-                        <p class="mb-0">Brooklyn, New York</p>
-                        <p class="mb-0">Brooklyn, New York</p>
-                        <p class="mb-0">Brooklyn, New York</p>
-                        <p class="mb-0">Brooklyn, New York</p>
-                        <p class="mb-0">Brooklyn, New York</p>
+                    <div class="location-card">
+                        <img src="{{ asset('website/assets/img/logo.svg') }}" alt="" class="img-fluid"
+                            style="width: 60px; height: 60px;" />
+                        <h6>Delhi</h6>
                     </div>
+                    <div class="location-card">
+                        <img src="{{ asset('website/assets/img/logo.svg') }}" alt="" class="img-fluid"
+                            style="width: 60px; height: 60px;" />
+                        <h6>Delhi</h6>
+                    </div>
+                    <div class="location-card">
+                        <img src="{{ asset('website/assets/img/logo.svg') }}" alt="" class="img-fluid"
+                            style="width: 60px; height: 60px;" />
+                        <h6>Delhi</h6>
+                    </div>
+                    <div class="location-card">
+                        <img src="{{ asset('website/assets/img/logo.svg') }}" alt="" class="img-fluid"
+                            style="width: 60px; height: 60px;" />
+                        <h6>Delhi</h6>
+                    </div>
+                </div>
+                <br>
+                <!-- Suggested Locations -->
+                <h5>All City</h5>
+                <div class="mt-4 d-flex flex-wrap gap-3">
+                    <p class="mb-0">Brooklyn, New York</p>
+                    <p class="mb-0">Brooklyn, New York</p>
+                    <p class="mb-0">Brooklyn, New York</p>
+                    <p class="mb-0">Brooklyn, New York</p>
+                    <p class="mb-0">Brooklyn, New York</p>
+                    <p class="mb-0">Brooklyn, New York</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Service Area -->
-    <section class="vs-service-wrapper space-top space-md-bottom">
-        <div class="parallax" data-parallax-image="{{ asset('website/assets/img/bg/bg-7.jpg') }}"></div>
-        <div class="container">
-            <div class="row text-center justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="section-title">
-                        <span class="h3 text-theme sec-subtitle">Popular lab Test</span>
-                        <p>Proactively revolutionize granular customer service after pandemic internal or "organic" sources
-                            proactive human capital rather.</p>
-                    </div>
+<!-- Service Area -->
+<section class="vs-service-wrapper space-top space-md-bottom">
+    <div class="parallax" data-parallax-image="{{ asset('website/assets/img/bg/bg-7.jpg') }}"></div>
+    <div class="container">
+        <div class="row text-center justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="section-title">
+                    <span class="h3 text-theme sec-subtitle">Popular lab Test</span>
+                    <p>Proactively revolutionize granular customer service after pandemic internal or "organic" sources
+                        proactive human capital rather.</p>
                 </div>
-            </div>
-            <div class="row vs-carousel wow fadeIn" data-wow-delay="0.3s" data-slide-show="3">
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
-                                    alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <div class="sr-content">
-                                <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6><del style="color: red; font-size: 18px">₹650</del> <span
-                                        style="font-size: 22px">₹300</span></h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
-                                    style="background-color: rgb(30, 8, 172);"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
-                                    alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <div class="sr-content">
-                                <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6><del style="color: red; font-size: 18px">₹650</del> <span
-                                        style="font-size: 22px">₹300</span></h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
-                                    style="background-color: rgb(30, 8, 172);"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
-                                    alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <div class="sr-content">
-                                <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6><del style="color: red; font-size: 18px">₹650</del> <span
-                                        style="font-size: 22px">₹300</span></h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
-                                    style="background-color: rgb(30, 8, 172);"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
-                                    alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <div class="sr-content">
-                                <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6><del style="color: red; font-size: 18px">₹650</del> <span
-                                        style="font-size: 22px">₹300</span></h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
-                                    style="background-color: rgb(30, 8, 172);"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
-                                    alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <div class="sr-content">
-                                <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6><del style="color: red; font-size: 18px">₹650</del> <span
-                                        style="font-size: 22px">₹300</span></h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
-                                    style="background-color: rgb(30, 8, 172);"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Repeat for other service boxes -->
             </div>
         </div>
-    </section>
-
-    <!-- Health Area -->
-    <section class="vs-service-wrapper space-top space-md-bottom">
-        <div class="parallax" data-parallax-image="{{ asset('website/assets/img/bg/bg-7.jpg') }}"></div>
-        <div class="container">
-            <div class="row text-center justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="section-title">
-                        <span class="h3 text-theme sec-subtitle">Popular Health Packages</span>
-                        <p>Proactively revolutionize granular customer service after pandemic internal or "organic" sources
-                            proactive human capital rather.</p>
+        <div class="row vs-carousel wow fadeIn" data-wow-delay="0.3s" data-slide-show="3">
+            <div class="col-md-4 col-xl-4">
+                <div class="col-xl-12 mb-25">
+                    <div class="service-box" style="background-color:#F3F6F7;">
+                        <div class="sr-img">
+                            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}" alt="Service Image"
+                                class="w-100" />
+                        </div>
+                        <br />
+                        <div class="sr-content">
+                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
+                            <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
+                            <h6><del style="color: red; font-size: 18px">₹650</del> <span
+                                    style="font-size: 22px">₹300</span></h6>
+                            <button><i class="fas fa-eye"></i></button>
+                            <button><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                                style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="row vs-carousel wow fadeIn" data-wow-delay="0.3s" data-slide-show="3">
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
-                                    alt="Service Image" class="w-100" />
-                            </div>
-                            <div class="sr-content">
-                                <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6><del style="color: red; font-size: 18px">₹650</del> <span
-                                        style="font-size: 22px">₹300</span></h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
-                                    style="background-color: rgb(30, 8, 172);"></i></a>
+            <div class="col-md-4 col-xl-4">
+                <div class="col-xl-12 mb-25">
+                    <div class="service-box" style="background-color:#F3F6F7;">
+                        <div class="sr-img">
+                            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}" alt="Service Image"
+                                class="w-100" />
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
-                                    alt="Service Image" class="w-100" />
-                            </div>
-                            <div class="sr-content">
-                                <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6><del style="color: red; font-size: 18px">₹650</del> <span
-                                        style="font-size: 22px">₹300</span></h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
-                                    style="background-color: rgb(30, 8, 172);"></i></a>
+                        <br />
+                        <div class="sr-content">
+                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
+                            <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
+                            <h6><del style="color: red; font-size: 18px">₹650</del> <span
+                                    style="font-size: 22px">₹300</span></h6>
+                            <button><i class="fas fa-eye"></i></button>
+                            <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
-                                    alt="Service Image" class="w-100" />
-                            </div>
-                            <div class="sr-content">
-                                <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6><del style="color: red; font-size: 18px">₹650</del> <span
-                                        style="font-size: 22px">₹300</span></h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
-                                    style="background-color: rgb(30, 8, 172);"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
-                                    alt="Service Image" class="w-100" />
-                            </div>
-                            <div class="sr-content">
-                                <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6><del style="color: red; font-size: 18px">₹650</del> <span
-                                        style="font-size: 22px">₹300</span></h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
-                                    style="background-color: rgb(30, 8, 172);"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
-                                    alt="Service Image" class="w-100" />
-                            </div>
-                            <div class="sr-content">
-                                <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6><del style="color: red; font-size: 18px">₹650</del> <span
-                                        style="font-size: 22px">₹300</span></h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
-                                    style="background-color: rgb(30, 8, 172);"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
-                                    alt="Service Image" class="w-100" />
-                            </div>
-                            <div class="sr-content">
-                                <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6><del style="color: red; font-size: 18px">₹650</del> <span
-                                        style="font-size: 22px">₹300</span></h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
-                                    style="background-color: rgb(30, 8, 172);"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
-                                    alt="Service Image" class="w-100" />
-                            </div>
-                            <div class="sr-content">
-                                <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6><del style="color: red; font-size: 18px">₹650</del> <span
-                                        style="font-size: 22px">₹300</span></h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
-                                    style="background-color: rgb(30, 8, 172);"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Repeat for other health packages -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Brand Section -->
-    <div class="brand-section-six" style="margin-bottom: 20px; padding-bottom: 20px; margin-top: 0;">
-        <div class="container">
-            <div class="row text-center justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="section-title">
-                        <span class="h3 text-theme sec-partner">Our Partner</span>
-                        <p>Proactively revolutionize granular customer service after pandemic internal or "organic" sources
-                            proactive human capital rather.</p>
+                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                                style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="brand-slider text-center vs-carousel" data-slide-show="5" data-lg-slide-show="4"
-                data-md-slide-show="3" data-sm-slide-show="2" data-xs-slide-show="1">
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            <div class="col-md-4 col-xl-4">
+                <div class="col-xl-12 mb-25">
+                    <div class="service-box" style="background-color:#F3F6F7;">
+                        <div class="sr-img">
+                            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}" alt="Service Image"
+                                class="w-100" />
+                        </div>
+                        <br />
+                        <div class="sr-content">
+                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
+                            <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
+                            <h6><del style="color: red; font-size: 18px">₹650</del> <span
+                                    style="font-size: 22px">₹300</span></h6>
+                            <button><i class="fas fa-eye"></i></button>
+                            <button><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                                style="background-color: rgb(30, 8, 172);"></i></a>
+                    </div>
                 </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <!-- Repeat for other brand images -->
             </div>
+            <div class="col-md-4 col-xl-4">
+                <div class="col-xl-12 mb-25">
+                    <div class="service-box" style="background-color:#F3F6F7;">
+                        <div class="sr-img">
+                            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}" alt="Service Image"
+                                class="w-100" />
+                        </div>
+                        <br />
+                        <div class="sr-content">
+                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
+                            <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
+                            <h6><del style="color: red; font-size: 18px">₹650</del> <span
+                                    style="font-size: 22px">₹300</span></h6>
+                            <button><i class="fas fa-eye"></i></button>
+                            <button><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                                style="background-color: rgb(30, 8, 172);"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xl-4">
+                <div class="col-xl-12 mb-25">
+                    <div class="service-box" style="background-color:#F3F6F7;">
+                        <div class="sr-img">
+                            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}" alt="Service Image"
+                                class="w-100" />
+                        </div>
+                        <br />
+                        <div class="sr-content">
+                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
+                            <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
+                            <h6><del style="color: red; font-size: 18px">₹650</del> <span
+                                    style="font-size: 22px">₹300</span></h6>
+                            <button><i class="fas fa-eye"></i></button>
+                            <button><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                                style="background-color: rgb(30, 8, 172);"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat for other service boxes -->
         </div>
     </div>
+</section>
 
-    <!-- Service Section -->
-    <div class="brand-section-six" style="margin-bottom: 20px; padding-bottom: 20px; margin-top: 0;">
-        <div class="container" style="margin-top: 50px;">
-            <div class="row text-center justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="section-title">
-                        <span class="h3 text-theme sec-subtitle">Our Service</span>
-                        <p>Proactively revolutionize granular customer service after pandemic internal or "organic" sources
-                            proactive human capital rather.</p>
+<!-- Health Area -->
+<section class="vs-service-wrapper space-top space-md-bottom">
+    <div class="parallax" data-parallax-image="{{ asset('website/assets/img/bg/bg-7.jpg') }}"></div>
+    <div class="container">
+        <div class="row text-center justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="section-title">
+                    <span class="h3 text-theme sec-subtitle">Popular Health Packages</span>
+                    <p>Proactively revolutionize granular customer service after pandemic internal or "organic" sources
+                        proactive human capital rather.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row vs-carousel wow fadeIn" data-wow-delay="0.3s" data-slide-show="3">
+            <div class="col-md-4 col-xl-4">
+                <div class="col-xl-12 mb-25">
+                    <div class="service-box" style="background-color:#F3F6F7;">
+                        <div class="sr-img">
+                            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}" alt="Service Image"
+                                class="w-100" />
+                        </div>
+                        <div class="sr-content">
+                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
+                            <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
+                            <h6><del style="color: red; font-size: 18px">₹650</del> <span
+                                    style="font-size: 22px">₹300</span></h6>
+                            <button><i class="fas fa-eye"></i></button>
+                            <button><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                                style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="brand-slider text-center vs-carousel" data-slide-show="5" data-lg-slide-show="4"
-                data-md-slide-show="3" data-sm-slide-show="2" data-xs-slide-show="1">
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            <div class="col-md-4 col-xl-4">
+                <div class="col-xl-12 mb-25">
+                    <div class="service-box" style="background-color:#F3F6F7;">
+                        <div class="sr-img">
+                            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}" alt="Service Image"
+                                class="w-100" />
+                        </div>
+                        <div class="sr-content">
+                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
+                            <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
+                            <h6><del style="color: red; font-size: 18px">₹650</del> <span
+                                    style="font-size: 22px">₹300</span></h6>
+                            <button><i class="fas fa-eye"></i></button>
+                            <button><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                                style="background-color: rgb(30, 8, 172);"></i></a>
+                    </div>
                 </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <div class="brand-img-six">
-                    <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
-                </div>
-                <!-- Repeat for other service images -->
             </div>
+            <div class="col-md-4 col-xl-4">
+                <div class="col-xl-12 mb-25">
+                    <div class="service-box" style="background-color:#F3F6F7;">
+                        <div class="sr-img">
+                            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}" alt="Service Image"
+                                class="w-100" />
+                        </div>
+                        <div class="sr-content">
+                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
+                            <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
+                            <h6><del style="color: red; font-size: 18px">₹650</del> <span
+                                    style="font-size: 22px">₹300</span></h6>
+                            <button><i class="fas fa-eye"></i></button>
+                            <button><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                                style="background-color: rgb(30, 8, 172);"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xl-4">
+                <div class="col-xl-12 mb-25">
+                    <div class="service-box" style="background-color:#F3F6F7;">
+                        <div class="sr-img">
+                            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}" alt="Service Image"
+                                class="w-100" />
+                        </div>
+                        <div class="sr-content">
+                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
+                            <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
+                            <h6><del style="color: red; font-size: 18px">₹650</del> <span
+                                    style="font-size: 22px">₹300</span></h6>
+                            <button><i class="fas fa-eye"></i></button>
+                            <button><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                                style="background-color: rgb(30, 8, 172);"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xl-4">
+                <div class="col-xl-12 mb-25">
+                    <div class="service-box" style="background-color:#F3F6F7;">
+                        <div class="sr-img">
+                            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}" alt="Service Image"
+                                class="w-100" />
+                        </div>
+                        <div class="sr-content">
+                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
+                            <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
+                            <h6><del style="color: red; font-size: 18px">₹650</del> <span
+                                    style="font-size: 22px">₹300</span></h6>
+                            <button><i class="fas fa-eye"></i></button>
+                            <button><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                                style="background-color: rgb(30, 8, 172);"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xl-4">
+                <div class="col-xl-12 mb-25">
+                    <div class="service-box" style="background-color:#F3F6F7;">
+                        <div class="sr-img">
+                            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}" alt="Service Image"
+                                class="w-100" />
+                        </div>
+                        <div class="sr-content">
+                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
+                            <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
+                            <h6><del style="color: red; font-size: 18px">₹650</del> <span
+                                    style="font-size: 22px">₹300</span></h6>
+                            <button><i class="fas fa-eye"></i></button>
+                            <button><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                                style="background-color: rgb(30, 8, 172);"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xl-4">
+                <div class="col-xl-12 mb-25">
+                    <div class="service-box" style="background-color:#F3F6F7;">
+                        <div class="sr-img">
+                            <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}" alt="Service Image"
+                                class="w-100" />
+                        </div>
+                        <div class="sr-content">
+                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
+                            <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
+                            <h6><del style="color: red; font-size: 18px">₹650</del> <span
+                                    style="font-size: 22px">₹300</span></h6>
+                            <button><i class="fas fa-eye"></i></button>
+                            <button><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                                style="background-color: rgb(30, 8, 172);"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat for other health packages -->
         </div>
     </div>
+</section>
 
-    <!-- Blog Area -->
-
-
-    <section class="vs-service-wrapper space-top space-md-bottom" style="background-color: rgb(237, 237, 224);">
-        <div class="parallax" data-parallax-image="{{ asset('website/assets/img/bg/bg-7.jpg') }}"></div>
-        <div class="container">
-            <div class="row text-center justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="section-title">
-                        <span class="h3 text-theme sec-subtitle">Blog Posts</span>
-                        <h2 class="h1">Latest News</h2>
-                        <p style="margin-bottom: 20px;">Proactively revolutionize granular customer service after pandemic
-                            internal or "organic" sources proactive human capital rather.</p>
-                    </div>
+<!-- Brand Section -->
+<div class="brand-section-six" style="margin-bottom: 20px; padding-bottom: 20px; margin-top: 0;">
+    <div class="container">
+        <div class="row text-center justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="section-title">
+                    <span class="h3 text-theme sec-partner">Our Partner</span>
+                    <p>Proactively revolutionize granular customer service after pandemic internal or "organic" sources
+                        proactive human capital rather.</p>
                 </div>
-            </div>
-            <div class="row vs-carousel wow fadeInUp" data-wow-delay="0.3s" data-slide-show="3" data-lg-slide-show="2">
-                <div class="col-xl-4">
-                    <div class="vs-blog blog-card">
-                        <div class="blog-img">
-                            <img src="{{ asset('website/assets/img/blog/b-1-1.jpg') }}" alt="Blog Image"
-                                class="w-100" />
-                            <div class="blog-date">
-                                <div class="day">22</div>
-                                Jan 2023
-                            </div>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <a href="blog-details.html"><i class="far fa-folder"></i>Mental Health</a>
-                                <a href="blog-details.html"><i class="fal fa-user"></i>David Smith</a>
-                            </div>
-                            <h3 class="blog-title h5 font-body lh-base"><a href="blog-details.html">Services enable
-                                    process is tobe after user-centric schemas now</a></h3>
-                            <a href="blog-details.html" class="link-btn">Read More<i
-                                    class="far fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="vs-blog blog-card">
-                        <div class="blog-img">
-                            <img src="{{ asset('website/assets/img/blog/b-1-1.jpg') }}" alt="Blog Image"
-                                class="w-100" />
-                            <div class="blog-date">
-                                <div class="day">22</div>
-                                Jan 2023
-                            </div>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <a href="blog-details.html"><i class="far fa-folder"></i>Mental Health</a>
-                                <a href="blog-details.html"><i class="fal fa-user"></i>David Smith</a>
-                            </div>
-                            <h3 class="blog-title h5 font-body lh-base"><a href="blog-details.html">Services enable
-                                    process is tobe after user-centric schemas now</a></h3>
-                            <a href="blog-details.html" class="link-btn">Read More<i
-                                    class="far fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="vs-blog blog-card">
-                        <div class="blog-img">
-                            <img src="{{ asset('website/assets/img/blog/b-1-1.jpg') }}" alt="Blog Image"
-                                class="w-100" />
-                            <div class="blog-date">
-                                <div class="day">22</div>
-                                Jan 2023
-                            </div>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <a href="blog-details.html"><i class="far fa-folder"></i>Mental Health</a>
-                                <a href="blog-details.html"><i class="fal fa-user"></i>David Smith</a>
-                            </div>
-                            <h3 class="blog-title h5 font-body lh-base"><a href="blog-details.html">Services enable
-                                    process is tobe after user-centric schemas now</a></h3>
-                            <a href="blog-details.html" class="link-btn">Read More<i
-                                    class="far fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="vs-blog blog-card">
-                        <div class="blog-img">
-                            <img src="{{ asset('website/assets/img/blog/b-1-1.jpg') }}" alt="Blog Image"
-                                class="w-100" />
-                            <div class="blog-date">
-                                <div class="day">22</div>
-                                Jan 2023
-                            </div>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <a href="blog-details.html"><i class="far fa-folder"></i>Mental Health</a>
-                                <a href="blog-details.html"><i class="fal fa-user"></i>David Smith</a>
-                            </div>
-                            <h3 class="blog-title h5 font-body lh-base"><a href="blog-details.html">Services enable
-                                    process is tobe after user-centric schemas now</a></h3>
-                            <a href="blog-details.html" class="link-btn">Read More<i
-                                    class="far fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Repeat for other blog posts -->
             </div>
         </div>
-    </section>
+        <div class="brand-slider text-center vs-carousel" data-slide-show="5" data-lg-slide-show="4"
+            data-md-slide-show="3" data-sm-slide-show="2" data-xs-slide-show="1">
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <!-- Repeat for other brand images -->
+        </div>
+    </div>
+</div>
+
+<!-- Service Section -->
+<div class="brand-section-six" style="margin-bottom: 20px; padding-bottom: 20px; margin-top: 0;">
+    <div class="container" style="margin-top: 50px;">
+        <div class="row text-center justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="section-title">
+                    <span class="h3 text-theme sec-subtitle">Our Service</span>
+                    <p>Proactively revolutionize granular customer service after pandemic internal or "organic" sources
+                        proactive human capital rather.</p>
+                </div>
+            </div>
+        </div>
+        <div class="brand-slider text-center vs-carousel" data-slide-show="5" data-lg-slide-show="4"
+            data-md-slide-show="3" data-sm-slide-show="2" data-xs-slide-show="1">
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <div class="brand-img-six">
+                <img src="{{ asset('website/assets/img/brand/brand-6-1.png') }}" alt="image" />
+            </div>
+            <!-- Repeat for other service images -->
+        </div>
+    </div>
+</div>
+
+<!-- Blog Area -->
+
+
+<section class="vs-service-wrapper space-top space-md-bottom" style="background-color: rgb(237, 237, 224);">
+    <div class="parallax" data-parallax-image="{{ asset('website/assets/img/bg/bg-7.jpg') }}"></div>
+    <div class="container">
+        <div class="row text-center justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="section-title">
+                    <span class="h3 text-theme sec-subtitle">Blog Posts</span>
+                    <h2 class="h1">Latest News</h2>
+                    <p style="margin-bottom: 20px;">Proactively revolutionize granular customer service after pandemic
+                        internal or "organic" sources proactive human capital rather.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row vs-carousel wow fadeInUp" data-wow-delay="0.3s" data-slide-show="3" data-lg-slide-show="2">
+            <div class="col-xl-4">
+                <div class="vs-blog blog-card">
+                    <div class="blog-img">
+                        <img src="{{ asset('website/assets/img/blog/b-1-1.jpg') }}" alt="Blog Image" class="w-100" />
+                        <div class="blog-date">
+                            <div class="day">22</div>
+                            Jan 2023
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <a href="blog-details.html"><i class="far fa-folder"></i>Mental Health</a>
+                            <a href="blog-details.html"><i class="fal fa-user"></i>David Smith</a>
+                        </div>
+                        <h3 class="blog-title h5 font-body lh-base"><a href="blog-details.html">Services enable
+                                process is tobe after user-centric schemas now</a></h3>
+                        <a href="blog-details.html" class="link-btn">Read More<i
+                                class="far fa-long-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="vs-blog blog-card">
+                    <div class="blog-img">
+                        <img src="{{ asset('website/assets/img/blog/b-1-1.jpg') }}" alt="Blog Image" class="w-100" />
+                        <div class="blog-date">
+                            <div class="day">22</div>
+                            Jan 2023
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <a href="blog-details.html"><i class="far fa-folder"></i>Mental Health</a>
+                            <a href="blog-details.html"><i class="fal fa-user"></i>David Smith</a>
+                        </div>
+                        <h3 class="blog-title h5 font-body lh-base"><a href="blog-details.html">Services enable
+                                process is tobe after user-centric schemas now</a></h3>
+                        <a href="blog-details.html" class="link-btn">Read More<i
+                                class="far fa-long-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="vs-blog blog-card">
+                    <div class="blog-img">
+                        <img src="{{ asset('website/assets/img/blog/b-1-1.jpg') }}" alt="Blog Image" class="w-100" />
+                        <div class="blog-date">
+                            <div class="day">22</div>
+                            Jan 2023
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <a href="blog-details.html"><i class="far fa-folder"></i>Mental Health</a>
+                            <a href="blog-details.html"><i class="fal fa-user"></i>David Smith</a>
+                        </div>
+                        <h3 class="blog-title h5 font-body lh-base"><a href="blog-details.html">Services enable
+                                process is tobe after user-centric schemas now</a></h3>
+                        <a href="blog-details.html" class="link-btn">Read More<i
+                                class="far fa-long-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="vs-blog blog-card">
+                    <div class="blog-img">
+                        <img src="{{ asset('website/assets/img/blog/b-1-1.jpg') }}" alt="Blog Image" class="w-100" />
+                        <div class="blog-date">
+                            <div class="day">22</div>
+                            Jan 2023
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <a href="blog-details.html"><i class="far fa-folder"></i>Mental Health</a>
+                            <a href="blog-details.html"><i class="fal fa-user"></i>David Smith</a>
+                        </div>
+                        <h3 class="blog-title h5 font-body lh-base"><a href="blog-details.html">Services enable
+                                process is tobe after user-centric schemas now</a></h3>
+                        <a href="blog-details.html" class="link-btn">Read More<i
+                                class="far fa-long-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat for other blog posts -->
+        </div>
+    </div>
+</section>
 @endsection

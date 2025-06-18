@@ -139,7 +139,7 @@ Route::delete('/admin/faq/delete/{id}', [AdminController::class, 'deleteFaq'])->
 
 //review page
 Route::prefix('admin')->group(function () {
-    Route::get('/review', [AdminController::class, 'Review']);
+    Route::get('/admin/review', [AdminController::class, 'Review']);
     Route::post('/review/store', [AdminController::class, 'store']);
     Route::get('/review/edit/{id}', [AdminController::class, 'edit']);
     Route::delete('/review/delete/{id}', [AdminController::class, 'destroy']);
@@ -211,9 +211,19 @@ Route::delete('/admin/deletelabpartner/{id}', [AdminController::class, 'deletela
 Route::post('/admin/statuslabpartner/{id}', [AdminController::class, 'statuslabpartner']);
 // AllTestPartner
 Route::get('/admin/all-test', [AdminController::class, 'AllTestPartner']);
-
+Route::post('/admin/addalltest', [AdminController::class, 'addalltest']);
+Route::get('/admin/editalltest/{id}', [AdminController::class, 'editalltest']);
+Route::post('/admin/updatealltest', [AdminController::class, 'updatealltest']);
+Route::delete('/admin/deletealltest/{id}', [AdminController::class, 'deletealltest']);
+Route::post('/admin/statusalltest/{id}', [AdminController::class, 'statusalltest']);
 //LabTest
 Route::get('/admin/lab-test', [AdminController::class, 'LabTest']);
+// Route::get('/admin/lab-test', [AdminController::class, 'labtestManagement'])->name('labtest.management');
+Route::post('/admin/lab-test/store', [AdminController::class, 'storelabtest'])->name('labtest.store');
+Route::post('/admin/lab-test/update/{id}', [AdminController::class, 'updatelabtest'])->name('labtest.update');
+Route::delete('/admin/lab-test/delete/{id}', [AdminController::class, 'deletelabtest'])->name('labtest.delete');
+Route::get('/admin/lab-test/edit/{id}', [AdminController::class, 'editlabtest'])->name('labtest.edit');
+Route::post('/admin/lab-test/status/{id}', [AdminController::class, 'labtesttoggleStatus'])->name('labtest.status');
 
 //category
 Route::get('/admin/category', [AdminController::class, 'Category']);
