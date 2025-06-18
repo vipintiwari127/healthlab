@@ -90,14 +90,14 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="card-body p-4">
-                                <form class="form-horizontal" id="editPartnerlabForm" runat="server" role="form"
+                                <form class="form-horizontal" id="partnerlabForm" runat="server" role="form"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
                                         <input type="hidden" id="edit_labpartner_id" name="id">
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Name</label>
-                                            <input type="text" class="form-control" name="name" id="edit_name"
+                                            <input type="text" class="form-control" name="name" id="name"
                                                 required placeholder="Name" value="" />
                                             <div class="invalid-feedback">
                                                 Please choose a Name.
@@ -105,7 +105,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Url</label>
-                                            <input type="url" class="form-control" name="url" id="edit_url"
+                                            <input type="url" class="form-control" name="url" id="url"
                                                 placeholder="URL" value="">
                                             <div class="invalid-feedback">
                                                 Please choose a Url.
@@ -113,15 +113,15 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Website Link </label>
-                                            <input type="text" class="form-control" name="website_link"
-                                                id="edit_website_link" placeholder="Website Link" value="">
+                                            <input type="url" class="form-control" name="website_link" id="website_link"
+                                                placeholder="Website Link" value="">
                                             <div class="invalid-feedback">
                                                 Please choose a Website Link .
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Office Email </label>
-                                            <input type="email" class="form-control" name="email" id="edit_email"
+                                            <input type="email" class="form-control" name="email" id="email"
                                                 placeholder="Email" value="" required>
                                             <div class="invalid-feedback">
                                                 Please choose a Office Email .
@@ -129,7 +129,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Office Phone </label>
-                                            <input type="number" class="form-control" name="mobile" id="edit_mobile"
+                                            <input type="number" class="form-control" name="mobile" id="mobile"
                                                 required placeholder="Office Phone" value="" />
                                             <div class="invalid-feedback">
                                                 Please choose a Office Phone.
@@ -138,8 +138,7 @@
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Contact Person</label>
                                             <input type="number" class="form-control" name="contact_person"
-                                                id="edit_contact_person" placeholder="Contact Person" value=""
-                                                required>
+                                                id="contact_person" placeholder="Contact Person" value="" required>
                                             <div class="invalid-feedback">
                                                 Please choose a Contact Person.
                                             </div>
@@ -147,7 +146,7 @@
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Contact Person Number</label>
                                             <input type="number" class="form-control" name="contact_person_number"
-                                                id="edit_contact_person_number" placeholder="Contact Person Number"
+                                                id="contact_person_number" placeholder="Contact Person Number"
                                                 value="" required>
                                             <div class="invalid-feedback">
                                                 Please choose a Contact Person Number.
@@ -155,7 +154,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">CC Emails </label>
-                                            <input type="email" class="form-control" name="cc" id="edit_cc"
+                                            <input type="email" class="form-control" name="cc" id="cc"
                                                 placeholder="Example - abc@gmail.com,test@gmail.com" value="">
                                             <div class="invalid-feedback">
                                                 Please choose a CC Emails.
@@ -163,7 +162,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">BCC Emails </label>
-                                            <input type="text" class="form-control" name="bcc" id="edit_bcc"
+                                            <input type="email" class="form-control" name="bcc" id="bcc"
                                                 placeholder="Example - abc@gmail.com,test@gmail.com" value="">
                                             <div class="invalid-feedback">
                                                 Please choose a BCC Emails.
@@ -185,27 +184,30 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">State</label>
-                                            <input type="text" class="form-control" name="bcc" id="edit_bcc"
-                                                placeholder="Example - abc@gmail.com,test@gmail.com" value="">
+                                            <select class="form-control" name="state_id" id="state_id" required
+                                                onchange="get_city();">
+                                                <option value="">Select State</option>
+                                                <option value="24">DELHI NCR</option>
+                                            </select>
                                             <div class="invalid-feedback">
                                                 Please choose a State .
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">City Name</label>
-                                            <select class="form-control selectpicker" name="city_id[]" id="edit_city_id"
-                                                multiple>
-                                                <option value="5">Tilak Nagar</option>
-                                                <option value="6">Rohini</option>
-                                                <option value="7">Dwarka</option>
+                                            <select class="form-control" name="city_id[]" id="city_id" multiplerequired
+                                                onchange="get_city();">
+                                                <option value="">Select State</option>
+                                                <option value="24">DELHI NCR</option>
                                             </select>
                                             <div class="invalid-feedback">
                                                 Please choose a City Name .
                                             </div>
                                         </div>
+                                        
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">PinCode</label>
-                                            <input type="number" class="form-control" name="pincode" id="edit_pincode"
+                                             <input type="number" class="form-control" name="pincode" id="pincode"
                                                 placeholder="Pincode" value="">
                                             <div class="invalid-feedback">
                                                 Please choose a PinCode .
@@ -213,7 +215,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label for="bsValidation1" class="form-label">Address</label>
-                                            <input type="text" class="form-control" name="address" id="edit_address"
+                                           <input type="text" class="form-control" name="address" id="address"
                                                 placeholder="Address" value="">
                                             <div class="invalid-feedback">
                                                 Please choose a Address .
@@ -221,8 +223,8 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Lab Services Available </label>
-                                            <input type="text" class="form-control" name="services"
-                                                id="edit_services" placeholder="Lab Services Available" value="">
+                                            <input type="text" class="form-control" name="services" id="services"
+                                                placeholder="Lab Services Available" value="">
                                             <div class="invalid-feedback">
                                                 Please choose a Lab Services Available .
                                             </div>
@@ -230,7 +232,7 @@
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Certification</label>
                                             <input type="text" class="form-control" name="certification"
-                                                id="edit_certification" placeholder="Certification" value="">
+                                                id="certification" placeholder="Certification" value="">
                                             <div class="invalid-feedback">
                                                 Please choose a Lab Certification .
                                             </div>
@@ -238,14 +240,14 @@
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Ultrasound Time </label>
                                             <input type="time" class="form-control" name="ultrasound_time"
-                                                id="edit_ultrasound_time" placeholder="Ultrasound Time" value="">
+                                                id="ultrasound_time" placeholder="Ultrasound Time" value="">
                                             <div class="invalid-feedback">
                                                 Please choose a Lab Ultrasound Time.
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Off Day</label>
-                                            <input type="text" class="form-control" name="offday" id="edit_offday"
+                                             <input type="text" class="form-control" name="offday" id="offday"
                                                 placeholder="Off Day" value="">
                                             <div class="invalid-feedback">
                                                 Please choose a Off Day.
@@ -253,8 +255,8 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Lab Timing </label>
-                                            <input type="time" class="form-control" name="lab_timing"
-                                                id="edit_lab_timing" placeholder="Lab Timing" value="">
+                                            <input type="time" class="form-control" name="lab_timing" id="lab_timing"
+                                                placeholder="Lab Timing" value="">
                                             <div class="invalid-feedback">
                                                 Please choose a Lab Timing .
                                             </div>
@@ -262,16 +264,14 @@
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Sunday Lab Timing </label>
                                             <input type="time" class="form-control" name="sunday_lab_timing"
-                                                id="edit_sunday_lab_timing" placeholder="Sunday Lab Timing"
-                                                value="">
+                                                id="sunday_lab_timing" placeholder="Sunday Lab Timing" value="">
                                             <div class="invalid-feedback">
                                                 Please choose a Sunday Lab Timing.
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Payment Mode</label>
-                                            <select class="form-control" name="payment_mode" id="edit_payment_mode"
-                                                required>
+                                           <select class="form-control" name="payment_mode" id="payment_mode" required>
                                                 <option value="">Select Payment Mode</option>
                                                 <option value="Cash">Cash</option>
                                                 <option value="Online">Online</option>
@@ -282,28 +282,26 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label for="bsValidation1" class="form-label">Description</label>
-                                            <textarea class="form-control" rows="5" name="description" id="edit_description" placeholder="Description"
-                                                value=""></textarea>
+                                             <textarea class="form-control" name="description"
+                                                id="description" placeholder="Description" value=""></textarea>
                                             <div class="invalid-feedback">
                                                 Please choose a Description.
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <label for="bsValidation1" class="form-label">Trust Matter </label>
-                                            <textarea class="form-control" rows="8" cols="50" style="height: 86px;" name="trust_matter"
-                                                id="edit_trust_matter"></textarea>
+                                           <textarea class="form-control" rows="8" cols="50" style="height: 86px;" name="trust_matter"
+                                                id="trust_matter"></textarea>
                                             <div class="invalid-feedback">
                                                 Please choose a Trust Matter .
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">Logo: (Size - 180 * 90)</label>
-                                            <div class="slim" style="width:180px; height:90px;"
+                                             <div class="slim" style="width:180px; height:90px;"
                                                 data-meta-user-id="1220" data-ratio="180:90" data-size="180,90">
-                                                <input type="file" name="logo" id="edit_logo">
+                                                <input type="file" name="logo" id="logo">
                                             </div>
-                                            <img src="" id="editLogoPreview" alt=""
-                                                style="max-width: 180px; max-height: 90px;">
                                             <div class="invalid-feedback">
                                                 Please choose a Logo: (Size - 180 * 90).
                                             </div>
@@ -441,8 +439,11 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="bsValidation1" class="form-label">State</label>
-                                            <input type="text" class="form-control" name="bcc" id="edit_bcc"
-                                                placeholder="Example - abc@gmail.com,test@gmail.com" value="">
+                                            <select class="form-control" name="state_id" id="edit_state_id" required
+                                                onchange="get_city();">
+                                                <option value="">Select State</option>
+                                                <option value="24">DELHI NCR</option>
+                                            </select>
                                             <div class="invalid-feedback">
                                                 Please choose a State .
                                             </div>
