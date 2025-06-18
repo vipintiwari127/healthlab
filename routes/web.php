@@ -228,9 +228,19 @@ Route::post('/admin/lab-test/feature/{id}', [AdminController::class, 'labtesttog
 
 //category
 Route::get('/admin/category', [AdminController::class, 'Category']);
+Route::post('/admin/category/store', [AdminController::class, 'storecategory'])->name('category.store');
+Route::post('/admin/category/update/{id}', [AdminController::class, 'updatecategory'])->name('category.update');
+Route::delete('/admin/category/delete/{id}', [AdminController::class, 'deletecategory'])->name('category.delete');
+Route::get('/admin/category/edit/{id}', [AdminController::class, 'editcategory'])->name('category.edit');
+Route::post('/admin/category/status/{id}', [AdminController::class, 'categorytoggleStatus'])->name('category.status');
 
 //Package
 Route::get('/admin/package', [AdminController::class, 'Package']);
+Route::post('/admin/package/store', [AdminController::class, 'storepackage'])->name('package.store');
+Route::post('/admin/package/update/{id}', [AdminController::class, 'updatepackage'])->name('package.update');
+Route::delete('/admin/package/delete/{id}', [AdminController::class, 'deletepackage'])->name('package.delete');
+Route::get('/admin/package/edit/{id}', [AdminController::class, 'editpackage'])->name('package.edit');
+Route::post('/admin/package/status/{id}', [AdminController::class, 'packagetoggleStatus'])->name('package.status');
 
 //settings
 Route::get('/admin/setting', [AdminController::class, 'Settings']);

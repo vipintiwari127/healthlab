@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Faq;
 use App\Models\Blog;
 use App\Models\Country;
@@ -10,6 +11,7 @@ use App\Models\HomeAnnouncement;
 use App\Models\Announcement;
 use App\Models\BusinessPartner;
 use App\Models\LabTest;
+use App\Models\Package;
 use App\Models\PartnerLab;
 use App\Models\State;
 use App\Models\City;
@@ -1010,13 +1012,152 @@ class adminController extends Controller
     }
     function Category()
     {
-        return view('admin.category');
+        $categoryData = Category::latest()->get();
+        return view('admin.category', compact('categoryData'));
+    }
+    public function storecategory(Request $request)
+    {
+        $validated = $request->validate([
+            'category_name' => 'required|string|max:255',
+            'url' => 'nullable|string',
+        ]);
+        Category::create($validated);
+        return response()->json(['status' => 'success', 'message' => 'Category  Data Added Successfully']);
+    }
+
+    public function updatecategory(Request $request, $id)
+    {
+        $category = Category::findOrFail($id);
+        $validated = $request->validate([
+            'category_name' => 'required|string|max:255',
+            'url' => 'nullable|string',
+        ]);
+
+        $category->update($validated);
+        return response()->json(['status' => 'success', 'message' => 'category Data Updated Successfully']);
+    }
+
+
+    public function editcategory($id)
+    {
+        $category = Category::findOrFail($id);
+        return response()->json($category);
+    }
+
+    public function deletecategory($id)
+    {
+        Category::findOrFail($id)->delete();
+        return response()->json(['status' => 'success', 'message' => 'category Data Deleted Successfully']);
+    }
+
+    public function categorytoggleStatus($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->status = $category->status == 1 ? 0 : 1;
+        $category->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'category status updated successfully',
+            'new_status' => $category->status
+        ]);
     }
     function Package()
     {
-        return view('admin.package');
+         $Packages = Package::all();
+    // return view('admin.partner.index', compact('partners'));
+        return view('admin.package',compact('Packages'));
     }
 
+   public function storepackage(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'package_category' => 'required|string|max:255',
+            'partner' => 'required|string|max:255',
+            'included_tests' => 'required|string',
+            'actual_price' => 'nullable|numeric',
+            'net_price' => 'nullable|numeric',
+            'offer_price' => 'nullable|numeric',
+            'total_parameters' => 'nullable|string|max:255',
+            'reporting_time' => 'required|date_format:H:i',
+            'specimen_requirement' => 'required|string|max:255',
+            'service_type' => 'required|in:Lab,Home,Both',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'description' => 'nullable|string',
+        ]);
+
+        // Handle image upload if exists
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('uploads'), $filename);
+            $validated['thumbnail'] = 'uploads/' . $filename;
+        }
+
+        // Save to database
+        Package::create($validated);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Package Data Added Successfully'
+        ]);
+    }
+
+    public function updatepackage(Request $request, $id)
+    {
+        $package = Package::findOrFail($id);
+         $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'package_category' => 'required|string|max:255',
+            'partner' => 'required|string|max:255',
+            'included_tests' => 'required|string',
+            'actual_price' => 'nullable|numeric',
+            'net_price' => 'nullable|numeric',
+            'offer_price' => 'nullable|numeric',
+            'total_parameters' => 'nullable|string|max:255',
+            'reporting_time' => 'required|date_format:H:i',
+            'specimen_requirement' => 'required|string|max:255',
+            'service_type' => 'required|in:Lab,Home,Both',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'description' => 'nullable|string',
+        ]);
+
+         if ($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('uploads'), $filename);
+            $validated['thumbnail'] = 'uploads/' . $filename;
+        }
+
+        
+        $package->update($validated);
+        return response()->json(['status' => 'success', 'message' => 'package Data Updated Successfully']);
+    }
+
+
+    public function editpackage($id)
+    {
+        $package = Package::findOrFail($id);
+        return response()->json($package);
+    }
+
+    public function deletepackage($id)
+    {
+        Package::findOrFail($id)->delete();
+        return response()->json(['status' => 'success', 'message' => 'package Data Deleted Successfully']);
+    }
+
+    public function packagetoggleStatus($id)
+    {
+        $package = Package::findOrFail($id);
+        $package->status = $package->status == 1 ? 0 : 1;
+        $package->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'package status updated successfully',
+            'new_status' => $package->status
+        ]);
+    }
     function Settings()
     {
         return view('admin.setting');
