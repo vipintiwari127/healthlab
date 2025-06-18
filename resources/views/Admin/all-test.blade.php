@@ -34,25 +34,46 @@
                             <table id="example2" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Sr.no</th>
-                                        <th>Name</th>
+                                        <th>Test Name</th>
                                         <th>Category</th>
-                                        <th>Update By</th>
-                                        <th>Date</th>
+                                        <th>Specimen</th>
+                                        <th>Description</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>Edinburgh</td>
-                                        <td>Edinburgh</td>
-                                        <td>$320,800</td>
-                                    </tr>
+                                    @foreach ($tests as $test)
+                                        <tr>
+                                            <td>{{ $test->test_name }}</td>
+                                            <td>{{ $test->test_category }}</td>
+                                            <td>{{ $test->specimen_requirement }}</td>
+                                            <td>{{ $test->test_description }}</td>
+                                            <td>
+                                                <form method="POST" action="{{ route('admin.statusAllTest', $test->id) }}">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="btn btn-sm {{ $test->status ? 'btn-success' : 'btn-danger' }}">
+                                                        {{ $test->status ? 'Active' : 'Inactive' }}
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('admin.editAllTest', $test->id) }}"
+                                                    class="btn btn-warning btn-sm">Edit</a>
+                                                <form method="POST" action="{{ route('admin.deleteAllTest', $test->id) }}"
+                                                    style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button onclick="return confirm('Are you sure?')"
+                                                        class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
@@ -66,40 +87,73 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="card-body p-4">
-                                <form class="row g-3 needs-validation" novalidate="">
-                                    <input type="hidden" name="id" id="review_id">
-                                    <div class="col-md-10">
-                                        <label for="bsValidation1" class="form-label">Review By</label>
-                                        <input type="text" class="form-control" id="review_by" placeholder="Review By"
-                                            required="">
-                                        <div class="invalid-feedback">
-                                            Please choose a Review By.
-                                        </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card-body p-4">
+                                        <form class="row g-3 needs-validation" novalidate="">
+                                            <input type="hidden" name="id" id="review_id">
+                                            <div class="col-md-10">
+                                                <label for="bsValidation1" class="form-label">Upload CSV</label>
+                                                <input type="file" class="form-control" id="upload_csv"
+                                                    placeholder="Upload CSV" required="">
+                                                <div class="invalid-feedback">
+                                                    Please choose a Upload CSV.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="d-md-flex d-grid align-items-center gap-3">
+                                                    <button type="submit" class="btn btn-primary px-4">Submit</button>
+                                                    <button type="reset" class="btn btn-light px-4">Reset</button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="col-md-2">
-                                        <label for="bsValidation1" class="form-label">Rating</label>
-                                        <input type="number" class="form-control" id="rating" placeholder="Rating"
-                                            required="">
-                                        <div class="invalid-feedback">
-                                            Please choose a Rating.
-                                        </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-body p-4">
+                                        <form class="row g-3 needs-validation" novalidate="">
+                                            <input type="hidden" name="id" id="review_id">
+                                            <div class="col-md-12">
+                                                <label for="bsValidation1" class="form-label">Test Name</label>
+                                                <input type="text" class="form-control" id="test_name"
+                                                    placeholder="Test Name" required="">
+                                                <div class="invalid-feedback">
+                                                    Please choose a Test Name.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="bsValidation1" class="form-label">Category</label>
+                                                <input type="text" class="form-control" id="test_category"
+                                                    placeholder="Category" required="">
+                                                <div class="invalid-feedback">
+                                                    Please choose a Category.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="bsValidation1" class="form-label">Specimen Requirement</label>
+                                                <input type="text" class="form-control" id="specimen_requirement"
+                                                    placeholder="Specimen Requirement" required="">
+                                                <div class="invalid-feedback">
+                                                    Please choose a Specimen Requirement.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="bsValidation1" class="form-label">Description</label>
+                                                <input type="text" class="form-control" id="test_description"
+                                                    placeholder="Description" required="">
+                                                <div class="invalid-feedback">
+                                                    Please choose a Review Description.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="d-md-flex d-grid align-items-center gap-3">
+                                                    <button type="submit" class="btn btn-primary px-4">Submit</button>
+                                                    <button type="reset" class="btn btn-light px-4">Reset</button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="col-md-12">
-                                        <label for="bsValidation1" class="form-label">Review Message</label>
-                                        <input type="text" class="form-control" id="message"
-                                            placeholder="Review Message" required="">
-                                        <div class="invalid-feedback">
-                                            Please choose a Review Message.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="d-md-flex d-grid align-items-center gap-3">
-                                            <button type="submit" class="btn btn-primary px-4">Submit</button>
-                                            <button type="reset" class="btn btn-light px-4">Reset</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

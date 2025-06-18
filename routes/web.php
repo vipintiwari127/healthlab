@@ -214,12 +214,25 @@ Route::post('/admin/updatelabpartner', [AdminController::class, 'updatelabpartne
 Route::delete('/admin/deletelabpartner/{id}', [AdminController::class, 'deletelabpartner']);
 Route::post('/admin/statuslabpartner/{id}', [AdminController::class, 'statuslabpartner']);
 // AllTestPartner
-Route::get('/admin/all-test', [AdminController::class, 'AllTestPartner']);
-Route::post('/admin/addalltest', [AdminController::class, 'addalltest']);
-Route::get('/admin/editalltest/{id}', [AdminController::class, 'editalltest']);
-Route::post('/admin/updatealltest', [AdminController::class, 'updatealltest']);
-Route::delete('/admin/deletealltest/{id}', [AdminController::class, 'deletealltest']);
-Route::post('/admin/statusalltest/{id}', [AdminController::class, 'statusalltest']);
+
+
+Route::prefix('admin')->group(function () {
+    Route::get('/all-test', [AdminController::class, 'allTestPartner'])->name('admin.allTest');
+
+    Route::post('/add-all-test', [AdminController::class, 'addAllTest'])->name('admin.addAllTest');
+
+    Route::get('/edit-all-test/{id}', [AdminController::class, 'editAllTest'])->name('admin.editAllTest');
+
+    Route::post('/update-all-test', [AdminController::class, 'updateAllTest'])->name('admin.updateAllTest');
+
+    Route::delete('/delete-all-test/{id}', [AdminController::class, 'deleteAllTest'])->name('admin.deleteAllTest');
+
+    Route::post('/status-all-test/{id}', [AdminController::class, 'statusAllTest'])->name('admin.statusAllTest');
+
+    // For CSV Upload
+    Route::post('/upload-all-test-csv', [AdminController::class, 'uploadAllTestCSV'])->name('admin.uploadAllTestCSV');
+});
+
 //LabTest
 Route::get('/admin/lab-test', [AdminController::class, 'LabTest']);
 // Route::get('/admin/lab-test', [AdminController::class, 'labtestManagement'])->name('labtest.management');

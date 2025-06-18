@@ -15,6 +15,7 @@ use App\Models\Package;
 use App\Models\PartnerLab;
 use App\Models\State;
 use App\Models\City;
+use App\Models\Test;
 use App\Models\SeoManagement;
 use App\Models\Review;
 use App\Models\CallCenterEnquiry;
@@ -993,9 +994,109 @@ class adminController extends Controller
         // Return a success response
         return response()->json(['message' => 'Lab partner updated successfully!']);
     }
-    function AllTestPartner()
+    // ✅ Show all tests
+    public function allTestPartner()
     {
-        return view('admin.all-test');
+        $tests = Test::orderBy('id', 'DESC')->get();
+        return view('admin.all-test', compact('tests'));
+    }
+
+    // ✅ Add a new test
+    public function addAllTest(Request $request)
+    {
+        $request->validate([
+            'test_name' => 'required|string|max:255',
+            'test_category' => 'required|string|max:255',
+            'specimen_requirement' => 'required|string|max:255',
+            'test_description' => 'required|string',
+        ]);
+
+        Test::create([
+            'test_name' => $request->test_name,
+            'test_category' => $request->test_category,
+            'specimen_requirement' => $request->specimen_requirement,
+            'test_description' => $request->test_description,
+        ]);
+
+        return redirect()->back()->with('success', 'Test added successfully!');
+    }
+
+    // ✅ Edit test
+    public function editAllTest($id)
+    {
+        $test = Test::findOrFail($id);
+        return response()->json($test);
+    }
+
+    // ✅ Update test
+    public function updateAllTest(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:tests,id',
+            'test_name' => 'required|string|max:255',
+            'test_category' => 'required|string|max:255',
+            'specimen_requirement' => 'required|string|max:255',
+            'test_description' => 'required|string',
+        ]);
+
+        $test = Test::findOrFail($request->id);
+
+        $test->update([
+            'test_name' => $request->test_name,
+            'test_category' => $request->test_category,
+            'specimen_requirement' => $request->specimen_requirement,
+            'test_description' => $request->test_description,
+        ]);
+
+        return redirect()->back()->with('success', 'Test updated successfully!');
+    }
+
+    // ✅ Delete test
+    public function deleteAllTest($id)
+    {
+        $test = Test::findOrFail($id);
+        $test->delete();
+
+        return response()->json(['success' => 'Test deleted successfully.']);
+    }
+
+    // ✅ Toggle status
+    public function statusAllTest($id)
+    {
+        $test = Test::findOrFail($id);
+        $test->status = !$test->status;
+        $test->save();
+
+        return response()->json(['success' => 'Status changed successfully.']);
+    }
+
+    // ✅ Upload CSV and insert records
+    public function uploadAllTestCSV(Request $request)
+    {
+        $request->validate([
+            'upload_csv' => 'required|mimes:csv,txt|max:2048',
+        ]);
+
+        $file = $request->file('upload_csv');
+
+        if (($handle = fopen($file, "r")) !== FALSE) {
+            $header = fgetcsv($handle); // skip header row
+
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if (count($data) >= 4) {
+                    Test::create([
+                        'test_name' => $data[0],
+                        'test_category' => $data[1],
+                        'specimen_requirement' => $data[2],
+                        'test_description' => $data[3],
+                    ]);
+                }
+            }
+
+            fclose($handle);
+        }
+
+        return redirect()->back()->with('success', 'CSV uploaded successfully!');
     }
 
     function LabTest()
