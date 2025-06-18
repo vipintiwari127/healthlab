@@ -73,137 +73,193 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="card-body p-4">
-                                <form class="row g-3 needs-validation" novalidate="">
-                                    <input type="hidden" name="id" id="review_id">
-                                    <div class="col-md-4">
-                                        <label for="bsValidation1" class="form-label">Name</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Name"
-                                            required="">
-                                        <div class="invalid-feedback">
-                                            Please Selete a Name.
+                                <form class="form-horizontal" method="post" runat="server" role="form"
+                                    enctype="multipart/form-data">
+
+                                    <div class="form-group">
+
+                                        <div class="col-sm-4">
+
+                                            <label>Name&nbsp;</label>
+                                            <input type="hidden" name="url" id="url" value="">
+                                            <input type="text" class="form-control" name="name" id="name"
+                                                required placeholder="Name" value="" />
+
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label>Package Category&nbsp;</label>
+
+
+
+                                            <select class="form-control chosen-select" name="cat_id[]" id="cat_id"
+                                                multiple required>
+
+                                                <option value="2">Full Body Check Up</option>
+                                                <option value="3">Womens Health</option>
+                                                <option value="4">Senior Citizen</option>
+                                                <option value="6">Healthy Bones</option>
+                                                <option value="7">Popular Packages</option>
+                                                <option value="10">Fever Panel</option>
+
+                                            </select>
+                                        </div>
+
+
+                                        <div class="col-sm-4">
+
+                                            <label>Partners&nbsp;</label>
+                                            <select class="form-control" name="partner_id" id="partner_id" required
+                                                onchange="get_test();">
+
+                                                <option value="">Select Partner</option>
+
+                                                <option value="37">PS.PATHLAB SARASWATI VIHAR </option>
+                                                <option value="36">PS.PATHLAB ROHINI SECTOR -05</option>
+                                                <option value="35">PS.PATHLAB ROHINI SECTOR-06</option>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div style="position: relative;">
+
+                                        <div class="form-group">
+
+
+
+
+
+
+
+
+                                            <div class="col-sm-12">
+
+                                                <label>Included Tests&nbsp;</label>
+
+                                                <input type="text" name="test_ids" class="form-control"
+                                                    placeholder="Included tests" value="">
+                                                <!-- <select class="form-control chosen-select"  name="test_ids[]" id="test_ids" multiple >
+                                                                            
+                                                                                    
+                                                                          </select> -->
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <div class="col-sm-4">
+
+                                            <label>Actual Price&nbsp;</label>
+                                            <input type="number" min='0' class="form-control"
+                                                name="actual_price" id="actual_price" required placeholder="Actual Price"
+                                                value="">
+                                        </div>
+
+                                        <div class="col-sm-4">
+
+                                            <label>NET Price&nbsp;</label>
+                                            <input type="number" min='0' class="form-control" name="net_price"
+                                                id="net_price" required placeholder="New Price" value="">
+                                        </div>
+
+
+                                        <div class="col-sm-4">
+
+                                            <label>Offer Price&nbsp;</label>
+                                            <input type="number" min='0' class="form-control" name="offer_price"
+                                                id="offer_price" placeholder="Offer Amount" value="">
+                                        </div>
+
+                                      </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+
+                                            <label>Total Parameters</label>
+                                            <input type="number" class="form-control" name="parameters_included"
+                                                id="parameters_included" placeholder="Total Parameters" value="">
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label>Reporting Time</label>
+                                            <input type="text" class="form-control" name="reporting_time"
+                                                id="reporting_time" placeholder="Reporting Time" value="">
+                                        </div>
+
+
+                                        <div class="col-sm-3">
+
+                                            <label>Specimen Requirement</label>
+                                            <input type="text" class="form-control" name="specimen_requirement"
+                                                id="specimen_requirement" placeholder="Specimen Requirement"
+                                                value="">
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label>Service Type</label><br>
+                                            <label style="margin-right: 15px;">
+                                                <input name="service_type" type="radio" value="Lab" required> &nbsp;
+                                                Lab
+                                            </label>
+                                            <label>
+                                                <input name="service_type" type="radio" value="Home" required> &nbsp;
+                                                Home
+                                            </label>
+                                            <label>
+                                                <input name="service_type" type="radio" value="Both" required> &nbsp;
+                                                Both
+                                            </label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+
+                                            <label>Description&nbsp;</label>
+                                            <textarea style="height:100px" class="form-control ckeditor" name="description" id="description"
+                                                placeholder="Description"></textarea>
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <hr>
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <div class="col-sm-12">
+
+                                            <label>Thumbnail :&nbsp;(Size - 180 * 90)</label>
+                                            <div class="slim" style="width:180px; height:90px;"
+                                                data-meta-user-id="1220" data-ratio="180:90" data-size="180,90">
+
+                                                <input type="file" name="thumbnail" id="thumbnail">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-sm-10">
+                                            <button type="submit" class="btn btn-success">Save</button>
+
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="bsValidation1" class="form-label">Package Category</label>
-                                        <select class="form-control" id="package_category" placeholder="Package Category"
-                                            required="">
-                                            <option value="">Select Package Category</option>
-                                            <option value="1">Category 1</option>
-                                            <option value="2">Category 2</option>
-                                            <option value="3">Category 3</option>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Please choose a Package Category.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="bsValidation1" class="form-label">Partner</label>
-                                        <select class="form-control" id="partner" placeholder="Partner" required="">
-                                            <option value="">Select Partner</option>
-                                            <option value="Partner1">Partner 1</option>
-                                            <option value="Partner2">Partner 2</option>
-                                            <option value="Partner3">Partner 3</option>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Please choose a Partner.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="bsValidation1" class="form-label">Included Tests </label>
-                                        <input type="text" class="form-control" id="included_tests"
-                                            placeholder="Included Tests " required="">
-                                        <div class="invalid-feedback">
-                                            Please choose a Included Tests .
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="bsValidation1" class="form-label">Actual Price </label>
-                                        <input type="number" class="form-control" id="actual_price"
-                                            placeholder="Actual Price" required="">
-                                        <div class="invalid-feedback">
-                                            Please choose a Actual Price.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="bsValidation1" class="form-label">NET Price </label>
-                                        <input type="number" class="form-control" id="net_price" placeholder="NET Price"
-                                            required="">
-                                        <div class="invalid-feedback">
-                                            Please choose a NET Price.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="bsValidation1" class="form-label">Offer Price</label>
-                                        <input type="bumber" class="form-control" id="offer_price"
-                                            placeholder="Offer Price" required="">
-                                        <div class="invalid-feedback">
-                                            Please choose a Offer Price.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="bsValidation1" class="form-label">Total Parameters</label>
-                                        <input type="text" class="form-control" id="total_parameters"
-                                            placeholder="Total Parameters" required="">
-                                        <div class="invalid-feedback">
-                                            Please choose a Total Parameters.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="bsValidation1" class="form-label">Reporting Time</label>
-                                        <input type="time" class="form-control" id="reporting_time"
-                                            placeholder="Reporting Time" required="">
-                                        <div class="invalid-feedback">
-                                            Please choose a Reporting Time.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="bsValidation1" class="form-label">Specimen Requirement</label>
-                                        <input type="text" class="form-control" id="specimen_requirement"
-                                            placeholder="Specimen Requirement" required="">
-                                        <div class="invalid-feedback">
-                                            Please choose a Specimen Requirement.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="bsValidation1" class="form-label">Service Type</label><br>
-                                        <label style="margin-right: 15px;">
-                                            <input name="service_type" type="radio" value="Lab" required> &nbsp;
-                                            Lab
-                                        </label>
-                                        <label>
-                                            <input name="service_type" type="radio" value="Home" required> &nbsp;
-                                            Home
-                                        </label>
-                                        <label>
-                                            <input name="service_type" type="radio" value="Both" required> &nbsp;
-                                            Both
-                                        </label>
-                                        <div class="invalid-feedback">
-                                            Please choose a Specimen Requirement.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="bsValidation1" class="form-label">SThumbnail : (Size - 180 * 90)</label>
-                                          <input type="file" class="form-control" id="thumbnail"
-                                            required="">
-                                        <div class="invalid-feedback">
-                                            Please choose a Image.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="bsValidation1" class="form-label">Description</label>
-                                          <textarea class="form-control" id="description"
-                                            placeholder="Description" required=""></textarea>
-                                        <div class="invalid-feedback">
-                                            Please choose a Description.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="d-md-flex d-grid align-items-center gap-3">
-                                            <button type="submit" class="btn btn-primary px-4">Submit</button>
-                                            <button type="reset" class="btn btn-light px-4">Reset</button>
-                                        </div>
-                                    </div>
+
                                 </form>
 
                             </div>
