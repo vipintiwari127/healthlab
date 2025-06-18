@@ -224,6 +224,7 @@ Route::post('/admin/lab-test/update/{id}', [AdminController::class, 'updatelabte
 Route::delete('/admin/lab-test/delete/{id}', [AdminController::class, 'deletelabtest'])->name('labtest.delete');
 Route::get('/admin/lab-test/edit/{id}', [AdminController::class, 'editlabtest'])->name('labtest.edit');
 Route::post('/admin/lab-test/status/{id}', [AdminController::class, 'labtesttoggleStatus'])->name('labtest.status');
+Route::post('/admin/lab-test/feature/{id}', [AdminController::class, 'labtesttogglefeature'])->name('labtest.feature');
 
 //category
 Route::get('/admin/category', [AdminController::class, 'Category']);

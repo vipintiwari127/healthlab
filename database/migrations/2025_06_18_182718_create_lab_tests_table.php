@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('specimen_requirement')->nullable();
             $table->string('service_type');
             $table->text('description')->nullable();
+            $table->boolean('feature')->default('1');
             $table->boolean('status')->default('1');
             $table->timestamps();
         });

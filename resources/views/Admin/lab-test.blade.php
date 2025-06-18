@@ -1,4 +1,4 @@
-@extends('Admin.layout.admin')
+@extends('admin.layout.admin')
 @section('admin-content')
 <!--start wrapper-->
 <div class="wrapper">
@@ -55,12 +55,12 @@
                                     <td>{{ $item->labPartner->name ?? 'N/A' }}</td>
                                     <td>{{ $item->lab_mrp_price }}</td>
                                     <td>
-                                        {{-- Assuming 'featured' is a boolean field --}}
-                                        @if($item->featured ?? false)
-                                        <span class="badge bg-success">Yes</span>
-                                        @else
-                                        <span class="badge bg-secondary">No</span>
-                                        @endif
+                                       <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="statusfeature{{ $item->id }}"
+                                                onchange="togglefeature({{ $item->id }})" {{ $item->feature ? 'checked' :
+                                            '' }}>
+                                        </div>
                                     </td>
                                     <td>
                                         <div class="form-check form-switch">
@@ -73,8 +73,7 @@
                                     <td>{{ $item->added_by ?? 'Admin' }}</td>
                                     <td>{{ $item->created_at->format('d-m-Y') }}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-info"
-                                            onclick="editLabTest({{ $item->id }})">Edit</button>
+                                        <button class="btn btn-sm btn-info" onclick="editlabtest({{ $item->id }})">Edit</button>
                                         <button class="btn btn-sm btn-danger delete-btn"
                                             data-id="{{ $item->id }}">Delete</button>
                                     </td>
@@ -188,8 +187,8 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label>Description&nbsp;</label>
-                                        <textarea style="height:200px" rows="5" id="description"
-                                            class="form-control"></textarea>
+                                        <textarea style="height:200px" rows="5" name="description" id="description"
+                                            class="form-control" ></textarea>
                                     </div>
                                 </div>
 
@@ -308,6 +307,20 @@
                 error: function(xhr) {
                     console.log(xhr.responseText);
                     toastr.error("Status update failed.");
+                }
+            });
+        }
+ 
+        function togglefeature(id){
+              $.ajax({
+                url: '/admin/lab-test/feature/' + id,
+                type: 'POST',
+                success: function(res) {
+                    toastr.success(res.message);
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                    toastr.error("feature update failed.");
                 }
             });
         }

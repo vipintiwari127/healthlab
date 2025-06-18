@@ -955,19 +955,22 @@ class adminController extends Controller
 
     public function updatelabtest(Request $request, $id)
     {
-        $seo = LabTest::findOrFail($id);
+        $labtest = LabTest::findOrFail($id);
         $validated = $request->validate([
-            'target_url' => 'required',
-            'meta_keyword' => 'nullable',
-            'meta_description' => 'nullable',
-            'meta_title' => 'nullable',
-            'alt_tag' => 'nullable',
-            'canonical_code' => 'nullable',
-            'extra_meta' => 'nullable',
+            'lab_partner_id' => 'required|integer',
+            'test_id' => 'nullable|integer',
+            'category' => 'required|string',
+            'lab_mrp_price' => 'required|numeric|min:0',
+            'lab_net_price' => 'nullable|numeric|min:0',
+            'offer_price' => 'nullable|numeric|min:0',
+            'reporting_time' => 'nullable|string',
+            'specimen_requirement' => 'nullable|string',
+            'service_type' => 'required|in:Lab,Home,Both',
+            'description' => 'nullable|string',
         ]);
 
-        $seo->update($validated);
-        return response()->json(['status' => 'success', 'message' => 'SEO Data Updated Successfully']);
+        $labtest->update($validated);
+        return response()->json(['status' => 'success', 'message' => 'labtest Data Updated Successfully']);
     }
 
     public function editlabtest($id)
@@ -991,6 +994,18 @@ class adminController extends Controller
             'status' => 'success',
             'message' => 'labtest status updated successfully',
             'new_status' => $labtest->status
+        ]);
+    }
+
+    public function labtesttogglefeature($id)
+    {
+        $labtest = LabTest::findOrFail($id);
+        $labtest->feature = $labtest->feature == 1 ? 0 : 1;
+        $labtest->save();
+        return response()->json([
+            'feature' => 'success',
+            'message' => 'labtest feature updated successfully',
+            'new_feature' => $labtest->feature
         ]);
     }
     function Category()

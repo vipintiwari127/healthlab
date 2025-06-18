@@ -19,6 +19,7 @@ class LabTest extends Model
         'specimen_requirement',
         'service_type',
         'description',
+        'feature',
         'status'
     ];
 
