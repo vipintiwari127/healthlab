@@ -62,35 +62,31 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="card-body p-4">
-                                <form role="form" method="post" enctype="multipart/form-data">
-
-
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Category Name</label>
-                                        <input type="text" name="name" id="name" class="form-control"
-                                            placeholder="name" required value="">
+                                <form class="row g-3 needs-validation" novalidate="">
+                                    <input type="hidden" name="id" id="review_id">
+                                    <div class="col-md-10">
+                                        <label for="bsValidation1" class="form-label">Category Name</label>
+                                        <input type="text" class="form-control" id="category_name" placeholder="Category Name"
+                                            required="">
+                                        <div class="invalid-feedback">
+                                            Please choose a Category Name.
+                                        </div>
                                     </div>
-
-
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">URL</label>
-                                        <input type="text" name="url" id="url" class="form-control"
-                                            placeholder="URL" readonly value="">
+                                    <div class="col-md-12">
+                                        <label for="bsValidation1" class="form-label">URL</label>
+                                        <input type="url" class="form-control" id="url" placeholder="URL"
+                                            required="">
+                                        <div class="invalid-feedback">
+                                            Please choose a URL.
+                                        </div>
                                     </div>
-                                    <div class="form-group">&nbsp;</div>
-
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-
-
-
-                                    <a href="https://www.pspathlab.com/admin/package_category"><button type="button"
-                                            class="btn btn-warning"><i class="fa fa-list"></i> Listing</button></a>
-
-
-                                    <a href="https://www.pspathlab.com/admin/manage_package_category"><button type="button"
-                                            class="btn btn-info"><i class="fa fa-plus"></i> Add New</button></a>
+                                    <div class="col-md-12">
+                                        <div class="d-md-flex d-grid align-items-center gap-3">
+                                            <button type="submit" class="btn btn-primary px-4">Submit</button>
+                                            <button type="reset" class="btn btn-light px-4">Reset</button>
+                                        </div>
+                                    </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>

@@ -67,75 +67,38 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="card-body p-4">
-                                <form id="csv-form" method="post" class="form-horizontal"
-                                    action=""
-                                    data-bv-message="This value is not valid"
-                                    data-bv-feedbackicons-validating="glyphicon glyphicon-refresh"
-                                    enctype="multipart/form-data">
-
-
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <label for="csv" class="orange">Upload</label>
-                                            <input type="file" name="csv" id="csv" class="form-control"
-                                                required>
+                                <form class="row g-3 needs-validation" novalidate="">
+                                    <input type="hidden" name="id" id="review_id">
+                                    <div class="col-md-10">
+                                        <label for="bsValidation1" class="form-label">Review By</label>
+                                        <input type="text" class="form-control" id="review_by" placeholder="Review By"
+                                            required="">
+                                        <div class="invalid-feedback">
+                                            Please choose a Review By.
                                         </div>
                                     </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-
-
-                                            <button type="submit" class="btn btn-blue" name="excel">Submit</button>
-
-
-
+                                    <div class="col-md-2">
+                                        <label for="bsValidation1" class="form-label">Rating</label>
+                                        <input type="number" class="form-control" id="rating" placeholder="Rating"
+                                            required="">
+                                        <div class="invalid-feedback">
+                                            Please choose a Rating.
                                         </div>
                                     </div>
-                                </form>
-                                <form method="post" action="">
-
-                                    <div class="form-group">
-                                        <label for="name">Test Name</label>
-                                        <input type="text" name="name" id="name" class="form-control"
-                                            placeholder="Name" required value="">
+                                    <div class="col-md-12">
+                                        <label for="bsValidation1" class="form-label">Review Message</label>
+                                        <input type="text" class="form-control" id="message"
+                                            placeholder="Review Message" required="">
+                                        <div class="invalid-feedback">
+                                            Please choose a Review Message.
+                                        </div>
                                     </div>
-
-
-                                    <div class="form-group">
-                                        <label for="category">Category</label>
-                                        <input type="text" name="category" id="category" class="form-control"
-                                            placeholder="Category" value="">
+                                    <div class="col-md-12">
+                                        <div class="d-md-flex d-grid align-items-center gap-3">
+                                            <button type="submit" class="btn btn-primary px-4">Submit</button>
+                                            <button type="reset" class="btn btn-light px-4">Reset</button>
+                                        </div>
                                     </div>
-
-
-                                    <div class="form-group">
-                                        <label for="description">Description</label>
-                                        <textarea name="description" id="description " class="form-control ckeditor" placeholder="Category"></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="specimen_requirement">Specimen Requirement</label>
-                                        <input type="text" class="form-control" name="specimen_requirement"
-                                            id="specimen_requirement" placeholder="Specimen Requirement" value="">
-                                    </div>
-
-
-
-                                    <button type="submit" class="btn btn-success" style="height: auto"><i
-                                            class="fa fa-save"></i> Save</button>
-
-
-
-
-                                    <a type="button" class="btn btn-info"
-                                        href=""><i class="fa fa-plus"></i>
-                                        Add New</a>
-
-
-
-
                                 </form>
 
                             </div>
