@@ -89,6 +89,7 @@
                             <h5 class="modal-title">Add Category</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+<<<<<<< HEAD
                         <div class="card-body p-4">
                             <form class="row g-3 needs-validation" id="categoryForm" novalidate="">
                                 @csrf
@@ -116,6 +117,47 @@
                                     </div>
                                 </div>
                             </form>
+=======
+                    </div>
+                </div>
+                {{-- add doctor referral modal --}}
+
+                <div class="modal fade" id="exampleLargeModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add Category</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="card-body p-4">
+                                <form class="row g-3 needs-validation" novalidate="">
+                                    <input type="hidden" name="id" id="review_id">
+                                    <div class="col-md-10">
+                                        <label for="bsValidation1" class="form-label">Category Name</label>
+                                        <input type="text" class="form-control" id="category_name" placeholder="Category Name"
+                                            required="">
+                                        <div class="invalid-feedback">
+                                            Please choose a Category Name.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="bsValidation1" class="form-label">URL</label>
+                                        <input type="url" class="form-control" id="url" placeholder="URL"
+                                            required="">
+                                        <div class="invalid-feedback">
+                                            Please choose a URL.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="d-md-flex d-grid align-items-center gap-3">
+                                            <button type="submit" class="btn btn-primary px-4">Submit</button>
+                                            <button type="reset" class="btn btn-light px-4">Reset</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+>>>>>>> 56d2447df0659035f5371649fcd539bb53cef3b6
                         </div>
                     </div>
                 </div>
@@ -123,6 +165,7 @@
         </div>
         <!-- end page content-->
     </div>
+<<<<<<< HEAD
 </div>
 
 
@@ -218,4 +261,6 @@
 </script>
 
 
+=======
+>>>>>>> 56d2447df0659035f5371649fcd539bb53cef3b6
 @endsection
