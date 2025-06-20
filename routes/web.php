@@ -117,10 +117,13 @@ Route::get('/admin/master-setup', [AdminController::class, 'MasterSetup']); // r
 Route::post('/admin/countries/store', [AdminController::class, 'MasterSetupstore'])->name('countries.store');
 Route::get('/admin/countries/edit/{id}', [AdminController::class, 'MasterSetupedit'])->name('countries.edit');
 Route::delete('/admin/countries/delete/{id}', [AdminController::class, 'MasterSetupdestroy'])->name('countries.delete');
+Route::get('/admin/country/toggle/{id}', [AdminController::class, 'countrytoggleStatus'])->name('country.toggle');
+
 //states
 Route::post('/admin/state/store', [AdminController::class, 'statestore'])->name('state.store');
 Route::get('/admin/state/edit/{id}', [AdminController::class, 'stateedit'])->name('state.edit');
 Route::delete('/admin/state/delete/{id}', [AdminController::class, 'statedestroy'])->name('state.delete');
+Route::get('/admin/state/toggle/{id}', [AdminController::class, 'statetoggleStatus'])->name('state.toggle');
 //cities
 Route::post('/admin/city/store', [AdminController::class, 'citystore'])->name('city.store');
 Route::get('/admin/city/edit/{id}', [AdminController::class, 'cityedit'])->name('city.edit');
@@ -229,7 +232,7 @@ Route::post('/admin/lab-test/feature/{id}', [AdminController::class, 'labtesttog
 //category
 Route::get('/admin/category', [AdminController::class, 'Category']);
 Route::post('/admin/category/store', [AdminController::class, 'storecategory'])->name('category.store');
-Route::post('/admin/category/update/{id}', [AdminController::class, 'updatecategory'])->name('category.update');
+Route::post('/admin/category/update/{id}', [AdminController::class, 'updatecategory'])->name('category.update'); // also needed
 Route::delete('/admin/category/delete/{id}', [AdminController::class, 'deletecategory'])->name('category.delete');
 Route::get('/admin/category/edit/{id}', [AdminController::class, 'editcategory'])->name('category.edit');
 Route::post('/admin/category/status/{id}', [AdminController::class, 'categorytoggleStatus'])->name('category.status');

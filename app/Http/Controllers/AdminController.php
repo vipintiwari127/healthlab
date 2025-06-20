@@ -240,7 +240,10 @@ class adminController extends Controller
     public function MasterSetup()
     {
         $countries = Country::latest()->get();
-        $state = State::latest()->get();
+        $state = State::latest()
+            ->join('countries', 'states.countryName', '=', 'countries.id')
+            ->select('states.*', 'countries.country_name as country_name')
+            ->get();
         $cities = City::latest()->get();
         return view('admin.master-setup', compact('countries', 'state', 'cities'));
     }
@@ -249,7 +252,7 @@ class adminController extends Controller
     {
         $request->validate([
             'country_name' => 'required|string',
-            'country_url' => 'required|url'
+            'country_url' => 'required|String'
         ]);
 
         Country::updateOrCreate(
@@ -271,6 +274,15 @@ class adminController extends Controller
         Country::findOrFail($id)->delete();
         return response()->json(['status' => 'success', 'message' => 'Country deleted successfully']);
     }
+    public function countrytoggleStatus($id)
+    {
+        $country = Country::findOrFail($id);
+        $country->status = !$country->status; // Toggle
+        $country->save();
+
+        return redirect()->back()->with('success', 'Country status updated successfully.');
+    }
+
 
     //state
     public function statestore(Request $request)
@@ -279,7 +291,7 @@ class adminController extends Controller
             'countryName' => 'required|string',
             'stateName' => 'required|string',
             'stateCode' => 'required|string',
-            'stateUrl' => 'required|url',
+            'stateUrl' => 'required|string',
             'aboutState' => 'required|string',
 
         ]);
@@ -310,6 +322,14 @@ class adminController extends Controller
         return response()->json(['status' => 'success', 'message' => 'State deleted successfully']);
     }
 
+    public function statetoggleStatus($id)
+    {
+        $state = State::findOrFail($id);
+        $state->status = !$state->status; // Toggle
+        $state->save();
+
+        return redirect()->back()->with('success', 'State status updated successfully.');
+    }
     //city
     public function citystore(Request $request)
     {
@@ -1022,7 +1042,8 @@ class adminController extends Controller
             'url' => 'nullable|string',
         ]);
         Category::create($validated);
-        return response()->json(['status' => 'success', 'message' => 'Category  Data Added Successfully']);
+
+        return response()->json(['status' => 'success', 'message' => 'Category Data Added Successfully']);
     }
 
     public function updatecategory(Request $request, $id)
@@ -1063,12 +1084,12 @@ class adminController extends Controller
     }
     function Package()
     {
-         $Packages = Package::all();
-    // return view('admin.partner.index', compact('partners'));
-        return view('admin.package',compact('Packages'));
+        $Packages = Package::all();
+        // return view('admin.partner.index', compact('partners'));
+        return view('admin.package', compact('Packages'));
     }
 
-   public function storepackage(Request $request)
+    public function storepackage(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -1089,7 +1110,7 @@ class adminController extends Controller
         // Handle image upload if exists
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
-            $filename = time().'_'.$file->getClientOriginalName();
+            $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads'), $filename);
             $validated['thumbnail'] = 'uploads/' . $filename;
         }
@@ -1106,7 +1127,7 @@ class adminController extends Controller
     public function updatepackage(Request $request, $id)
     {
         $package = Package::findOrFail($id);
-         $validated = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'package_category' => 'required|string|max:255',
             'partner' => 'required|string|max:255',
@@ -1122,14 +1143,14 @@ class adminController extends Controller
             'description' => 'nullable|string',
         ]);
 
-         if ($request->hasFile('thumbnail')) {
+        if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
-            $filename = time().'_'.$file->getClientOriginalName();
+            $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads'), $filename);
             $validated['thumbnail'] = 'uploads/' . $filename;
         }
 
-        
+
         $package->update($validated);
         return response()->json(['status' => 'success', 'message' => 'package Data Updated Successfully']);
     }

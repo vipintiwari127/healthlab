@@ -79,4 +79,8 @@ class WebsiteCotroller extends Controller
     {
         return view('website.lab');
     }
+    public function labDetails()
+    {
+        return view('website.single-details');
+    }
 }

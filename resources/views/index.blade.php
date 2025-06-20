@@ -193,7 +193,7 @@
                         </div>
                         <br />
                         <div class="sr-content">
-                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h3 class="h5"><a class="text-reset" href="{{"/lab-details"}}">ANTI HEV IGG</a></h3>
                             <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
                             <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
                             <h6><del style="color: red; font-size: 18px">₹650</del> <span
@@ -201,7 +201,7 @@
                             <button><i class="fas fa-eye"></i></button>
                             <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                        <a href="{{"/lab-details"}}" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
                                 style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
@@ -215,7 +215,7 @@
                         </div>
                         <br />
                         <div class="sr-content">
-                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h3 class="h5"><a class="text-reset" href="{{"/lab-details"}}">ANTI HEV IGG</a></h3>
                             <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
                             <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
                             <h6><del style="color: red; font-size: 18px">₹650</del> <span
@@ -223,7 +223,7 @@
                             <button><i class="fas fa-eye"></i></button>
                             <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                        <a href="{{"/lab-details"}}" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
                                 style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
@@ -237,7 +237,7 @@
                         </div>
                         <br />
                         <div class="sr-content">
-                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h3 class="h5"><a class="text-reset" href="{{"/lab-details"}}">ANTI HEV IGG</a></h3>
                             <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
                             <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
                             <h6><del style="color: red; font-size: 18px">₹650</del> <span
@@ -245,7 +245,7 @@
                             <button><i class="fas fa-eye"></i></button>
                             <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                        <a href="{{"/lab-details"}}" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
                                 style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
@@ -259,7 +259,7 @@
                         </div>
                         <br />
                         <div class="sr-content">
-                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h3 class="h5"><a class="text-reset" href="{{"/lab-details"}}">ANTI HEV IGG</a></h3>
                             <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
                             <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
                             <h6><del style="color: red; font-size: 18px">₹650</del> <span
@@ -267,7 +267,7 @@
                             <button><i class="fas fa-eye"></i></button>
                             <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                        <a href="{{"/lab-details"}}" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
                                 style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
@@ -281,7 +281,7 @@
                         </div>
                         <br />
                         <div class="sr-content">
-                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h3 class="h5"><a class="text-reset" href="{{"/lab-details"}}">ANTI HEV IGG</a></h3>
                             <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
                             <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
                             <h6><del style="color: red; font-size: 18px">₹650</del> <span
@@ -289,7 +289,7 @@
                             <button><i class="fas fa-eye"></i></button>
                             <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                        <a href="{{"/lab-details"}}" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
                                 style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
@@ -321,7 +321,7 @@
                                 class="w-100" />
                         </div>
                         <div class="sr-content">
-                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h3 class="h5"><a class="text-reset" href="{{"/lab-details"}}">ANTI HEV IGG</a></h3>
                             <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
                             <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
                             <h6><del style="color: red; font-size: 18px">₹650</del> <span
@@ -329,7 +329,7 @@
                             <button><i class="fas fa-eye"></i></button>
                             <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                        <a href="{{"/lab-details"}}" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
                                 style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
@@ -342,7 +342,7 @@
                                 class="w-100" />
                         </div>
                         <div class="sr-content">
-                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h3 class="h5"><a class="text-reset" href="{{"/lab-details"}}">ANTI HEV IGG</a></h3>
                             <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
                             <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
                             <h6><del style="color: red; font-size: 18px">₹650</del> <span
@@ -350,7 +350,7 @@
                             <button><i class="fas fa-eye"></i></button>
                             <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                        <a href="{{"/lab-details"}}" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
                                 style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
@@ -363,7 +363,7 @@
                                 class="w-100" />
                         </div>
                         <div class="sr-content">
-                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h3 class="h5"><a class="text-reset" href="{{"/lab-details"}}">ANTI HEV IGG</a></h3>
                             <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
                             <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
                             <h6><del style="color: red; font-size: 18px">₹650</del> <span
@@ -371,7 +371,7 @@
                             <button><i class="fas fa-eye"></i></button>
                             <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                        <a href="{{"/lab-details"}}" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
                                 style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
@@ -384,7 +384,7 @@
                                 class="w-100" />
                         </div>
                         <div class="sr-content">
-                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h3 class="h5"><a class="text-reset" href="{{"/lab-details"}}">ANTI HEV IGG</a></h3>
                             <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
                             <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
                             <h6><del style="color: red; font-size: 18px">₹650</del> <span
@@ -392,7 +392,7 @@
                             <button><i class="fas fa-eye"></i></button>
                             <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                        <a href="{{"/lab-details"}}" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
                                 style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
@@ -405,7 +405,7 @@
                                 class="w-100" />
                         </div>
                         <div class="sr-content">
-                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h3 class="h5"><a class="text-reset" href="{{"/lab-details"}}">ANTI HEV IGG</a></h3>
                             <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
                             <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
                             <h6><del style="color: red; font-size: 18px">₹650</del> <span
@@ -413,7 +413,7 @@
                             <button><i class="fas fa-eye"></i></button>
                             <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                        <a href="{{"/lab-details"}}" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
                                 style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
@@ -426,7 +426,7 @@
                                 class="w-100" />
                         </div>
                         <div class="sr-content">
-                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h3 class="h5"><a class="text-reset" href="{{"/lab-details"}}">ANTI HEV IGG</a></h3>
                             <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
                             <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
                             <h6><del style="color: red; font-size: 18px">₹650</del> <span
@@ -434,7 +434,7 @@
                             <button><i class="fas fa-eye"></i></button>
                             <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                        <a href="{{"/lab-details"}}" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
                                 style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>
@@ -447,7 +447,7 @@
                                 class="w-100" />
                         </div>
                         <div class="sr-content">
-                            <h3 class="h5"><a class="text-reset" href="single-lab.html">ANTI HEV IGG</a></h3>
+                            <h3 class="h5"><a class="text-reset" href="{{"/lab-details"}}">ANTI HEV IGG</a></h3>
                             <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
                             <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
                             <h6><del style="color: red; font-size: 18px">₹650</del> <span
@@ -455,7 +455,7 @@
                             <button><i class="fas fa-eye"></i></button>
                             <button><i class="fas fa-cart-plus"></i></button>
                         </div>
-                        <a href="single-lab.html" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
+                        <a href="{{"/lab-details"}}" class="icon-btn style4"><i class="far fa-long-arrow-alt-right"
                                 style="background-color: rgb(30, 8, 172);"></i></a>
                     </div>
                 </div>

@@ -37,10 +37,10 @@
         }
     </style>
     <!--==============================
-                                Breadcumb
-                            ============================== -->
+                                                Breadcumb
+                                            ============================== -->
     <div class="breadcumb-wrapper">
-        <div class="parallax" data-parallax-image="{{ asset('website/assets/img/breadcurmb/breadcurmb-1-1.jpg')}}"></div>
+        <div class="parallax" data-parallax-image="{{ asset('website/assets/img/breadcurmb/breadcurmb-1-1.jpg') }}"></div>
         <div class="container z-index-common">
             <div class="breadcumb-content">
                 <h1 class="breadcumb-title">Lab Details</h1>
@@ -55,8 +55,8 @@
         </div>
     </div>
     <!--==============================
-                            Shop Products Details
-                            ==============================-->
+                                            Shop Products Details
+                                            ==============================-->
     <section class="vs-shop-details space-top space-md-bottom">
         <div class="container">
             <div class="shop-wrap1 mb-80 bg-smoke">
@@ -65,12 +65,12 @@
                         <div class="product-big-img mb-4">
                             <!-- <p class="price">₹989<del>₹799</del></p> -->
                             <div class="img-fullsize">
-                                <img class="lab-imag" src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg')}}" alt="Image"
-                                    class="w-100" style="width: 500px;" />
+                                <img class="lab-imag" src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
+                                    alt="Image" class="w-100" style="width: 500px;" />
                             </div>
                             <!-- <a href="#" class="link-btn add_to_wishlist"
-                                              ><i class="far fa-heart"></i>Add To Wishlist</a
-                                            > -->
+                                                              ><i class="far fa-heart"></i>Add To Wishlist</a
+                                                            > -->
                         </div>
                         <div class="product-thumb-area gx-3 vs-carousel row" data-slide-show="4" data-md-slide-show="3"
                             data-sm-slide-show="4" data-xs-slide-show="2"></div>
@@ -86,21 +86,24 @@
                                     <div class="product_meta">
                                         <span style="color: black;"><b>Lab Name:</b>
                                             <span class="sku" style="color: black;">PS.PATHLAB SARASWATI
-                                                VIHAR</span></span>
-                                        <span style="color: black;"><b>Address: </b> <span class="sku"
-                                                style="color: black;"> <i class="far fa-map-marker-alt"></i>&nbsp;E-1083
-                                                SARASWATI VIHAR
-
+                                                VIHAR</span>
+                                            <span style="color: black;"><b>Address: </b>
+                                                <span class="sku" style="color: black;"> <i
+                                                        class="far fa-map-marker-alt"></i>&nbsp;E-1083
+                                                    SARASWATI VIHAR</span>
+                                                <br>
                                                 <span style="color: black;"><b>Net Price:</b> <del style="color:red;">₹
-                                                        1600</del></span>
-                                                <span style="color: black;"><b>Offer Price:</b> ₹ 800</span>
-                                                <span style="color: black;"><b>Reporting Time :</b> 24 HOURS</span>
-                                                <span style="color: black;"><b>Specimen Requirement:</b> BLOOD</span>
+                                                        1600</del></span><br>
+                                                <span style="color: black;"><b>Offer Price:</b> ₹ 800</span><br>
+                                                <span style="color: black;"><b>Reporting Time :</b> 24 HOURS</span><br>
+                                                <span style="color: black;"><b>Specimen Requirement:</b> BLOOD</span><br>
                                                 <br />
                                                 <a href="cart.html" class="vs-btn style2">Add To Cart<i
                                                         class="fas fa-chevron-right"></i></a>
                                                 <a href="cart.html" class="vs-btn style2">Get Call Back<i
                                                         class="fas fa-chevron-right"></i></a>
+                                            </span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

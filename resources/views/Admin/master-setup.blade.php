@@ -1,5 +1,11 @@
 @extends('Admin.layout.admin')
 @section('admin-content')
+    @if (session('success'))
+        <script>
+            toastr.success("{{ session('success') }}");
+        </script>
+    @endif
+
     <div class="page-content-wrapper">
         <!-- start page content-->
         <div class="page-content">
@@ -82,7 +88,16 @@
                                                             <td>{{ $key + 1 }}</td>
                                                             <td>{{ $country->country_name }}</td>
                                                             <td>{{ $country->country_url }}</td>
-                                                            <td>{{ $country->status ? 'Active' : 'Inactive' }}</td>
+                                                            <td>
+                                                                @if ($country->status)
+                                                                    <a href="{{ route('country.toggle', $country->id) }}"
+                                                                        class="btn btn-success btn-sm">Active</a>
+                                                                @else
+                                                                    <a href="{{ route('country.toggle', $country->id) }}"
+                                                                        class="btn btn-danger btn-sm">Inactive</a>
+                                                                @endif
+                                                            </td>
+
                                                             <td>
                                                                 <button class="btn btn-sm btn-info"
                                                                     onclick="editCountry({{ $country->id }})">Edit</button>
@@ -122,11 +137,19 @@
                                                     @foreach ($state as $key => $statedata)
                                                         <tr>
                                                             <td>{{ $key + 1 }}</td>
-                                                            <td>{{ $statedata->countryName }}</td>
+                                                            <td>{{ $statedata->country_name  }}</td>
                                                             <td>{{ $statedata->stateName }}</td>
                                                             <td>{{ $statedata->stateUrl }}</td>
                                                             <td>{{ $statedata->stateCode }}</td>
-                                                            <td>{{ $statedata->status ? 'Active' : 'Inactive' }}</td>
+                                                            <td>
+                                                                @if ($statedata->status)
+                                                                    <a href="{{ route('state.toggle', $statedata->id) }}"
+                                                                        class="btn btn-success btn-sm">Active</a>
+                                                                @else
+                                                                    <a href="{{ route('state.toggle', $statedata->id) }}"
+                                                                        class="btn btn-danger btn-sm">Inactive</a>
+                                                                @endif
+                                                            </td>
                                                             <td>
                                                                 <button class="btn btn-sm btn-info"
                                                                     onclick="editState({{ $statedata->id }})">Edit</button>
@@ -245,8 +268,18 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <label for="countryName" class="form-label">Country Name</label>
-                                                    <input type="text" class="form-control" id="countryName"
-                                                        name="countryName" placeholder="Country Name" required>
+                                                    {{-- <input type="text" class="form-control" id="countryName"
+                                                        name="countryName" placeholder="Country Name" required> --}}
+                                                    <select name="countryName" id="countryName" class="form-control"
+                                                        required>
+                                                        <option value="">Select Country</option>
+                                                        @foreach ($countries as $country)
+                                                            <option value="{{ $country->id }}">
+                                                                {{ $country->country_name }}</option>
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
                                                     <div class="invalid-feedback">Please provide a valid Country Name.
                                                     </div>
                                                 </div>

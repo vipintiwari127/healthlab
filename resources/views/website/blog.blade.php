@@ -70,13 +70,13 @@
                         <div class="sr-body">
                             <span class="sr-icon"><i class="flaticon-discuss fa-3x"></i></span>
                             <h3 class="h4 sr-title">
-                                <a class="text-reset" href="service-details.html">Haematology</a>
+                                <a class="text-reset" href="{{"/blog-details"}}">Haematology</a>
                             </h3>
                             <div class="sr-content">
                                 <p class="sr-text">
                                     Appropriately customize excellent imperatives for products.
                                 </p>
-                                <a href="service-details.html" class="link-btn">Read More<i
+                                <a href="{{"/blog-details"}}" class="link-btn">Read More<i
                                         class="fal fa-long-arrow-right"></i></a>
                             </div>
                         </div>
@@ -92,13 +92,13 @@
                         <div class="sr-body">
                             <span class="sr-icon"><i class="flaticon-group fa-3x"></i></span>
                             <h3 class="h4 sr-title">
-                                <a class="text-reset" href="service-details.html">Family Physician</a>
+                                <a class="text-reset" href="{{"/blog-details"}}">Family Physician</a>
                             </h3>
                             <div class="sr-content">
                                 <p class="sr-text">
                                     Appropriately customize excellent imperatives for products.
                                 </p>
-                                <a href="service-details.html" class="link-btn">Read More<i
+                                <a href="{{"/blog-details"}}" class="link-btn">Read More<i
                                         class="fal fa-long-arrow-right"></i></a>
                             </div>
                         </div>
@@ -113,13 +113,13 @@
                         <div class="sr-body">
                             <span class="sr-icon"><i class="flaticon-quality-of-life fa-3x"></i></span>
                             <h3 class="h4 sr-title">
-                                <a class="text-reset" href="service-details.html">Pediatrician</a>
+                                <a class="text-reset" href="{{"/blog-details"}}">Pediatrician</a>
                             </h3>
                             <div class="sr-content">
                                 <p class="sr-text">
                                     Appropriately customize excellent imperatives for products.
                                 </p>
-                                <a href="service-details.html" class="link-btn">Read More<i
+                                <a href="{{"/blog-details"}}" class="link-btn">Read More<i
                                         class="fal fa-long-arrow-right"></i></a>
                             </div>
                         </div>
@@ -134,13 +134,13 @@
                         <div class="sr-body">
                             <span class="sr-icon"><i class="flaticon-healthcare fa-3x"></i></span>
                             <h3 class="h4 sr-title">
-                                <a class="text-reset" href="service-details.html">Gynecologist</a>
+                                <a class="text-reset" href="{{"/blog-details"}}">Gynecologist</a>
                             </h3>
                             <div class="sr-content">
                                 <p class="sr-text">
                                     Appropriately customize excellent imperatives for products.
                                 </p>
-                                <a href="service-details.html" class="link-btn">Read More<i
+                                <a href="{{"/blog-details"}}" class="link-btn">Read More<i
                                         class="fal fa-long-arrow-right"></i></a>
                             </div>
                         </div>
@@ -155,13 +155,13 @@
                         <div class="sr-body">
                             <span class="sr-icon"><i class="flaticon-medical-symbol fa-3x"></i></span>
                             <h3 class="h4 sr-title">
-                                <a class="text-reset" href="service-details.html">Expert Surgeon</a>
+                                <a class="text-reset" href="{{"/blog-details"}}">Expert Surgeon</a>
                             </h3>
                             <div class="sr-content">
                                 <p class="sr-text">
                                     Appropriately customize excellent imperatives for products.
                                 </p>
-                                <a href="service-details.html" class="link-btn">Read More<i
+                                <a href="{{"/blog-details"}}" class="link-btn">Read More<i
                                         class="fal fa-long-arrow-right"></i></a>
                             </div>
                         </div>
@@ -176,13 +176,13 @@
                         <div class="sr-body">
                             <span class="sr-icon"><i class="flaticon-stethoscope fa-3x"></i></span>
                             <h3 class="h4 sr-title">
-                                <a class="text-reset" href="service-details.html">Nephrologist</a>
+                                <a class="text-reset" href="{{"/blog-details"}}">Nephrologist</a>
                             </h3>
                             <div class="sr-content">
                                 <p class="sr-text">
                                     Appropriately customize excellent imperatives for products.
                                 </p>
-                                <a href="service-details.html" class="link-btn">Read More<i
+                                <a href="{{"/blog-details"}}" class="link-btn">Read More<i
                                         class="fal fa-long-arrow-right"></i></a>
                             </div>
                         </div>
