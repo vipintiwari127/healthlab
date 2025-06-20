@@ -11,10 +11,7 @@ use App\Models\HomeAnnouncement;
 use App\Models\Announcement;
 use App\Models\BusinessPartner;
 use App\Models\LabTest;
-<<<<<<< HEAD
 use App\Models\Package;
-=======
->>>>>>> 56d2447df0659035f5371649fcd539bb53cef3b6
 use App\Models\PartnerLab;
 use App\Models\State;
 use App\Models\City;
