@@ -33,7 +33,7 @@ Route::get('/services-details', [WebsiteCotroller::class, 'servicesDetails']);
 // Blog page
 Route::get('/blog', [WebsiteCotroller::class, 'blog']);
 // Blog details page
-Route::get('/blog-details', [WebsiteCotroller::class, 'blogDetails']);
+Route::get('/blog-details/{slug}', [WebsiteCotroller::class, 'blogDetails']);
 // FAQ page
 Route::get('/faq', [WebsiteCotroller::class, 'faq']);
 // Error 404 page
@@ -128,6 +128,7 @@ Route::get('/admin/state/toggle/{id}', [AdminController::class, 'statetoggleStat
 Route::post('/admin/city/store', [AdminController::class, 'citystore'])->name('city.store');
 Route::get('/admin/city/edit/{id}', [AdminController::class, 'cityedit'])->name('city.edit');
 Route::delete('/admin/city/delete/{id}', [AdminController::class, 'citydestroy'])->name('city.delete');
+Route::get('/admin/city/toggle/{id}', [AdminController::class, 'citytoggleStatus'])->name('city.toggle');
 //----------------------------------------------------------------------master setup end----------------------------------------------------------------------
 //phone book
 Route::get('/admin/phone-book', [AdminController::class, 'phoneBook']);

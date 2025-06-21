@@ -38,8 +38,8 @@
     </style>
 
     <!--==============================
-                    Breadcumb
-                ============================== -->
+                                Breadcumb
+                            ============================== -->
     <div class="breadcumb-wrapper">
         <div class="parallax" data-parallax-image="{{ asset('website/assets/img/breadcurmb/breadcurmb-1-1.jpg') }}"></div>
         <div class="container z-index-common">
@@ -56,144 +56,39 @@
         </div>
     </div>
     <!--==============================
-                    Service Area
-                    ==============================-->
+                                Service Area
+                                ==============================-->
     <section class="vs-service-wrapper space-top space-md-bottom">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-xl-4">
-                    <div class="service-thumb">
-                        <div class="sr-img">
-                            <img class="w-100" src="{{ asset('website/assets/img/service/sr-3-1.jpg') }}"
-                                alt="Serivce Image" />
-                        </div>
-                        <div class="sr-body">
-                            <span class="sr-icon"><i class="flaticon-discuss fa-3x"></i></span>
-                            <h3 class="h4 sr-title">
-                                <a class="text-reset" href="{{"/blog-details"}}">Haematology</a>
-                            </h3>
-                            <div class="sr-content">
-                                <p class="sr-text">
-                                    Appropriately customize excellent imperatives for products.
-                                </p>
-                                <a href="{{"/blog-details"}}" class="link-btn">Read More<i
-                                        class="fal fa-long-arrow-right"></i></a>
+                @foreach ($blogs as $blog)
+                    <div class="col-md-6 col-xl-4">
+                        <div class="service-thumb">
+                            <div class="sr-img">
+                                <img class="w-100" src="{{ asset('uploads/blogs/' . $blog->image) }}"
+                                    alt="{{ $blog->title }}" />
+                            </div>
+                            <div class="sr-body">
+                                <span class="sr-icon"><i class="flaticon-discuss fa-3x"></i></span>
+                                
+                                <div class="sr-content">
+                                    <p class="h4 sr-title">
+                                        <a class="text-reset"
+                                            href="{{ url('blog-details/' . $blog->url) }}">{{ $blog->title }}</a>
+                                    </p>
+                                    <a href="{{ url('blog-details/' . $blog->url) }}" class="link-btn">Read More<i
+                                            class="fal fa-long-arrow-right"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-md-6 col-xl-4">
-                    <div class="service-thumb">
-                        <div class="sr-img">
-                            <img class="w-100" src="{{ asset('website/assets/img/service/sr-3-2.jpg') }}"
-                                alt="Serivce Image" />
-                        </div>
-                        <div class="sr-body">
-                            <span class="sr-icon"><i class="flaticon-group fa-3x"></i></span>
-                            <h3 class="h4 sr-title">
-                                <a class="text-reset" href="{{"/blog-details"}}">Family Physician</a>
-                            </h3>
-                            <div class="sr-content">
-                                <p class="sr-text">
-                                    Appropriately customize excellent imperatives for products.
-                                </p>
-                                <a href="{{"/blog-details"}}" class="link-btn">Read More<i
-                                        class="fal fa-long-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xl-4">
-                    <div class="service-thumb">
-                        <div class="sr-img">
-                            <img class="w-100" src="{{ asset('website/assets/img/service/sr-3-3.jpg') }}"
-                                alt="Serivce Image" />
-                        </div>
-                        <div class="sr-body">
-                            <span class="sr-icon"><i class="flaticon-quality-of-life fa-3x"></i></span>
-                            <h3 class="h4 sr-title">
-                                <a class="text-reset" href="{{"/blog-details"}}">Pediatrician</a>
-                            </h3>
-                            <div class="sr-content">
-                                <p class="sr-text">
-                                    Appropriately customize excellent imperatives for products.
-                                </p>
-                                <a href="{{"/blog-details"}}" class="link-btn">Read More<i
-                                        class="fal fa-long-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xl-4">
-                    <div class="service-thumb">
-                        <div class="sr-img">
-                            <img class="w-100" src="{{ asset('website/assets/img/service/sr-3-4.jpg') }}"
-                                alt="Serivce Image" />
-                        </div>
-                        <div class="sr-body">
-                            <span class="sr-icon"><i class="flaticon-healthcare fa-3x"></i></span>
-                            <h3 class="h4 sr-title">
-                                <a class="text-reset" href="{{"/blog-details"}}">Gynecologist</a>
-                            </h3>
-                            <div class="sr-content">
-                                <p class="sr-text">
-                                    Appropriately customize excellent imperatives for products.
-                                </p>
-                                <a href="{{"/blog-details"}}" class="link-btn">Read More<i
-                                        class="fal fa-long-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xl-4">
-                    <div class="service-thumb">
-                        <div class="sr-img">
-                            <img class="w-100" src="{{ asset('website/assets/img/service/sr-3-5.jpg') }}"
-                                alt="Serivce Image" />
-                        </div>
-                        <div class="sr-body">
-                            <span class="sr-icon"><i class="flaticon-medical-symbol fa-3x"></i></span>
-                            <h3 class="h4 sr-title">
-                                <a class="text-reset" href="{{"/blog-details"}}">Expert Surgeon</a>
-                            </h3>
-                            <div class="sr-content">
-                                <p class="sr-text">
-                                    Appropriately customize excellent imperatives for products.
-                                </p>
-                                <a href="{{"/blog-details"}}" class="link-btn">Read More<i
-                                        class="fal fa-long-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xl-4">
-                    <div class="service-thumb">
-                        <div class="sr-img">
-                            <img class="w-100" src="{{ asset('website/assets/img/service/sr-3-6.jpg') }}"
-                                alt="Serivce Image" />
-                        </div>
-                        <div class="sr-body">
-                            <span class="sr-icon"><i class="flaticon-stethoscope fa-3x"></i></span>
-                            <h3 class="h4 sr-title">
-                                <a class="text-reset" href="{{"/blog-details"}}">Nephrologist</a>
-                            </h3>
-                            <div class="sr-content">
-                                <p class="sr-text">
-                                    Appropriately customize excellent imperatives for products.
-                                </p>
-                                <a href="{{"/blog-details"}}" class="link-btn">Read More<i
-                                        class="fal fa-long-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
     <!--==============================
-                    Features Area
-                    ==============================-->
+                                Features Area
+                                ==============================-->
     <section class="vs-accordion-wrapper space-top space-md-bottom">
         <div class="container">
             <div class="row">
@@ -220,8 +115,7 @@
                             </div>
                             <div class="col-sm-6 col-lg-5 col-xl-6">
                                 <div class="d-flex mb-25">
-                                    <span class="text-theme mr-20"><i
-                                            class="flaticon-computer-mouse fa-3x lh-1"></i></span>
+                                    <span class="text-theme mr-20"><i class="flaticon-computer-mouse fa-3x lh-1"></i></span>
                                     <div class="media-body">
                                         <h3 class="h5 mb-2 pb-1">Specialist Surgery</h3>
                                         <p class="mb-0 fs-xs">
@@ -274,8 +168,8 @@
         </div>
     </section>
     <!--==============================
-                    Team Area
-                    ==============================-->
+                                Team Area
+                                ==============================-->
     <section class="vs-team-wrapper space-top space-md-bottom">
         <div class="container">
             <div class="row text-center justify-content-center">
@@ -333,7 +227,8 @@
                 <div class="col-xl-4 mb-30">
                     <div class="team-card">
                         <div class="team-head">
-                            <img src="{{ asset('website/assets/img/team/t-1-2.png') }}" alt="Team Area" class="w-100" />
+                            <img src="{{ asset('website/assets/img/team/t-1-2.png') }}" alt="Team Area"
+                                class="w-100" />
                             <div class="team-card-links">
                                 <a class="team-links-toggler" href="#"><i class="fas fa-share-alt"></i></a>
                                 <div class="team-social">

@@ -137,7 +137,7 @@
                                                     @foreach ($state as $key => $statedata)
                                                         <tr>
                                                             <td>{{ $key + 1 }}</td>
-                                                            <td>{{ $statedata->country_name  }}</td>
+                                                            <td>{{ $statedata->country_name }}</td>
                                                             <td>{{ $statedata->stateName }}</td>
                                                             <td>{{ $statedata->stateUrl }}</td>
                                                             <td>{{ $statedata->stateCode }}</td>
@@ -189,11 +189,19 @@
                                                     @foreach ($cities as $key => $city)
                                                         <tr>
                                                             <td>{{ $key + 1 }}</td>
-                                                            <td>{{ $city->city_countryName }}</td>
-                                                            <td>{{ $city->city_stateName }}</td>
+                                                            <td>{{ $city->country_name }}</td>
+                                                            <td>{{ $city->state_name }}</td>
                                                             <td>{{ $city->cityUrl }}</td>
                                                             <td>{{ $city->city_name }}</td>
-                                                            <td>{{ $city->status ? 'Active' : 'Inactive' }}</td>
+                                                            <td>
+                                                                @if ($city->status)
+                                                                    <a href="{{ route('city.toggle', $city->id) }}"
+                                                                        class="btn btn-success btn-sm">Active</a>
+                                                                @else
+                                                                    <a href="{{ route('city.toggle', $city->id) }}"
+                                                                        class="btn btn-danger btn-sm">Inactive</a>
+                                                                @endif
+                                                            </td>
                                                             <td>
                                                                 <button class="btn btn-sm btn-info"
                                                                     onclick="editcity({{ $city->id }})">Edit</button>
@@ -336,28 +344,40 @@
                                             <input type="hidden" name="city_id" id="city_id">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <label for="countryName" class="form-label">Country Name</label>
-                                                    <input type="text" class="form-control" id="city_countryName"
-                                                        name="city_countryName" placeholder="Country Name" required>
-                                                    <div class="invalid-feedback">Please provide a valid Country Name.
-                                                    </div>
+                                                    <label for="city_stateName" class="form-label">State Name</label>
+                                                    <select class="form-control" id="city_stateName"
+                                                        name="city_stateName" required>
+                                                        <option value="">Select State</option>
+                                                        @foreach ($state as $states)
+                                                            <option value="{{ $states->id }}">{{ $states->stateName }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="invalid-feedback">Please select a valid State Name.</div>
                                                 </div>
 
                                                 <div class="col-md-6">
+                                                    <label for="city_countryName" class="form-label">Country Name</label>
+                                                    <select class="form-control" id="city_countryName"
+                                                        name="city_countryName" required>
+                                                        <option value="">Select Country</option>
+                                                        @foreach ($countries as $country)
+                                                            <option value="{{ $country->id }}">
+                                                                {{ $country->country_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="invalid-feedback">Please select a valid Country Name.</div>
+                                                </div>
+
+
+                                                <div class="col-md-6 mt-3">
                                                     <label for="cityName" class="form-label">City Name</label>
                                                     <input type="text" class="form-control" id="city_name"
                                                         name="city_name" placeholder="City Name" required>
                                                     <div class="invalid-feedback">Please provide a valid City Name.</div>
                                                 </div>
 
-                                                <div class="col-md-6">
-                                                    <label for="state" class="form-label">State Name</label>
-                                                    <input type="text" class="form-control" id="city_stateName"
-                                                        name="city_stateName" placeholder="State Name" required>
-                                                    <div class="invalid-feedback">Please provide a valid State Name.</div>
-                                                </div>
-
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 mt-3">
                                                     <label for="state" class="form-label">City Url</label>
                                                     <input type="text" class="form-control" id="cityUrl"
                                                         name="cityUrl" placeholder="City Url" required>

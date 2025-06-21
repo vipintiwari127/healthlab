@@ -45,8 +45,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sr.no</th>
-                                        <th>Question</th>
-                                        <th>Answer</th>
+                                        <th>Data</th>
                                         <th>Update Date</th>
                                         <th>Action</th>
                                     </tr>
@@ -55,8 +54,17 @@
                                     @foreach ($faqs as $index => $faq)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>{{ $faq->question }}</td>
-                                            <td>{{ $faq->answer }}</td>
+                                            <td>
+                                                <b>Ques:</b> {{ $faq->question }}<br>
+                                                <b>Ans:</b>
+                                                @php
+                                                    $words = explode(' ', strip_tags($faq->answer));
+                                                    $chunks = array_chunk($words, 20);
+                                                    foreach ($chunks as $chunk) {
+                                                        echo implode(' ', $chunk) . ',<br>';
+                                                    }
+                                                @endphp
+                                            </td>
                                             <td>{{ $faq->updated_at->format('d-m-Y') }}</td>
                                             <td>
                                                 <button class="btn btn-warning btn-sm editBtn" data-id="{{ $faq->id }}"
@@ -68,9 +76,9 @@
                                                     Delete
                                                 </button>
                                             </td>
-
                                         </tr>
                                     @endforeach
+
                                 </tbody>
                             </table>
                         </div>
