@@ -11,7 +11,10 @@ use App\Models\HomeAnnouncement;
 use App\Models\Announcement;
 use App\Models\BusinessPartner;
 use App\Models\LabTest;
+<<<<<<< HEAD
 use App\Models\Package;
+=======
+>>>>>>> 5bb8f7c (save)
 use App\Models\PartnerLab;
 use App\Models\State;
 use App\Models\City;
@@ -1001,6 +1004,7 @@ class adminController extends Controller
         return view('admin.all-test', compact('tests'));
     }
 
+<<<<<<< HEAD
     // ✅ Add a new test
     public function addAllTest(Request $request)
     {
@@ -1099,6 +1103,8 @@ class adminController extends Controller
         return redirect()->back()->with('success', 'CSV uploaded successfully!');
     }
 
+=======
+>>>>>>> 5bb8f7c (save)
     function LabTest()
     {
         $labtestData = LabTest::latest()->get();
