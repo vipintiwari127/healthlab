@@ -437,6 +437,7 @@
     <script src="{{ asset('admin/assets/js/table-datatable.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/validation/validation-script.js') }}"></script>
+    
     <script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {

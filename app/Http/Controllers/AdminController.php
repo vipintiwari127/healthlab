@@ -19,6 +19,7 @@ use App\Models\SeoManagement;
 use App\Models\Review;
 use App\Models\CallCenterEnquiry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class adminController extends Controller
 {
@@ -244,7 +245,15 @@ class adminController extends Controller
             ->join('countries', 'states.countryName', '=', 'countries.id')
             ->select('states.*', 'countries.country_name as country_name')
             ->get();
-        $cities = City::latest()->get();
+        $cities = City::latest()
+            ->join('states', 'cities.city_stateName', '=', 'states.id')
+            ->join('countries', 'cities.city_countryName', '=', 'countries.id')
+            ->select(
+                'cities.*',
+                'states.stateName as state_name',
+                'countries.country_name as country_name'
+            )
+            ->get();
         return view('admin.master-setup', compact('countries', 'state', 'cities'));
     }
     // Countries
@@ -337,9 +346,8 @@ class adminController extends Controller
             'city_countryName' => 'required|string',
             'city_stateName' => 'required|string',
             'cityUrl' => 'required|string',
-            'city_name' => 'required|String',
+            'city_name' => 'required|string',
             'city_about' => 'required|string',
-
         ]);
 
         City::updateOrCreate(
@@ -353,8 +361,18 @@ class adminController extends Controller
             ]
         );
 
-        return response()->json(['status' => 'success', 'message' => 'State saved successfully']);
+        return response()->json(['status' => 'success', 'message' => 'City saved successfully']);
     }
+
+    public function citytoggleStatus($id)
+    {
+        $city = City::findOrFail($id);
+        $city->status = !$city->status; // Toggle status
+        $city->save();
+
+        return redirect()->back()->with('success', 'City status updated successfully.');
+    }
+
 
 
     public function cityedit($id)
@@ -454,12 +472,35 @@ class adminController extends Controller
         return view('admin.blog', compact('blogs'));
     }
 
+    // public function storeBlog(Request $request)
+    // {
+    //     $request->validate([
+    //         'posting_date' => 'required|date',
+    //         'title' => 'required',
+    //         'url' => 'required',
+    //         'description' => 'required',
+    //         'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+    //     ]);
+
+    //     $fileName = time() . '.' . $request->image->extension();
+    //     $request->image->move(public_path('uploads/blogs'), $fileName);
+
+    //     Blog::create([
+    //         'posting_date' => $request->posting_date,
+    //         'title' => $request->title,
+    //         'url' => $request->url,
+    //         'description' => $request->description,
+    //         'image' => $fileName
+    //     ]);
+
+    //     return redirect()->route('admin.blog')->with('success', 'Blog added successfully!');
+    // }
     public function storeBlog(Request $request)
     {
         $request->validate([
             'posting_date' => 'required|date',
             'title' => 'required',
-            'url' => 'required',
+            'url' => 'nullable', // अब इसे required नहीं करेंगे
             'description' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
@@ -467,16 +508,19 @@ class adminController extends Controller
         $fileName = time() . '.' . $request->image->extension();
         $request->image->move(public_path('uploads/blogs'), $fileName);
 
+        $slug = $request->url ?? Str::slug($request->title);
+
         Blog::create([
             'posting_date' => $request->posting_date,
             'title' => $request->title,
-            'url' => $request->url,
+            'url' => $slug,
             'description' => $request->description,
             'image' => $fileName
         ]);
 
         return redirect()->route('admin.blog')->with('success', 'Blog added successfully!');
     }
+
 
     public function editBlog($id)
     {
@@ -493,13 +537,16 @@ class adminController extends Controller
             $request->image->move(public_path('uploads/blogs'), $fileName);
         }
 
+        $slug = $request->url ?? Str::slug($request->title);
+
         $blog->update([
             'posting_date' => $request->posting_date,
             'title' => $request->title,
-            'url' => $request->url,
+            'url' => $slug,
             'description' => $request->description,
             'image' => $fileName
         ]);
+
 
         return redirect()->route('admin.blog')->with('success', 'Blog updated successfully!');
     }

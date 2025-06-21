@@ -39,9 +39,9 @@
                                     <tr>
                                         <th>Sr.no</th>
                                         <th>Blog Image</th>
-                                        <th>Blog Title</th>
-                                        <th>Blog Url</th>
-                                        <th>Blog Description</th>
+                                        <th>Blog Data</th>
+                                        {{-- <th>Blog Url</th> --}}
+                                        {{-- <th>Blog Description</th> --}}
                                         <th>Posting Date</th>
                                         <th>Action</th>
                                     </tr>
@@ -54,9 +54,14 @@
                                                 <img src="{{ asset('uploads/blogs/' . $blog->image) }}" alt="Blog Image"
                                                     width="80" height="60">
                                             </td>
-                                            <td>{{ $blog->title }}</td>
-                                            <td>{{ $blog->url }}</td>
-                                            <td>{{ $blog->description }}</td>
+                                            <td>
+                                                <p><b>Title:</b> {{ $blog->title }}</p>
+
+                                                <p><b>Url:</b> {{ $blog->url }}</p>
+                                            </td>
+
+
+
                                             <td>{{ $blog->posting_date }}</td>
                                             <td>
                                                 <button class="btn btn-sm btn-info"
@@ -106,13 +111,17 @@
 
                                     <div class="col-md-12">
                                         <label for="url" class="form-label">Blog URL</label>
-                                        <input type="text" class="form-control" name="url" id="url" required>
+                                        <input type="text" class="form-control" name="url" id="url" required
+                                            readonly>
                                         <div class="invalid-feedback">Please enter a Blog URL.</div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <label for="description" class="form-label">Full Description</label>
-                                        <textarea class="form-control" name="description" id="description" rows="4" required></textarea>
+                                        <textarea class="form-control" name="description" id="description" rows="4">
+                                            {{ old('description', $blog->description ?? '') }}
+                                        </textarea>
+
                                         <div class="invalid-feedback">Please enter a Full Description.</div>
                                     </div>
 
@@ -178,4 +187,29 @@
             </div>
         </div>
     </div>
+    {{-- <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script> --}}
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script>
+        function slugify(text) {
+            return text
+                .toString()
+                .toLowerCase()
+                .trim()
+                .replace(/\s+/g, '-') // Replace spaces with -
+                .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+                .replace(/\-\-+/g, '-'); // Replace multiple - with single -
+        }
+
+        document.getElementById('title').addEventListener('input', function() {
+            const slug = slugify(this.value);
+            document.getElementById('url').value = slug;
+        });
+    </script>
 @endsection

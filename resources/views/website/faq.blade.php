@@ -62,55 +62,27 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="vs-accordion accordion accordion-style2" id="vsaccordion">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                                        Uniquely optimize reliable models before wireless results ofessionally impact
-                                        progressive core.
-                                    </button>
-                                </h2>
-                                <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#vsaccordion">
-                                    <div class="accordion-body">
-                                        <p>Professionally impact distributed data via value-added experiences. Proacti
-                                            incentivize 24/365 applications whereas turnkey total linkage. whiteboard
-                                            multifunctional channels with interoperable value.</p>
+                            @foreach ($faqs as $index => $faq)
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button {{ $index != 0 ? 'collapsed' : '' }}" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}"
+                                            aria-expanded="{{ $index == 0 ? 'true' : 'false' }}"
+                                            aria-controls="collapse{{ $index }}">
+                                            {{ $faq->question }}
+                                        </button>
+                                    </h2>
+                                    <div id="collapse{{ $index }}"
+                                        class="accordion-collapse collapse {{ $index == 0 ? 'show' : '' }}"
+                                        data-bs-parent="#vsaccordion">
+                                        <div class="accordion-body">
+                                            <p>{!! nl2br(e($faq->answer)) !!}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-                                        Lorem ipsum is placeholder text commonly used in the graphic, print, and
-                                        publishing industries for
-                                    </button>
-                                </h2>
-                                <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#vsaccordion">
-                                    <div class="accordion-body">
-                                        <p>Professionally impact distributed data via value-added experiences. Proacti
-                                            incentivize 24/365 applications whereas turnkey total linkage. whiteboard
-                                            multifunctional channels with interoperable value.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                        From its medieval origins to the digital era, learn everything there is to know
-                                        about the ubiquitous
-                                    </button>
-                                </h2>
-                                <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#vsaccordion">
-                                    <div class="accordion-body">
-                                        <p>Professionally impact distributed data via value-added experiences. Proacti
-                                            incentivize 24/365 applications whereas turnkey total linkage. whiteboard
-                                            multifunctional channels with interoperable value.</p>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
+
                     </div>
                 </div>
             </div>

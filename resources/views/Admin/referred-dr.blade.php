@@ -43,6 +43,7 @@
                                         <th>Age</th>
                                         <th>Start date</th>
                                         <th>Salary</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -56,12 +57,15 @@
                                             <td>{{ $doctor->phone }}</td>
                                             <td>{{ $doctor->email }}</td>
                                             <td>
+                                               <input class="form-check-input status-toggle" type="checkbox"
+                                                    data-id="{{ $doctor->id }}" {{ $doctor->status ? 'checked' : '' }}>
+                                            </td>
+                                            <td>
                                                 <button class="btn btn-sm btn-primary edit-btn"
                                                     data-id="{{ $doctor->id }}">Edit</button>
                                                 <button class="btn btn-sm btn-danger delete-btn"
                                                     data-id="{{ $doctor->id }}">Delete</button>
-                                                <input class="form-check-input status-toggle" type="checkbox"
-                                                    data-id="{{ $doctor->id }}" {{ $doctor->status ? 'checked' : '' }}>
+                                                
                                             </td>
                                         </tr>
                                     @endforeach

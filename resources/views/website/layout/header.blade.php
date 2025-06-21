@@ -166,7 +166,7 @@
                                 </button>
                                 <a href="#" class="d-inline-block d-lg-none"><i class="fas fa-map-marker-alt"
                                         style="font-size: 20px; margin-top: 10px; "></i></a>
-                                <h6 class="d-lg-none">Delhi</h6>
+                                <h6 class="d-lg-none selected-location">Delhi</h6>
                                 </button>
                             </div>
                             <div
@@ -182,7 +182,7 @@
                                         class="far fa-shopping-cart"></i><span class="badge">3</span></a>
                                 <ol class="login" id="locationDisplay">
                                     <i class="far fa-map-marker-alt"></i>
-                                    <span id="locationText">36D Street Brooklyn, New York</span>
+                                    <span class="selected-location">36D Street Brooklyn, New York</span>
                                 </ol>
                             </div>
 
@@ -425,6 +425,48 @@
             locationModal.show();
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const locationCards = document.querySelectorAll('.select-location');
+            const locationTexts = document.querySelectorAll('.selected-location');
+            const modalEl = document.getElementById('locationModal');
+            let modalInstance;
+
+            // Check if modal is already initialized
+            if (bootstrap.Modal.getInstance(modalEl)) {
+                modalInstance = bootstrap.Modal.getInstance(modalEl);
+            } else {
+                modalInstance = new bootstrap.Modal(modalEl);
+            }
+
+            const savedLocation = localStorage.getItem('selectedCity');
+
+            if (savedLocation) {
+                locationTexts.forEach(el => el.textContent = savedLocation);
+            } else {
+                // Show the modal only if no location is saved
+                modalInstance.show();
+            }
+
+            // On city click
+            locationCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const selectedCity = this.getAttribute('data-city');
+
+                    // Update text
+                    locationTexts.forEach(el => el.textContent = selectedCity);
+
+                    // Save to localStorage
+                    localStorage.setItem('selectedCity', selectedCity);
+
+                    // Hide the modal
+                    modalInstance.hide();
+                });
+            });
+        });
+    </script>
+
+
 
 
 </body>
