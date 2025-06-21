@@ -1,4 +1,4 @@
-@extends('Admin.layout.admin')
+@extends('admin.layout.admin')
 @section('admin-content')
     <div class="page-content-wrapper">
         <!-- start page content-->
@@ -64,7 +64,7 @@
                                     <div class="card-body">
                                         <form class="row g-3 needs-validation" novalidate method="POST"
                                             enctype="multipart/form-data" id="blogForm"
-                                            action="{{ route('admin.blog.store') }}">
+                                            action="{{ route('admin.general.store') }}">
                                             @csrf
                                             <div class="col-md-3">
                                                 <label for="image" class="form-label">Website Logo</label>
@@ -332,4 +332,53 @@
             });
         });
     </script>
+
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+
+        // Add or Update Form Submission
+        $('#seoForm').on('submit', function(e) {
+            e.preventDefault();
+            let id = $('#seo_id').val();
+            let url = id ? `/admin/seo-management/update/${id}` : `/admin/general/settin/update/`;
+            let method = id ? 'POST' : 'POST';
+
+            $.ajax({
+                url: url,
+                method: method,
+                data: $(this).serialize(),
+                success: function(res) {
+                    toastr.success(res.message);
+                    $('#seoForm')[0].reset();
+                    $('#seo_id').val('');
+                    $('#exampleLargeModal').modal('hide');
+                    location.reload();
+                }
+            });
+        });
+
+        // Edit
+        function editSEO(id) {
+            $.get(`/admin/general/settin/edit/${id}`, function(data) {
+                $('#seo_id').val(data.id);
+                $('[name="target_url"]').val(data.target_url);
+                $('[name="meta_keyword"]').val(data.meta_keyword);
+                $('[name="meta_description"]').val(data.meta_description);
+                $('[name="meta_title"]').val(data.meta_title);
+                $('[name="alt_tag"]').val(data.alt_tag);
+                $('[name="canonical_code"]').val(data.canonical_code);
+                $('[name="extra_meta"]').val(data.extra_meta);
+                $('#exampleLargeModal').modal('show');
+            });
+        }
+
+
+    
+    </script>
+    
 @endsection

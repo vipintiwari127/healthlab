@@ -247,3 +247,9 @@ Route::post('/admin/package/status/{id}', [AdminController::class, 'packagetoggl
 
 //settings
 Route::get('/admin/setting', [AdminController::class, 'Settings']);
+Route::get('/admin/general/setting', [AdminController::class, 'Settings'])->name('admin.general.store');
+Route::post('/admin/general/settin/store', [AdminController::class, 'storegeneralsettin'])->name('generalsettin.store');
+Route::post('/admin/general/settin/update/{id}', [AdminController::class, 'updategeneralsettin'])->name('generalsettin.update');
+Route::delete('/admin/general/settin/delete/{id}', [AdminController::class, 'deletegeneralsettin'])->name('generalsettin.delete');
+Route::get('/admin/general/settin/edit/{id}', [AdminController::class, 'editgeneralsettin'])->name('generalsettin.edit');
+Route::post('/admin/general/settin/status/{id}', [AdminController::class, 'toggleStatus'])->name('generalsettin.status');
