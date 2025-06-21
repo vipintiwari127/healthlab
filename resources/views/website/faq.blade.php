@@ -70,7 +70,7 @@
                                             aria-expanded="{{ $index == 0 ? 'true' : 'false' }}"
                                             aria-controls="collapse{{ $index }}">
                                             {{ $faq->question }}
-                                        </button>
+                                        </button> 
                                     </h2>
                                     <div id="collapse{{ $index }}"
                                         class="accordion-collapse collapse {{ $index == 0 ? 'show' : '' }}"

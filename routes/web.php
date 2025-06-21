@@ -248,9 +248,19 @@ Route::post('/admin/package/status/{id}', [AdminController::class, 'packagetoggl
 
 //settings
 Route::get('/admin/setting', [AdminController::class, 'Settings']);
-Route::get('/admin/general/setting', [AdminController::class, 'Settings'])->name('admin.general.store');
-Route::post('/admin/general/settin/store', [AdminController::class, 'storegeneralsettin'])->name('generalsettin.store');
-Route::post('/admin/general/settin/update/{id}', [AdminController::class, 'updategeneralsettin'])->name('generalsettin.update');
-Route::delete('/admin/general/settin/delete/{id}', [AdminController::class, 'deletegeneralsettin'])->name('generalsettin.delete');
-Route::get('/admin/general/settin/edit/{id}', [AdminController::class, 'editgeneralsettin'])->name('generalsettin.edit');
-Route::post('/admin/general/settin/status/{id}', [AdminController::class, 'toggleStatus'])->name('generalsettin.status');
+// Route::post('/admin/general/settin/store', [AdminController::class, 'storegeneralsettin'])->name('generalsettin.store');
+// Route::post('/admin/general/settin/update/{id}', [AdminController::class, 'updategeneralsettin'])->name('generalsettin.update');
+// Route::get('/admin/general/settin/edit/{id}', [AdminController::class, 'editgeneralsettin'])->name('generalsettin.edit');
+
+
+Route::post('/admin/general/settin/store-or-update', [AdminController::class, 'storeOrUpdate'])->name('admin.general.storeOrUpdate');
+Route::get('/admin/general/settin/get', [AdminController::class, 'getSettings'])->name('admin.general.get');
+
+
+Route::post('/admin/social-links/store-or-update', [AdminController::class, 'SocialstoreOrUpdate'])->name('admin.social.storeOrUpdate');
+Route::get('/admin/social-links/get', [AdminController::class, 'Socialget'])->name('admin.social.get');
+
+
+Route::post('/admin/default-seo/store-or-update', [AdminController::class, 'MetaSettingstoreOrUpdate'])->name('admin.defaultseo.storeOrUpdate');
+Route::get('/admin/default-seo/get', [AdminController::class, 'MetaSettingget'])->name('admin.defaultseo.get');
+
