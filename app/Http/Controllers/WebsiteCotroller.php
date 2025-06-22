@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use App\Models\Blog;
 use App\Models\Faq;
+use App\Models\Package; // Add this at the top if not already
+use App\Models\LabTest;
 
 use Illuminate\Http\Request;
 
@@ -18,9 +20,15 @@ class WebsiteCotroller extends Controller
         // All active cities for "All City"
         $allCities = City::where('status', 1)->get();
 
+        $labTests = LabTest::with(['labPartner.city', 'tests']) // eager load test name
+            ->where('status', 1)
+            ->get();
+
+        $packages = Package::where('status', 1)->get(); // Only active packages
+
         //blog
-         $blogs = Blog::latest()->get();
-        return view('index', compact('popularCities', 'allCities','blogs'));
+        $blogs = Blog::latest()->get();
+        return view('index', compact('popularCities', 'allCities', 'blogs', 'labTests','packages'));
     }
 
     public function about()
@@ -50,11 +58,11 @@ class WebsiteCotroller extends Controller
         $blogs = Blog::latest()->get();
         return view('website.blog-details', compact('blog', 'blogs'));
     }
-   public function faq()
-{
-    $faqs = Faq::orderBy('id', 'ASC')->get(); // You can also order by 'created_at' if needed
-    return view('website.faq', compact('faqs'));
-}
+    public function faq()
+    {
+        $faqs = Faq::orderBy('id', 'ASC')->get(); // You can also order by 'created_at' if needed
+        return view('website.faq', compact('faqs'));
+    }
     public function error404()
     {
         return view('website.error-404');
@@ -89,14 +97,26 @@ class WebsiteCotroller extends Controller
     }
     public function healthPackage()
     {
-        return view('website.health-package');
+        $packages = Package::where('status', 1)->get(); // Only active packages
+        return view('website.health-package', compact('packages'));
     }
-    public function Labs()
+    public function healthPackageDetails($slug)
     {
-        return view('website.lab');
+        $package = Package::with('partnerLab')->where('slug', $slug)->firstOrFail();
+        return view('website.health-details', compact('package'));
     }
-    public function labDetails()
+    public function labs()
     {
-        return view('website.single-details');
+        $labTests = LabTest::with(['labPartner.city', 'tests']) // eager load test name
+            ->where('status', 1)
+            ->get();
+
+        return view('website.lab', compact('labTests'));
+    }
+
+    public function labDetails($id)
+    {
+        $labTest = LabTest::with('partner')->where('id', $id)->firstOrFail();
+        return view('website.single-details', compact('labTest'));
     }
 }

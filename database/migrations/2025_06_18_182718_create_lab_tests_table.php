@@ -27,6 +27,9 @@ return new class extends Migration
             $table->boolean('status')->default('1');
             $table->timestamps();
         });
+        Schema::table('lab_tests', function (Blueprint $table) {
+            $table->string('slug')->unique()->after('test_id');
+        });
     }
 
     /**

@@ -52,9 +52,17 @@
                                     @foreach ($Packages as $index => $Package)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>{{ $Package->partner }}</td>
+                                            <td>{{ $Package->partnerLab->name ?? 'N/A' }}</td>
                                             <td>{{ $Package->included_tests }}</td>
-                                            <td>{{ $Package->feature }}</td>
+                                            <td>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="featureSwitch{{ $Package->id }}"
+                                                        onchange="toggleFeature({{ $Package->id }})"
+                                                        {{ $Package->feature ? 'checked' : '' }}>
+                                                </div>
+                                            </td>
+
                                             <td>
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox"
@@ -81,8 +89,7 @@
                         </div>
                     </div>
                 </div>
-                {{-- add doctor referral modal --}}
-
+                <!-- Modal -->
                 <div class="modal fade" id="exampleLargeModal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -92,7 +99,6 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="card-body p-4">
-<<<<<<< HEAD
                                 <form class="row g-3 needs-validation" novalidate="" id="packageForm">
                                     @csrf
                                     <input type="hidden" name="id" id="package_id">
@@ -106,31 +112,32 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="bsValidation1" class="form-label">Package package</label>
-                                        <select class="form-control" id="package_package" name="package_category"
-                                            placeholder="Package package" required="">
-                                            <option selected disabled>Select Package package</option>
-                                            <option value="1">package 1</option>
-                                            <option value="2">package 2</option>
-                                            <option value="3">package 3</option>
+                                        <label for="bsValidation1" class="form-label">Package</label>
+                                        <select class="form-control" id="package_package" name="package_category" required>
+                                            <option selected disabled>Select Package</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->category_name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         <div class="invalid-feedback">
-                                            Please choose a Package package.
+                                            Please choose a Package.
                                         </div>
                                     </div>
+
                                     <div class="col-md-4">
                                         <label for="bsValidation1" class="form-label">Partner</label>
-                                        <select class="form-control" id="partner" name="partner" placeholder="Partner"
-                                            required="">
+                                        <select class="form-control" id="partner" name="partner" required>
                                             <option selected disabled>Select Partner</option>
-                                            <option value="Partner1">Partner 1</option>
-                                            <option value="Partner2">Partner 2</option>
-                                            <option value="Partner3">Partner 3</option>
+                                            @foreach ($partners as $partner)
+                                                <option value="{{ $partner->id }}">{{ $partner->name }}</option>
+                                            @endforeach
                                         </select>
                                         <div class="invalid-feedback">
                                             Please choose a Partner.
                                         </div>
                                     </div>
+
                                     <div class="col-md-12">
                                         <label for="bsValidation1" class="form-label">Included Tests </label>
                                         <input type="text" class="form-control" name="included_tests" id="included_tests"
@@ -173,8 +180,8 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label for="bsValidation1" class="form-label">Reporting Time</label>
-                                        <input type="time" class="form-control" name="reporting_time"
-                                            id="reporting_time" placeholder="Reporting Time" required="">
+                                        <input type="text" class="form-control" name="reporting_time"
+                                            id="reporting_time" placeholder="Reporting Time">
                                         <div class="invalid-feedback">
                                             Please choose a Reporting Time.
                                         </div>
@@ -208,212 +215,25 @@
                                     <div class="col-md-4">
                                         <label for="bsValidation1" class="form-label">SThumbnail : (Size - 180 *
                                             90)</label>
-                                        <input type="file" class="form-control" name="thumbnail" id="thumbnail"
-                                            required="">
+                                        <input type="file" class="form-control" name="thumbnail" id="thumbnail">
                                         <div class="invalid-feedback">
                                             Please choose a Image.
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <label for="bsValidation1" class="form-label">Description</label>
-                                        <textarea class="form-control" id="description" placeholder="Description" required="" name="description"></textarea>
+                                        <textarea class="form-control" id="description" placeholder="Description" name="description"></textarea>
                                         <div class="invalid-feedback">
                                             Please choose a Description.
                                         </div>
                                     </div>
+
                                     <div class="col-md-12">
                                         <div class="d-md-flex d-grid align-items-center gap-3">
                                             <button type="submit" class="btn btn-primary px-4">Submit</button>
                                             <button type="reset" class="btn btn-light px-4">Reset</button>
-=======
-                                <form class="form-horizontal" method="post" runat="server" role="form"
-                                    enctype="multipart/form-data">
-
-                                    <div class="form-group">
-
-                                        <div class="col-sm-4">
-
-                                            <label>Name&nbsp;</label>
-                                            <input type="hidden" name="url" id="url" value="">
-                                            <input type="text" class="form-control" name="name" id="name"
-                                                required placeholder="Name" value="" />
-
-                                        </div>
-
-                                        <div class="col-sm-4">
-                                            <label>Package Category&nbsp;</label>
-
-
-
-                                            <select class="form-control chosen-select" name="cat_id[]" id="cat_id"
-                                                multiple required>
-
-                                                <option value="2">Full Body Check Up</option>
-                                                <option value="3">Womens Health</option>
-                                                <option value="4">Senior Citizen</option>
-                                                <option value="6">Healthy Bones</option>
-                                                <option value="7">Popular Packages</option>
-                                                <option value="10">Fever Panel</option>
-
-                                            </select>
-                                        </div>
-
-
-                                        <div class="col-sm-4">
-
-                                            <label>Partners&nbsp;</label>
-                                            <select class="form-control" name="partner_id" id="partner_id" required
-                                                onchange="get_test();">
-
-                                                <option value="">Select Partner</option>
-
-                                                <option value="37">PS.PATHLAB SARASWATI VIHAR </option>
-                                                <option value="36">PS.PATHLAB ROHINI SECTOR -05</option>
-                                                <option value="35">PS.PATHLAB ROHINI SECTOR-06</option>
-
-                                            </select>
-                                        </div>
-
-                                    </div>
-
-                                    <div style="position: relative;">
-
-                                        <div class="form-group">
-
-
-
-
-
-
-
-
-                                            <div class="col-sm-12">
-
-                                                <label>Included Tests&nbsp;</label>
-
-                                                <input type="text" name="test_ids" class="form-control"
-                                                    placeholder="Included tests" value="">
-                                                <!-- <select class="form-control chosen-select"  name="test_ids[]" id="test_ids" multiple >
-                                                                            
-                                                                                    
-                                                                          </select> -->
-                                            </div>
-
-
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <div class="form-group">
-
-                                        <div class="col-sm-4">
-
-                                            <label>Actual Price&nbsp;</label>
-                                            <input type="number" min='0' class="form-control"
-                                                name="actual_price" id="actual_price" required placeholder="Actual Price"
-                                                value="">
-                                        </div>
-
-                                        <div class="col-sm-4">
-
-                                            <label>NET Price&nbsp;</label>
-                                            <input type="number" min='0' class="form-control" name="net_price"
-                                                id="net_price" required placeholder="New Price" value="">
-                                        </div>
-
-
-                                        <div class="col-sm-4">
-
-                                            <label>Offer Price&nbsp;</label>
-                                            <input type="number" min='0' class="form-control" name="offer_price"
-                                                id="offer_price" placeholder="Offer Amount" value="">
-                                        </div>
-
-                                      </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-3">
-
-                                            <label>Total Parameters</label>
-                                            <input type="number" class="form-control" name="parameters_included"
-                                                id="parameters_included" placeholder="Total Parameters" value="">
-                                        </div>
-
-                                        <div class="col-sm-3">
-                                            <label>Reporting Time</label>
-                                            <input type="text" class="form-control" name="reporting_time"
-                                                id="reporting_time" placeholder="Reporting Time" value="">
-                                        </div>
-
-
-                                        <div class="col-sm-3">
-
-                                            <label>Specimen Requirement</label>
-                                            <input type="text" class="form-control" name="specimen_requirement"
-                                                id="specimen_requirement" placeholder="Specimen Requirement"
-                                                value="">
-                                        </div>
-
-                                        <div class="col-sm-3">
-                                            <label>Service Type</label><br>
-                                            <label style="margin-right: 15px;">
-                                                <input name="service_type" type="radio" value="Lab" required> &nbsp;
-                                                Lab
-                                            </label>
-                                            <label>
-                                                <input name="service_type" type="radio" value="Home" required> &nbsp;
-                                                Home
-                                            </label>
-                                            <label>
-                                                <input name="service_type" type="radio" value="Both" required> &nbsp;
-                                                Both
-                                            </label>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-
-                                            <label>Description&nbsp;</label>
-                                            <textarea style="height:100px" class="form-control ckeditor" name="description" id="description"
-                                                placeholder="Description"></textarea>
-                                        </div>
-
-
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <hr>
-                                    </div>
-
-
-                                    <div class="form-group">
-
-                                        <div class="col-sm-12">
-
-                                            <label>Thumbnail :&nbsp;(Size - 180 * 90)</label>
-                                            <div class="slim" style="width:180px; height:90px;"
-                                                data-meta-user-id="1220" data-ratio="180:90" data-size="180,90">
-
-                                                <input type="file" name="thumbnail" id="thumbnail">
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-
-                                    <div class="form-group">
-                                        <div class="col-sm-10">
-                                            <button type="submit" class="btn btn-success">Save</button>
-
->>>>>>> 5bb8f7c (save)
                                         </div>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
@@ -423,7 +243,6 @@
             <!-- end page content-->
         </div>
     </div>
-
     <script>
         $.ajaxSetup({
             headers: {
@@ -431,58 +250,49 @@
             }
         });
 
-
-        // Add or Update Form Submission
-        $('#packageForm').on('submit', function(e) {
-            e.preventDefault();
-            let id = $('#package_id').val();
-            let url = id ? `/admin/package/update/${id}` : `/admin/package/store`;
-            let method = id ? 'POST' : 'POST';
-
-            $.ajax({
-                url: url,
-                method: method,
-                data: $(this).serialize(),
-                success: function(res) {
-                    toastr.success(res.message);
-                    $('#packageForm')[0].reset();
-                    $('#package_id').val('');
-                    $('#exampleLargeModal').modal('hide');
-                    location.reload();
-                }
-            });
-        });
-
-        // Edit
-        function editlabtest(id) {
-            $.get(`/admin/package/edit/${id}`, function(data) {
-                $('#package_id').val(data.id);
-                $('#name').val(data.name);
-                $('#package_package').val(data.package_category);
-                $('#partner').val(data.partner);
-                $('#included_tests').val(data.included_tests);
-                $('#actual_price').val(data.actual_price);
-                $('#net_price').val(data.net_price);
-                $('#offer_price').val(data.offer_price);
-                $('#total_parameters').val(data.total_parameters);
-                $('#reporting_time').val(data.reporting_time);
-                $('#specimen_requirement').val(data.specimen_requirement);
-                $('#description').val(data.description);
-
-                // Set the correct radio button for service_type
-                $('input[name="service_type"][value="' + data.service_type + '"]').prop('checked', true);
-
-                // If thumbnail preview is needed
-                // $('#current_thumbnail').attr('src', '/path/to/uploads/' + data.thumbnail);
-
-                $('#exampleLargeModal').modal('show');
-            });
-
-        }
-
-
+        // Initialize Summernote
         $(document).ready(function() {
-            // Delete with SweetAlert confirmation
+            $('#description').summernote({
+                height: 300,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['fontsize', 'color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link', 'picture']],
+                    ['view', ['codeview']]
+                ]
+            });
+
+            // Form Submit (Add / Update)
+            $('#packageForm').on('submit', function(e) {
+                e.preventDefault();
+
+                let id = $('#package_id').val();
+                let url = id ? `/admin/package/update/${id}` : `/admin/package/store`;
+
+                // Get summernote content
+                let descriptionHtml = $('#description').summernote('code');
+                let formData = new FormData(this);
+                formData.set('description', descriptionHtml);
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(res) {
+                        toastr.success(res.message);
+                        $('#packageForm')[0].reset();
+                        $('#description').summernote('reset');
+                        $('#package_id').val('');
+                        $('#exampleLargeModal').modal('hide');
+                        location.reload();
+                    }
+                });
+            });
+
+            // Delete with SweetAlert
             $(document).on('click', '.delete-btn', function() {
                 const id = $(this).data('id');
 
@@ -499,9 +309,6 @@
                         $.ajax({
                             url: `/admin/package/delete/${id}`,
                             type: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
                             success: function(response) {
                                 toastr.success(response.message);
                                 setTimeout(() => location.reload(), 1000);
@@ -516,6 +323,25 @@
             });
         });
 
+        // Edit Function
+        function editlabtest(id) {
+            $.get(`/admin/package/edit/${id}`, function(data) {
+                $('#package_id').val(data.id);
+                $('#name').val(data.name);
+                $('#package_package').val(data.package_category);
+                $('#partner').val(data.partner);
+                $('#included_tests').val(data.included_tests);
+                $('#actual_price').val(data.actual_price);
+                $('#net_price').val(data.net_price);
+                $('#offer_price').val(data.offer_price);
+                $('#total_parameters').val(data.total_parameters);
+                $('#reporting_time').val(data.reporting_time);
+                $('#specimen_requirement').val(data.specimen_requirement);
+                $('#description').summernote('code', data.description); // set HTML
+                $('input[name="service_type"][value="' + data.service_type + '"]').prop('checked', true);
+                $('#exampleLargeModal').modal('show');
+            });
+        }
 
         function toggleStatus(id) {
             $.ajax({
@@ -528,6 +354,16 @@
                     console.log(xhr.responseText);
                     toastr.error("Status update failed.");
                 }
+            });
+        }
+
+        function toggleFeature(id) {
+            $.post("{{ url('/admin/package/feature-toggle/') }}/" + id, {
+                _token: "{{ csrf_token() }}"
+            }, function(res) {
+                toastr.success(res.success);
+            }).fail(function() {
+                toastr.error('Failed to change feature status.');
             });
         }
     </script>

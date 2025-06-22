@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('thumbnail')->nullable();
             $table->text('description')->nullable();
             $table->boolean('status')->default('1');
+            $table->boolean('feature ')->default('1');
             $table->timestamps();
               });
     }

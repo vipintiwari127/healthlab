@@ -24,7 +24,6 @@
                 </div>
                 <!--end breadcrumb-->
 
-                {{-- <h6 class="mb-0 text-uppercase">DataTable Import</h6> --}}
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                     data-bs-target="#exampleLargeModal">Add Manage All Test</button>
                 <hr />
@@ -37,37 +36,28 @@
                                         <th>Test Name</th>
                                         <th>Category</th>
                                         <th>Specimen</th>
-                                        <th>Description</th>
+                                      
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($tests as $test)
-                                        <tr>
+                                        <tr id="row-{{ $test->id }}">
                                             <td>{{ $test->test_name }}</td>
                                             <td>{{ $test->test_category }}</td>
                                             <td>{{ $test->specimen_requirement }}</td>
-                                            <td>{{ $test->test_description }}</td>
+                                           
                                             <td>
-                                                <form method="POST" action="{{ route('admin.statusAllTest', $test->id) }}">
-                                                    @csrf
-                                                    <button type="submit"
-                                                        class="btn btn-sm {{ $test->status ? 'btn-success' : 'btn-danger' }}">
-                                                        {{ $test->status ? 'Active' : 'Inactive' }}
-                                                    </button>
-                                                </form>
+                                                <button class="btn btn-sm toggle-status" data-id="{{ $test->id }}">
+                                                    {{ $test->status ? 'Active' : 'Inactive' }}
+                                                </button>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.editAllTest', $test->id) }}"
-                                                    class="btn btn-warning btn-sm">Edit</a>
-                                                <form method="POST" action="{{ route('admin.deleteAllTest', $test->id) }}"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button onclick="return confirm('Are you sure?')"
-                                                        class="btn btn-danger btn-sm">Delete</button>
-                                                </form>
+                                                <button class="btn btn-warning btn-sm edit-btn"
+                                                    data-id="{{ $test->id }}">Edit</button>
+                                                <button class="btn btn-danger btn-sm delete-btn"
+                                                    data-id="{{ $test->id }}">Delete</button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -77,260 +67,149 @@
                         </div>
                     </div>
                 </div>
-                {{-- add doctor referral modal --}}
-
+                <!-- Modal -->
                 <div class="modal fade" id="exampleLargeModal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Add Bussiness Partner</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-<<<<<<< HEAD
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card-body p-4">
-                                        <form class="row g-3 needs-validation" novalidate="">
-                                            <input type="hidden" name="id" id="review_id">
-                                            <div class="col-md-10">
-                                                <label for="bsValidation1" class="form-label">Upload CSV</label>
-                                                <input type="file" class="form-control" id="upload_csv"
-                                                    placeholder="Upload CSV" required="">
-                                                <div class="invalid-feedback">
-                                                    Please choose a Upload CSV.
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="d-md-flex d-grid align-items-center gap-3">
-                                                    <button type="submit" class="btn btn-primary px-4">Submit</button>
-                                                    <button type="reset" class="btn btn-light px-4">Reset</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                        <form id="testForm" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="id" id="test_id">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalTitle">Add Business Partner</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="card-body p-4">
-                                        <form class="row g-3 needs-validation" novalidate="">
-                                            <input type="hidden" name="id" id="review_id">
-                                            <div class="col-md-12">
-                                                <label for="bsValidation1" class="form-label">Test Name</label>
-                                                <input type="text" class="form-control" id="test_name"
-                                                    placeholder="Test Name" required="">
-                                                <div class="invalid-feedback">
-                                                    Please choose a Test Name.
-                                                </div>
+                                <div class="modal-body row">
+                                    <div class="col-md-6">
+                                        <div class="card-body p-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Upload CSV</label>
+                                                <input type="file" name="upload_csv" class="form-control" id="upload_csv"
+                                                    accept=".csv">
+                                                <div class="invalid-feedback">Please choose a CSV file.</div>
                                             </div>
-                                            <div class="col-md-12">
-                                                <label for="bsValidation1" class="form-label">Category</label>
-                                                <input type="text" class="form-control" id="test_category"
-                                                    placeholder="Category" required="">
-                                                <div class="invalid-feedback">
-                                                    Please choose a Category.
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label for="bsValidation1" class="form-label">Specimen Requirement</label>
-                                                <input type="text" class="form-control" id="specimen_requirement"
-                                                    placeholder="Specimen Requirement" required="">
-                                                <div class="invalid-feedback">
-                                                    Please choose a Specimen Requirement.
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label for="bsValidation1" class="form-label">Description</label>
-                                                <input type="text" class="form-control" id="test_description"
-                                                    placeholder="Description" required="">
-                                                <div class="invalid-feedback">
-                                                    Please choose a Review Description.
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="d-md-flex d-grid align-items-center gap-3">
-                                                    <button type="submit" class="btn btn-primary px-4">Submit</button>
-                                                    <button type="reset" class="btn btn-light px-4">Reset</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-=======
-                            <div class="card-body p-4">
-                                <form id="csv-form"  method="post" class="form-horizontal"
-                                    action=""
-                                    data-bv-message="This value is not valid"
-                                    data-bv-feedbackicons-validating="glyphicon glyphicon-refresh"
-                                    enctype="multipart/form-data">
-
-
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <label for="csv" class="orange">Upload</label>
-                                            <input type="file" name="csv" id="csv" class="form-control"
-                                                required>
                                         </div>
                                     </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-
-
-                                            <button type="submit" class="btn btn-blue" name="excel">Submit</button>
-
-
-
+                                    <div class="col-md-6">
+                                        <div class="card-body p-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Test Name</label>
+                                                <input type="text" name="test_name" id="test_name" class="form-control"
+                                                    placeholder="Test Name">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Category</label>
+                                                <input type="text" name="test_category" id="test_category"
+                                                    class="form-control" placeholder="Category">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Specimen Requirement</label>
+                                                <input type="text" name="specimen_requirement" id="specimen_requirement"
+                                                    class="form-control" placeholder="Specimen Requirement">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Description</label>
+                                                <input type="text" name="test_description" id="test_description"
+                                                    class="form-control" placeholder="Description">
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
-                                <form method="post" action="">
-
-                                    <div class="form-group">
-                                        <label for="name">Test Name</label>
-                                        <input type="text" name="name" id="name" class="form-control"
-                                            placeholder="Name" required value="">
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="category">Category</label>
-                                        <input type="text" name="category" id="category" class="form-control"
-                                            placeholder="Category" value="">
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="description">Description</label>
-                                        <textarea name="description" id="description " class="form-control ckeditor" placeholder="Category"></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="specimen_requirement">Specimen Requirement</label>
-                                        <input type="text" class="form-control" name="specimen_requirement"
-                                            id="specimen_requirement" placeholder="Specimen Requirement" value="">
-                                    </div>
-
-
-
-                                    <button type="submit" class="btn btn-success" style="height: auto"><i
-                                            class="fa fa-save"></i> Save</button>
-
-
-
-
-                                    <a type="button" class="btn btn-info"
-                                        href=""><i class="fa fa-plus"></i>
-                                        Add New</a>
-
-
-
-
-                                </form>
-
->>>>>>> 5bb8f7c (save)
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" id="submitBtn" class="btn btn-success">Submit</button>
+                                    <button type="reset" class="btn btn-light">Reset</button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
+                <!-- end page content-->
             </div>
-            <!-- end page content-->
         </div>
-    </div>
+        <script>
+            $(document).ready(function() {
+                // Submit Form (Add / Update / CSV Upload)
+                $('#testForm').on('submit', function(e) {
+                    e.preventDefault();
 
-    <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+                    const formData = new FormData(this);
+                    const id = $('#test_id').val();
+                    const hasCSV = $('#upload_csv').val() !== "";
+                    let url = "";
 
+                    if (hasCSV) {
+                        url = "{{ route('admin.uploadAllTestCSV') }}";
+                    } else {
+                        url = id ? "{{ route('admin.updateAllTest') }}" : "{{ route('admin.addAllTest') }}";
+                    }
 
-        // Add or Update Form Submission
-        $('#seoForm').on('submit', function(e) {
-            e.preventDefault();
-            let id = $('#seo_id').val();
-            let url = id ? `/admin/seo-management/update/${id}` : `/admin/seo-management/store`;
-            let method = id ? 'POST' : 'POST';
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(res) {
+                            toastr.success(id ? "Test updated!" : (hasCSV ? "CSV Uploaded!" :
+                                "Test added!"));
+                            $('#testForm')[0].reset();
+                            $('#exampleLargeModal').modal('hide');
+                            setTimeout(() => location.reload(), 1000);
+                        },
+                        error: function(xhr) {
+                            let error = xhr.responseJSON?.message || "Something went wrong!";
+                            toastr.error(error);
+                        }
+                    });
+                });
 
-            $.ajax({
-                url: url,
-                method: method,
-                data: $(this).serialize(),
-                success: function(res) {
-                    toastr.success(res.message);
-                    $('#seoForm')[0].reset();
-                    $('#seo_id').val('');
-                    $('#exampleLargeModal').modal('hide');
-                    location.reload();
-                }
-            });
-        });
+                // Edit Test
+                $('.edit-btn').on('click', function() {
+                    const id = $(this).data('id');
+                    $.get("{{ url('admin/edit-all-test') }}/" + id, function(data) {
+                        $('#test_id').val(data.id);
+                        $('#test_name').val(data.test_name);
+                        $('#test_category').val(data.test_category);
+                        $('#specimen_requirement').val(data.specimen_requirement);
+                        $('#test_description').val(data.test_description);
+                        $('#upload_csv').val('');
+                        $('#modalTitle').text('Edit Test');
+                        $('#exampleLargeModal').modal('show');
+                    });
+                });
 
-        // Edit
-        function editSEO(id) {
-            $.get(`/admin/seo-management/edit/${id}`, function(data) {
-                $('#seo_id').val(data.id);
-                $('[name="target_url"]').val(data.target_url);
-                $('[name="meta_keyword"]').val(data.meta_keyword);
-                $('[name="meta_description"]').val(data.meta_description);
-                $('[name="meta_title"]').val(data.meta_title);
-                $('[name="alt_tag"]').val(data.alt_tag);
-                $('[name="canonical_code"]').val(data.canonical_code);
-                $('[name="extra_meta"]').val(data.extra_meta);
-                $('#exampleLargeModal').modal('show');
-            });
-        }
-
-
-        $(document).ready(function() {
-            // Delete with SweetAlert confirmation
-            $(document).on('click', '.delete-btn', function() {
-                const id = $(this).data('id');
-
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "This SEO Data will be deleted!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
+                // Delete Test
+                $('.delete-btn').on('click', function() {
+                    const id = $(this).data('id');
+                    if (confirm("Are you sure you want to delete this test?")) {
                         $.ajax({
-                            url: `/admin/seo-management/delete/${id}`,
-                            type: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            url: "{{ url('admin/delete-all-test') }}/" + id,
+                            type: "DELETE",
+                            data: {
+                                _token: "{{ csrf_token() }}"
                             },
-                            success: function(response) {
-                                toastr.success(response.message);
-                                setTimeout(() => location.reload(), 1000);
+                            success: function(res) {
+                                toastr.success(res.success);
+                                $('#row-' + id).remove();
                             },
-                            error: function(xhr) {
-                                toastr.error("Something went wrong!");
-                                console.error(xhr.responseText);
+                            error: function() {
+                                toastr.error("Failed to delete test.");
                             }
                         });
                     }
                 });
-            });
-        });
 
-
-        function toggleStatus(id) {
-            $.ajax({
-                url: '/admin/seo-management/status/' + id,
-                type: 'POST',
-                success: function(res) {
-                    toastr.success(res.message);
-                },
-                error: function(xhr) {
-                    console.log(xhr.responseText);
-                    toastr.error("Status update failed.");
-                }
+                // Toggle Status
+                $('.toggle-status').on('click', function() {
+                    const id = $(this).data('id');
+                    $.post("{{ url('admin/status-all-test') }}/" + id, {
+                        _token: "{{ csrf_token() }}"
+                    }, function(res) {
+                        toastr.success(res.success);
+                        setTimeout(() => location.reload(), 800);
+                    }).fail(function() {
+                        toastr.error("Unable to change status.");
+                    });
+                });
             });
-        }
-    </script>
-@endsection
+        </script>
+    @endsection

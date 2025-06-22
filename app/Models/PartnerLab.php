@@ -16,4 +16,8 @@ class PartnerLab extends Model
         'description', 'trust_matter', 'logo', 'document', 'lab_photos'
     ];
     
+    public function city()
+{
+    return $this->belongsTo(City::class, 'city_id', 'id');
+}
 }

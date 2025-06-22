@@ -63,11 +63,13 @@ Route::get('/fqa', [WebsiteCotroller::class, 'faq']);
 // Health packeage page 
 Route::get('/health-package', [WebsiteCotroller::class, 'healthPackage']);
 // Health package details page
-Route::get('/health-package-details', [WebsiteCotroller::class, 'healthPackageDetails']);
-// lab page 
+Route::get('/health-package-details/{slug}', [WebsiteCotroller::class, 'healthPackageDetails']);
+
+// Lab page
 Route::get('/lab', [WebsiteCotroller::class, 'labs']);
-// lab details page 
-Route::get('/lab-details', [WebsiteCotroller::class, 'labDetails']);
+// Lab details page
+Route::get('/lab-details/{id}', [WebsiteCotroller::class, 'labDetails']);
+
 
 
 
@@ -213,10 +215,10 @@ Route::get('/admin/editlabpartner/{id}', [AdminController::class, 'editlabpartne
 Route::post('/admin/updatelabpartner', [AdminController::class, 'updatelabpartner']);
 Route::delete('/admin/deletelabpartner/{id}', [AdminController::class, 'deletelabpartner']);
 Route::post('/admin/statuslabpartner/{id}', [AdminController::class, 'statuslabpartner']);
+Route::post('/admin/ambulance-toggle/{id}', [AdminController::class, 'toggleAmbulance']);
+Route::post('/admin/payment-toggle/{id}', [AdminController::class, 'togglePayment']);
+
 // AllTestPartner
-<<<<<<< HEAD
-
-
 Route::prefix('admin')->group(function () {
     Route::get('/all-test', [AdminController::class, 'allTestPartner'])->name('admin.allTest');
 
@@ -234,14 +236,14 @@ Route::prefix('admin')->group(function () {
     Route::post('/upload-all-test-csv', [AdminController::class, 'uploadAllTestCSV'])->name('admin.uploadAllTestCSV');
 });
 
-=======
+
 Route::get('/admin/all-test', [AdminController::class, 'AllTestPartner']);
 Route::post('/admin/addalltest', [AdminController::class, 'addalltest']);
 Route::get('/admin/editalltest/{id}', [AdminController::class, 'editalltest']);
 Route::post('/admin/updatealltest', [AdminController::class, 'updatealltest']);
 Route::delete('/admin/deletealltest/{id}', [AdminController::class, 'deletealltest']);
 Route::post('/admin/statusalltest/{id}', [AdminController::class, 'statusalltest']);
->>>>>>> 5bb8f7c (save)
+
 //LabTest
 Route::get('/admin/lab-test', [AdminController::class, 'LabTest']);
 // Route::get('/admin/lab-test', [AdminController::class, 'labtestManagement'])->name('labtest.management');
@@ -267,6 +269,8 @@ Route::post('/admin/package/update/{id}', [AdminController::class, 'updatepackag
 Route::delete('/admin/package/delete/{id}', [AdminController::class, 'deletepackage'])->name('package.delete');
 Route::get('/admin/package/edit/{id}', [AdminController::class, 'editpackage'])->name('package.edit');
 Route::post('/admin/package/status/{id}', [AdminController::class, 'packagetoggleStatus'])->name('package.status');
+Route::post('/admin/package/feature-toggle/{id}', [AdminController::class, 'featureToggle'])->name('admin.featureToggle');
+
 
 //settings
 Route::get('/admin/setting', [AdminController::class, 'Settings']);

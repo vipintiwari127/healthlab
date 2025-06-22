@@ -107,7 +107,7 @@
                                     <div class="col-md-12">
                                         <label class="form-label">URL</label>
                                         <input type="url" class="form-control" name="url" id="url"
-                                            placeholder="URL" required>
+                                            placeholder="URL" required readonly>
                                         <div class="invalid-feedback">
                                             Please choose a URL.
                                         </div>

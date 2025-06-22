@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Package extends Model
 {
     use HasFactory;
-     protected $fillable = [
+    protected $fillable = [
         'name',
+         'slug', // ✅ Add this line
         'package_category',
         'partner',
         'included_tests',
@@ -23,5 +24,13 @@ class Package extends Model
         'thumbnail',
         'description',
         'status',
+        'feature ',
     ];
+
+ public function partnerLab()
+{
+    return $this->belongsTo(PartnerLab::class, 'partner');
+}
+
+
 }

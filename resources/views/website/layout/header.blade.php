@@ -166,7 +166,8 @@
                                 </button>
                                 <a href="#" class="d-inline-block d-lg-none"><i class="fas fa-map-marker-alt"
                                         style="font-size: 20px; margin-top: 10px; "></i></a>
-                                <h6 class="d-lg-none selected-location">Delhi</h6>
+                                <h6 class="d-lg-none selected-location">Select City</h6>
+
                                 </button>
                             </div>
                             <div
@@ -182,8 +183,9 @@
                                         class="far fa-shopping-cart"></i><span class="badge">3</span></a>
                                 <ol class="login" id="locationDisplay">
                                     <i class="far fa-map-marker-alt"></i>
-                                    <span class="selected-location">36D Street Brooklyn, New York</span>
+                                    <span class="selected-location">Select City</span>
                                 </ol>
+
                             </div>
 
 
@@ -425,7 +427,7 @@
             locationModal.show();
         });
     </script>
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             const locationCards = document.querySelectorAll('.select-location');
             const locationTexts = document.querySelectorAll('.selected-location');
@@ -464,8 +466,53 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const locationCards = document.querySelectorAll('.select-location');
+            const locationTexts = document.querySelectorAll('.selected-location');
+            const modalEl = document.getElementById('locationModal');
+            const savedLocation = localStorage.getItem('selectedCity');
+
+            // ✅ Show saved location everywhere
+            if (savedLocation) {
+                locationTexts.forEach(el => el.textContent = savedLocation);
+            }
+
+            // ✅ If modal does not exist (on other pages), skip rest
+            if (!modalEl) return;
+
+            // ✅ Initialize Bootstrap modal if available
+            let modalInstance;
+            if (bootstrap.Modal.getInstance(modalEl)) {
+                modalInstance = bootstrap.Modal.getInstance(modalEl);
+            } else {
+                modalInstance = new bootstrap.Modal(modalEl);
+            }
+
+            // ✅ Show modal if no location saved
+            if (!savedLocation) {
+                modalInstance.show();
+            }
+
+            // ✅ On city click inside modal
+            locationCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const selectedCity = this.getAttribute('data-city');
+
+                    // Save to localStorage
+                    localStorage.setItem('selectedCity', selectedCity);
+
+                    // Update location display
+                    locationTexts.forEach(el => el.textContent = selectedCity);
+
+                    // Hide modal
+                    modalInstance.hide();
+                });
+            });
+        });
+    </script>
 
 
 

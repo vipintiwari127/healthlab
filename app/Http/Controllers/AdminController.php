@@ -11,10 +11,7 @@ use App\Models\HomeAnnouncement;
 use App\Models\Announcement;
 use App\Models\BusinessPartner;
 use App\Models\LabTest;
-<<<<<<< HEAD
 use App\Models\Package;
-=======
->>>>>>> 5bb8f7c (save)
 use App\Models\PartnerLab;
 use App\Models\State;
 use App\Models\City;
@@ -800,18 +797,21 @@ class adminController extends Controller
         return response()->json(['message' => 'Status updated']);
     }
 
-
+    // ---------------------------------------------------------lab partner management----------------------------------------------------
     // labpartner
 
     public function labpartner()
     {
         $labPartners = PartnerLab::latest()->get(); // Fetch all lab partners
-        return view('admin.lab-partner', compact('labPartners'));
+        $cities = City::all();
+        $state = State::all();
+        return view('admin.lab-partner', compact('labPartners', 'cities', 'state'));
     }
 
 
     public function addlabpartner(Request $request)
     {
+        // Step 1: Validate input (do not add slug logic here)
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
@@ -820,18 +820,21 @@ class adminController extends Controller
             'contact_person_number' => 'required|string|max:255',
             'ambulance_service' => 'required|string|max:255',
             'state_id' => 'required|string|max:255',
-            'city_id' => 'required|array',
+            'city_id' => 'required|string',
             'payment_mode' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'document' => 'nullable|file|max:2048',
             'lab_photo.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Prepare data except files
+        // Step 2: Prepare data (excluding files)
         $labData = $request->except(['logo', 'document', 'lab_photo']);
-        $labData['city_id'] = implode(',', $request->city_id);
+        // $labData['city_id'] = implode(',', $request->city_id);
 
-        // Store logo in 'uploads/lab_logos'
+        // Step 3: Generate slug from name
+        $labData['url'] = Str::slug($request->name);
+
+        // Step 4: Store logo
         if ($request->hasFile('logo')) {
             $logo = $request->file('logo');
             $logoName = time() . '_logo.' . $logo->getClientOriginalExtension();
@@ -839,7 +842,7 @@ class adminController extends Controller
             $labData['logo'] = $logoPath;
         }
 
-        // Store document in 'uploads/lab_documents'
+        // Step 5: Store document
         if ($request->hasFile('document')) {
             $document = $request->file('document');
             $docName = time() . '_document.' . $document->getClientOriginalExtension();
@@ -847,7 +850,7 @@ class adminController extends Controller
             $labData['document'] = $documentPath;
         }
 
-        // Store multiple lab photos in 'uploads/lab_photos'
+        // Step 6: Store lab photos
         if ($request->hasFile('lab_photo')) {
             $labPhotos = [];
             foreach ($request->file('lab_photo') as $index => $photo) {
@@ -858,10 +861,12 @@ class adminController extends Controller
             $labData['lab_photos'] = implode(',', $labPhotos);
         }
 
+        // Step 7: Save to database
         PartnerLab::create($labData);
 
         return redirect()->back()->with('success', 'Lab Partner added successfully!');
     }
+
 
 
     public function deletelabpartner($id)
@@ -902,13 +907,33 @@ class adminController extends Controller
         return response()->json($partnerlab);
     }
 
+    // Ambulance toggle
+    public function toggleAmbulance($id, Request $request)
+    {
+        $partner = PartnerLab::findOrFail($id);
+        $partner->ambulance_service = $request->status;
+        $partner->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    // Payment toggle
+    public function togglePayment($id, Request $request)
+    {
+        $partner = PartnerLab::findOrFail($id);
+        $partner->payment_mode = $request->payment_mode; // e.g., "Online" or NULL
+        $partner->save();
+
+        return response()->json(['success' => true]);
+    }
+
     public function updatelabpartner(Request $request)
     {
         // Validate the request data
         $validatedData = $request->validate([
             'id' => 'required|exists:partner_labs,id',
             'name' => 'required|string|max:255',
-            'url' => 'nullable|string|max:255',
+            // 'url' => 'nullable|string|max:255', ❌ No need to validate url if it's generated
             'website_link' => 'nullable|string|max:255',
             'email' => 'required|email|max:255',
             'mobile' => 'required|string|max:20',
@@ -942,7 +967,7 @@ class adminController extends Controller
         // Update the lab partner data
         $labPartner->update([
             'name' => $validatedData['name'],
-            'url' => $validatedData['url'],
+            'url' => Str::slug($validatedData['name']), // ✅ Auto generate URL from name
             'website_link' => $validatedData['website_link'],
             'email' => $validatedData['email'],
             'mobile' => $validatedData['mobile'],
@@ -950,7 +975,7 @@ class adminController extends Controller
             'contact_person_number' => $validatedData['contact_person_number'],
             'cc' => $validatedData['cc'],
             'bcc' => $validatedData['bcc'],
-            'ambulance_service' => $validatedData['ambulance_service'] == 'Yes' ? 1 : 0,
+            'ambulance_service' => $validatedData['ambulance_service'] === 'Yes' ? 1 : 0,
             'state_id' => $validatedData['state_id'],
             'city_id' => $validatedData['city_id'] ? implode(',', $validatedData['city_id']) : null,
             'pincode' => $validatedData['pincode'],
@@ -966,37 +991,15 @@ class adminController extends Controller
             'trust_matter' => $validatedData['trust_matter'],
         ]);
 
-        // Handle file uploads
-        // if ($request->hasFile('logo')) {
-        //     if ($labPartner->logo) {
-        //         Storage::delete('public/' . $labPartner->logo);
-        //     }
-        //     $path = $request->file('logo')->storeAs('public/uploads', $request->file('logo')->getClientOriginalName());
-        //     $labPartner->logo = str_replace('public/', '', $path);
-        // }
-
-        // if ($request->hasFile('document')) {
-        //     if ($labPartner->document) {
-        //         Storage::delete('public/' . $labPartner->document);
-        //     }
-        //     $path = $request->file('document')->storeAs('public/uploads', $request->file('document')->getClientOriginalName());
-        //     $labPartner->document = str_replace('public/', '', $path);
-        // }
-
-        // if ($request->hasFile('lab_photo')) {
-        //     if ($labPartner->lab_photo) {
-        //         Storage::delete('public/' . $labPartner->lab_photo);
-        //     }
-        //     $path = $request->file('lab_photo')->storeAs('public/uploads', $request->file('lab_photo')->getClientOriginalName());
-        //     $labPartner->lab_photo = str_replace('public/', '', $path);
-        // }
-
+        // Optionally handle file uploads here (uncomment if needed)
 
         $labPartner->save();
 
-        // Return a success response
         return response()->json(['message' => 'Lab partner updated successfully!']);
     }
+
+
+    //---------------------------------------------------------Test management----------------------------------------------------
     // ✅ Show all tests
     public function allTestPartner()
     {
@@ -1004,7 +1007,6 @@ class adminController extends Controller
         return view('admin.all-test', compact('tests'));
     }
 
-<<<<<<< HEAD
     // ✅ Add a new test
     public function addAllTest(Request $request)
     {
@@ -1068,12 +1070,11 @@ class adminController extends Controller
     public function statusAllTest($id)
     {
         $test = Test::findOrFail($id);
-        $test->status = !$test->status;
+        $test->status = !$test->status; // true → false, false → true
         $test->save();
 
         return response()->json(['success' => 'Status changed successfully.']);
     }
-
     // ✅ Upload CSV and insert records
     public function uploadAllTestCSV(Request $request)
     {
@@ -1103,13 +1104,18 @@ class adminController extends Controller
         return redirect()->back()->with('success', 'CSV uploaded successfully!');
     }
 
-=======
->>>>>>> 5bb8f7c (save)
+    // ---------------------------------------------------------Lab Test management----------------------------------------------------
     function LabTest()
     {
         $labtestData = LabTest::latest()->get();
-        return view('admin.lab-test', compact('labtestData'));
+        $labpartners = PartnerLab::all();
+        $tests = Test::all();
+        $test_categories = Test::all();
+        $labtestData = LabTest::with(['labPartner', 'test'])->get();
+
+        return view('admin.lab-test', compact('labtestData', 'labpartners', 'tests', 'test_categories'));
     }
+
     public function storelabtest(Request $request)
     {
         $validated = $request->validate([
@@ -1184,6 +1190,8 @@ class adminController extends Controller
             'new_feature' => $labtest->feature
         ]);
     }
+
+    //---------------------------------------------------------Category management----------------------------------------------------
     function Category()
     {
         $categoryData = Category::latest()->get();
@@ -1193,23 +1201,32 @@ class adminController extends Controller
     {
         $validated = $request->validate([
             'category_name' => 'required|string|max:255',
-            'url' => 'nullable|string',
+            // Remove 'url' from validation if you generate it manually
         ]);
+
+        // Generate URL from category_name
+        $validated['url'] = Str::slug($validated['category_name']);
+
         Category::create($validated);
 
         return response()->json(['status' => 'success', 'message' => 'Category Data Added Successfully']);
     }
 
+
     public function updatecategory(Request $request, $id)
     {
         $category = Category::findOrFail($id);
+
         $validated = $request->validate([
             'category_name' => 'required|string|max:255',
-            'url' => 'nullable|string',
         ]);
 
+        // Regenerate URL from category_name
+        $validated['url'] = Str::slug($validated['category_name']);
+
         $category->update($validated);
-        return response()->json(['status' => 'success', 'message' => 'category Data Updated Successfully']);
+
+        return response()->json(['status' => 'success', 'message' => 'Category Data Updated Successfully']);
     }
 
 
@@ -1236,12 +1253,20 @@ class adminController extends Controller
             'new_status' => $category->status
         ]);
     }
+
+    // ---------------------------------------------------------Package management----------------------------------------------------
+
     function Package()
     {
         $Packages = Package::all();
+        $categories = Category::all();
+        $partners = PartnerLab::orderBy('name')->get();
+        $Packages = Package::with('partnerLab')->get();
         // return view('admin.partner.index', compact('partners'));
-        return view('admin.package', compact('Packages'));
+        return view('admin.package', compact('Packages', 'categories', 'partners'));
     }
+
+
 
     public function storepackage(Request $request)
     {
@@ -1254,14 +1279,17 @@ class adminController extends Controller
             'net_price' => 'nullable|numeric',
             'offer_price' => 'nullable|numeric',
             'total_parameters' => 'nullable|string|max:255',
-            'reporting_time' => 'required|date_format:H:i',
+            'reporting_time' => 'required|string',
             'specimen_requirement' => 'required|string|max:255',
             'service_type' => 'required|in:Lab,Home,Both',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'description' => 'nullable|string',
         ]);
 
-        // Handle image upload if exists
+        // ✅ Add slug
+        $validated['slug'] = Str::slug($validated['name']);
+
+        // ✅ Handle image upload
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             $filename = time() . '_' . $file->getClientOriginalName();
@@ -1269,7 +1297,7 @@ class adminController extends Controller
             $validated['thumbnail'] = 'uploads/' . $filename;
         }
 
-        // Save to database
+        // ✅ Save
         Package::create($validated);
 
         return response()->json([
@@ -1281,6 +1309,7 @@ class adminController extends Controller
     public function updatepackage(Request $request, $id)
     {
         $package = Package::findOrFail($id);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'package_category' => 'required|string|max:255',
@@ -1290,13 +1319,17 @@ class adminController extends Controller
             'net_price' => 'nullable|numeric',
             'offer_price' => 'nullable|numeric',
             'total_parameters' => 'nullable|string|max:255',
-            'reporting_time' => 'required|date_format:H:i',
+            'reporting_time' => 'required|string',
             'specimen_requirement' => 'required|string|max:255',
             'service_type' => 'required|in:Lab,Home,Both',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'description' => 'nullable|string',
         ]);
 
+        // ✅ Update slug again
+        $validated['slug'] = Str::slug($validated['name']);
+
+        // ✅ Image Upload
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             $filename = time() . '_' . $file->getClientOriginalName();
@@ -1304,10 +1337,14 @@ class adminController extends Controller
             $validated['thumbnail'] = 'uploads/' . $filename;
         }
 
-
         $package->update($validated);
-        return response()->json(['status' => 'success', 'message' => 'package Data Updated Successfully']);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Package Data Updated Successfully'
+        ]);
     }
+
 
 
     public function editpackage($id)
@@ -1333,6 +1370,16 @@ class adminController extends Controller
             'new_status' => $package->status
         ]);
     }
+    public function featureToggle($id)
+    {
+        $package = Package::findOrFail($id);
+        $package->feature = !$package->feature;
+        $package->save();
+
+        return response()->json(['success' => 'Feature status updated.']);
+    }
+
+
     function Settings()
     {
         return view('admin.setting');

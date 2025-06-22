@@ -40,6 +40,8 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- Summernote CSS/JS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
     <title>Health admin</title>
 </head>
 
@@ -328,9 +330,9 @@
 
                         {{-- Setting --}}
                         <li>
-                            <a href="{{"/admin/setting"}}">
+                            <a href="{{ '/admin/setting' }}">
                                 <ion-icon name="ellipse-outline"></ion-icon>Setting
-                            </a>    
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -437,7 +439,7 @@
     <script src="{{ asset('admin/assets/js/table-datatable.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/validation/validation-script.js') }}"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
     <script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {

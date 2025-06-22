@@ -38,10 +38,10 @@
     </style>
 
     <!--==============================
-                Breadcumb
-            ============================== -->
+                            Breadcumb
+                        ============================== -->
     <div class="breadcumb-wrapper">
-        <div class="parallax" data-parallax-image="{{ asset('website/assets/img/breadcurmb/breadcurmb-1-1.jpg')}}"></div>
+        <div class="parallax" data-parallax-image="{{ asset('website/assets/img/breadcurmb/breadcurmb-1-1.jpg') }}"></div>
         <div class="container z-index-common">
             <div class="breadcumb-content">
                 <h1 class="breadcumb-title">lab</h1>
@@ -126,299 +126,42 @@
         </div>
     </section>
     <!--==============================
-                Service Area
-                ==============================-->
+                            Service Area
+                            ==============================-->
     <section class="vs-service-wrapper space-top space-md-bottom">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg')}}" alt="Service Image" class="w-100" />
+                @foreach ($labTests as $test)
+                    <div class="col-md-4 col-xl-4">
+                        <div class="col-xl-12 mb-25">
+                            <div class="service-box" style="background-color:#F3F6F7;">
+                                <div class="sr-img">
+                                    <img class="lab-imag" src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg') }}"
+                                        alt="Image" class="w-100" style="width: 500px;" />
+                                </div><br />
+                                <div class="sr-content">
+                                    <h3 class="h5">
+                                        <a class="text-reset" href="{{ url('/lab-details/' . $test->id) }}">
+                                            {{ $test->test->test_name ?? 'Test Name' }}
+                                        </a>
+
+                                    </h3>
+                                    <h6 style="color: black;">{{ $test->partner->name ?? 'Lab' }}</h6>
+                                    <h6 style="font-size: 10px;">
+                                        <i class="fas fa-medal"></i>&nbsp;{{ $test->partner->city->city_name ?? 'N/A' }}
+                                    </h6>
+
+                                    <del style="color: red; font-size: 18px">₹{{ $test->lab_mrp_price }}</del>
+                                    <span style="font-size: 22px">₹{{ $test->offer_price }}</span>
+                                    </h6><br><br>
+                                    <a href="{{ url('/lab-details/' . $test->id) }}"><button><i class="fas fa-eye"></i></button></a>
+                                    <button><i class="fas fa-cart-plus"></i></button>
+                                </div>
                             </div>
-                            <br />
-                            <!-- <div class="sr-icon">
-                              <img
-                                src="assets/img/service/sr-2-1.jpg"
-                                alt="Service Image"
-                                class="w-50"
-                              />
-                            </div> -->
-                            <div class="sr-content">
-                                <h3 class="h5">
-                                    <a class="text-reset" href="single-lab.html">ANTI HEV IGG</a>
-                                </h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6>
-                                    <del style="color: red; font-size: 18px">₹650</del>
-                                    <span style="font-size: 22px">₹300</span>
-                                </h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i
-                                    class="far fa-long-arrow-alt-right"></i></a>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg')}}" alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <!-- <div class="sr-icon">
-                              <img
-                                src="assets/img/service/sr-2-1.jpg"
-                                alt="Service Image"
-                                class="w-50"
-                              />
-                            </div> -->
-                            <div class="sr-content">
-                                <h3 class="h5">
-                                    <a class="text-reset" href="single-lab.html">ANTI HEV IGG</a>
-                                </h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6>
-                                    <del style="color: red; font-size: 18px">₹650</del>
-                                    <span style="font-size: 22px">₹300</span>
-                                </h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i
-                                    class="far fa-long-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg')}}" alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <!-- <div class="sr-icon">
-                              <img
-                                src="assets/img/service/sr-2-1.jpg"
-                                alt="Service Image"
-                                class="w-50"
-                              />
-                            </div> -->
-                            <div class="sr-content">
-                                <h3 class="h5">
-                                    <a class="text-reset" href="single-lab.html">ANTI HEV IGG</a>
-                                </h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6>
-                                    <del style="color: red; font-size: 18px">₹650</del>
-                                    <span style="font-size: 22px">₹300</span>
-                                </h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i
-                                    class="far fa-long-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg')}}" alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <!-- <div class="sr-icon">
-                              <img
-                                src="assets/img/service/sr-2-1.jpg"
-                                alt="Service Image"
-                                class="w-50"
-                              />
-                            </div> -->
-                            <div class="sr-content">
-                                <h3 class="h5">
-                                    <a class="text-reset" href="single-lab.html">ANTI HEV IGG</a>
-                                </h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6>
-                                    <del style="color: red; font-size: 18px">₹650</del>
-                                    <span style="font-size: 22px">₹300</span>
-                                </h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i
-                                    class="far fa-long-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg')}}" alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <!-- <div class="sr-icon">
-                              <img
-                                src="assets/img/service/sr-2-1.jpg"
-                                alt="Service Image"
-                                class="w-50"
-                              />
-                            </div> -->
-                            <div class="sr-content">
-                                <h3 class="h5">
-                                    <a class="text-reset" href="single-lab.html">ANTI HEV IGG</a>
-                                </h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6>
-                                    <del style="color: red; font-size: 18px">₹650</del>
-                                    <span style="font-size: 22px">₹300</span>
-                                </h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i
-                                    class="far fa-long-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg')}}" alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <!-- <div class="sr-icon">
-                              <img
-                                src="assets/img/service/sr-2-1.jpg"
-                                alt="Service Image"
-                                class="w-50"
-                              />
-                            </div> -->
-                            <div class="sr-content">
-                                <h3 class="h5">
-                                    <a class="text-reset" href="single-lab.html">ANTI HEV IGG</a>
-                                </h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6>
-                                    <del style="color: red; font-size: 18px">₹650</del>
-                                    <span style="font-size: 22px">₹300</span>
-                                </h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i
-                                    class="far fa-long-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg')}}" alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <!-- <div class="sr-icon">
-                              <img
-                                src="assets/img/service/sr-2-1.jpg"
-                                alt="Service Image"
-                                class="w-50"
-                              />
-                            </div> -->
-                            <div class="sr-content">
-                                <h3 class="h5">
-                                    <a class="text-reset" href="single-lab.html">ANTI HEV IGG</a>
-                                </h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6>
-                                    <del style="color: red; font-size: 18px">₹650</del>
-                                    <span style="font-size: 22px">₹300</span>
-                                </h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i
-                                    class="far fa-long-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg')}}" alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <!-- <div class="sr-icon">
-                              <img
-                                src="assets/img/service/sr-2-1.jpg"
-                                alt="Service Image"
-                                class="w-50"
-                              />
-                            </div> -->
-                            <div class="sr-content">
-                                <h3 class="h5">
-                                    <a class="text-reset" href="single-lab.html">ANTI HEV IGG</a>
-                                </h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6>
-                                    <del style="color: red; font-size: 18px">₹650</del>
-                                    <span style="font-size: 22px">₹300</span>
-                                </h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i
-                                    class="far fa-long-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                    <div class="col-xl-12 mb-25">
-                        <div class="service-box" style="background-color:#F3F6F7;">
-                            <div class="sr-img">
-                                <img src="{{ asset('website/assets/img/6543cdab7e963_youtube.jpg')}}" alt="Service Image" class="w-100" />
-                            </div>
-                            <br />
-                            <!-- <div class="sr-icon">
-                              <img
-                                src="assets/img/service/sr-2-1.jpg"
-                                alt="Service Image"
-                                class="w-50"
-                              />
-                            </div> -->
-                            <div class="sr-content">
-                                <h3 class="h5">
-                                    <a class="text-reset" href="single-lab.html">ANTI HEV IGG</a>
-                                </h3>
-                                <h6 style="color: black;">PS.PATHLAB SARASWATI VIHAR</h6>
-                                <h6 style="font-size: 10px;"><i class="fas fa-medal"></i>&nbsp;Rohini</h6>
-                                <h6>
-                                    <del style="color: red; font-size: 18px">₹650</del>
-                                    <span style="font-size: 22px">₹300</span>
-                                </h6>
-                                <button><i class="fas fa-eye"></i></button>
-                                <button><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                            <a href="single-lab.html" class="icon-btn style4"><i
-                                    class="far fa-long-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
         </div>
     </section>
