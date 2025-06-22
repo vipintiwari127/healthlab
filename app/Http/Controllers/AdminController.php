@@ -7,20 +7,27 @@ use App\Models\Faq;
 use App\Models\Blog;
 use App\Models\Country;
 use App\Models\Doctor;
+use App\Models\GeneralSetting;
 use App\Models\HomeAnnouncement;
 use App\Models\Announcement;
 use App\Models\BusinessPartner;
 use App\Models\LabTest;
+use App\Models\MetaSetting;
 use App\Models\Package;
 use App\Models\PartnerLab;
+use App\Models\SocialSetting;
 use App\Models\State;
 use App\Models\City;
 use App\Models\Test;
 use App\Models\SeoManagement;
 use App\Models\Review;
 use App\Models\CallCenterEnquiry;
+// use Illuminate\Http\File;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+
 
 class adminController extends Controller
 {
@@ -1384,8 +1391,168 @@ class adminController extends Controller
     {
         return view('admin.setting');
     }
+
+  public function storeOrUpdate(Request $request)
+    {
+        $data = $this->validateForm($request);
+        $setting = GeneralSetting::find(1); // always use ID = 1
+
+        // Upload website logo
+        if ($request->hasFile('website_image')) {
+            if ($setting && $setting->website_image && file_exists(public_path($setting->website_image))) {
+                File::delete(public_path($setting->website_image));
+            }
+            $image = $request->file('website_image');
+            $filename = time() . '-' . Str::slug(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('admin/uploads/settings'), $filename);
+            $data['website_image'] = 'admin/uploads/settings/' . $filename;
+        } else {
+            $data['website_image'] = $setting->website_image ?? null;
+        }
+
+        // Upload multiple slider images
+        $existingSliders = $setting && $setting->sliders ? json_decode($setting->sliders, true) : [];
+        $sliderImages = [];
+        $sliderTitles = $request->slider_title ?? [];
+        $buttonNames = $request->button_name ?? [];
+        $sliderLinks = $request->slider_link ?? [];
+
+        if ($request->hasFile('slider_image')) {
+            foreach ($request->file('slider_image') as $index => $file) {
+                $sliderName = time() . '-' . $index . '-slider.' . $file->getClientOriginalExtension();
+                $file->move(public_path('admin/uploads/sliders'), $sliderName);
+                $sliderImages[] = [
+                    'slider_image' => 'admin/uploads/sliders/' . $sliderName,
+                    'slider_title' => $sliderTitles[$index] ?? '',
+                    'button_name' => $buttonNames[$index] ?? '',
+                    'slider_link' => $sliderLinks[$index] ?? ''
+                ];
+            }
+        }
+
+        // Merge new with existing if no new upload
+        if (empty($sliderImages) && !empty($existingSliders)) {
+            $sliderImages = $existingSliders;
+        }
+
+        $data['sliders'] = json_encode($sliderImages);
+
+        if ($setting) {
+            $setting->update($data);
+            return response()->json(['message' => 'General settings updated successfully']);
+        } else {
+            $data['id'] = 1;
+            GeneralSetting::create($data);
+            return response()->json(['message' => 'General settings created successfully']);
+        }
+    }
+
+    public function getSettings()
+    {
+        $setting = GeneralSetting::find(1);
+        if ($setting && $setting->sliders) {
+            $setting->sliders = json_decode($setting->sliders);
+        }
+        return response()->json($setting);
+    }
+
+    private function validateForm(Request $request)
+    {
+        return $request->validate([
+            'site_name' => 'required|string|max:255',
+            'search_distance' => 'required|string',
+            'primary_phone' => 'required|string|max:20',
+            'alternative_phone' => 'nullable|string|max:20',
+            'website_email' => 'required|email',
+            'booking_email' => 'required|email',
+            'contact_email' => 'required|email',
+            'bussiness_address_1' => 'required|string',
+            'copyright_context' => 'required|string',
+            'footer_about_company' => 'required|string',
+
+            'slider_title.*' => 'nullable|string',
+            'button_name.*' => 'nullable|string',
+            'slider_link.*' => 'nullable|string',
+
+            'website_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'slider_image.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+    }
+
+
+    public function SocialstoreOrUpdate(Request $request)
+    {
+        $data = $this->SocialvalidateForm($request);
+        $setting = SocialSetting::find(1);
+
+        if ($setting) {
+            $setting->update($data);
+            return response()->json(['message' => 'Social links updated successfully']);
+        } else {
+            $data['id'] = 1;
+            SocialSetting::create($data);
+            return response()->json(['message' => 'Social links saved successfully']);
+        }
+    }
+
+    public function Socialget()
+    {
+        $setting = SocialSetting::find(1);
+        return response()->json($setting);
+    }
+
+    private function SocialvalidateForm(Request $request)
+    {
+        return $request->validate([
+            'facebook_url' => 'nullable|url',
+            'twitter_url' => 'nullable|url',
+            'linkedin_url' => 'nullable|url',
+            'instagram_url' => 'nullable|url',
+            'youtube_url' => 'nullable|url',
+            'google_plus_url' => 'nullable|url',
+            'pintrest_url' => 'nullable|url',
+        ]);
+    }
+
+
+ public function MetaSettingstoreOrUpdate(Request $request)
+    {
+        $data = $this->MetaSettingvalidateForm($request);
+        $seo = MetaSetting::find(1);
+
+        if ($seo) {
+            $seo->update($data);
+            return response()->json(['message' => 'Default SEO updated successfully']);
+        } else {
+            $data['id'] = 1;
+            MetaSetting::create($data);
+            return response()->json(['message' => 'Default SEO created successfully']);
+        }
+    }
+
+    public function MetaSettingget()
+    {
+        $seo = MetaSetting::find(1);
+        return response()->json($seo);
+    }
+
+    private function MetaSettingvalidateForm(Request $request)
+    {
+        return $request->validate([
+            'default_meta_title' => 'required|string|max:255',
+            'meta_keyword' => 'required|string|max:255',
+            'meta_description' => 'required|string|max:255',
+            'extra_meta' => 'required|string|max:255',
+        ]);
+    }
+
+
     function Addpages()
     {
         return view('admin.page');
     }
+    
 }
+
+
+
