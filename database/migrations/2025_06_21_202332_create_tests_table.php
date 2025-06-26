@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('test_category');
             $table->string('specimen_requirement');
             $table->text('test_description');
-            $table->text('status');
+            $table->boolean('status')->default('1');
             $table->timestamps();
         });
     }

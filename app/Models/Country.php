@@ -11,5 +11,6 @@ class Country extends Model
         'id',          // ✅ Add this if you're using updateOrCreate with 'id'
         'country_name',
         'country_url',
+        'status',
     ];
 }

@@ -139,6 +139,7 @@
             <!-- end page content-->
         </div>
     </div>
+    
     <script>
         $.ajaxSetup({
             headers: {
@@ -234,4 +235,6 @@
             });
         }
     </script>
+
+
 @endsection

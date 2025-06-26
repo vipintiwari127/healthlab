@@ -10,7 +10,7 @@ class Package extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-         'slug', // ✅ Add this line
+        'slug', // ✅ Add this line
         'package_category',
         'partner',
         'included_tests',
@@ -26,11 +26,8 @@ class Package extends Model
         'status',
         'feature ',
     ];
-
- public function partnerLab()
-{
-    return $this->belongsTo(PartnerLab::class, 'partner');
-}
-
-
+    public function partnerLab()
+    {
+        return $this->belongsTo(PartnerLab::class, 'partner');
+    }
 }

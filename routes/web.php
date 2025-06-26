@@ -87,12 +87,19 @@ Route::get('/admin/register', [AdminAuthController::class, 'showRegisterForm']);
 Route::post('/admin/register', [AdminAuthController::class, 'register']);
 //Doctor page
 // Route::get('/admin/doctor', [AdminController::class, 'referredby']);
-Route::get('/admin/doctor', [AdminController::class, 'showreferredby']);
-Route::post('/admin/adddoctor', [AdminController::class, 'addreferredby']);
-Route::get('/admin/editdoctor/{id}', [AdminController::class, 'editreferredby']);
-Route::post('/admin/updatedoctor', [AdminController::class, 'updatereferredby']);
-Route::delete('/admin/deletedoctor/{id}', [AdminController::class, 'deletereferredby']);
-Route::post('/admin/statusdoctor/{id}', [AdminController::class, 'statusreferredby']);
+Route::get('/admin/doctor', [AdminController::class, 'showreferredby'])->name('doctor.management');
+Route::post('/admin/doctormanagement/store', [AdminController::class, 'storedoctor'])->name('doctor.store');
+Route::post('/admin/doctor-management/update/{id}', [AdminController::class, 'updatedoctor'])->name('doctor.update');
+Route::delete('/admin/doctor-management/delete/{id}', [AdminController::class, 'deletedoctor'])->name('doctor.delete');
+Route::get('/admin/doctor-management/edit/{id}', [AdminController::class, 'editdoctor'])->name('doctor.edit');
+Route::post('/admin/doctor-management/status/{id}', [AdminController::class, 'doctortoggleStatus'])->name('doctor.status');
+
+// Route::get('/admin/doctor', [AdminController::class, 'showreferredby']);
+// Route::post('/admin/adddoctor', [AdminController::class, 'addreferredby']);
+// Route::get('/admin/editdoctor/{id}', [AdminController::class, 'editreferredby']);
+// Route::post('/admin/updatedoctor', [AdminController::class, 'updatereferredby']);
+// Route::delete('/admin/deletedoctor/{id}', [AdminController::class, 'deletereferredby']);
+// Route::post('/admin/statusdoctor/{id}', [AdminController::class, 'statusreferredby']);
 //Booking page 
 Route::get('/admin/booking', [AdminController::class, 'BookingPage']);
 //Announcement page
@@ -236,6 +243,10 @@ Route::prefix('admin')->group(function () {
     Route::post('/upload-all-test-csv', [AdminController::class, 'uploadAllTestCSV'])->name('admin.uploadAllTestCSV');
 });
 
+Route::post('/admin/testCategory/store', [AdminController::class, 'testCategorystore'])->name('admin.testCategory.store');
+Route::get('/admin/testCategory/edit/{id}', [AdminController::class, 'testCategoryedit'])->name('testCategory.edit');
+Route::delete('/admin/testCategory/delete/{id}', [AdminController::class, 'testCategorydestroy'])->name('testCategory.delete');
+Route::get('/admin/testCategory/toggle/{id}', [AdminController::class, 'testCategorytoggleStatus'])->name('testCategory.toggle');
 
 Route::get('/admin/all-test', [AdminController::class, 'AllTestPartner']);
 Route::post('/admin/addalltest', [AdminController::class, 'addalltest']);
