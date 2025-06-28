@@ -7,17 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- loader-->
-    <link href="{{ asset('Admin/assets/css/pace.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('Admin/assets/js/pace.min.js') }}"></script>
+    <link href="{{ asset('admin/assets/css/pace.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('admin/assets/js/pace.min.js') }}"></script>
 
     <!--plugins-->
-    <link href="{{ asset('Admin/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
 
     <!-- CSS Files -->
-    <link href="{{ asset('Admin/assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('Admin/assets/css/bootstrap-extended.css') }}" rel="stylesheet">
-    <link href="{{ asset('Admin/assets/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('Admin/assets/css/icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/css/bootstrap-extended.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/css/icons.css') }}" rel="stylesheet">
     <link href="../../../css2?family=Roboto:wght@400;500&display=swap')}}" rel="stylesheet">
 
     <title>Registration </title>
@@ -80,7 +80,7 @@
     <!--end wrapper-->
 
 
-    <script src="{{ asset('Admin/assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -90,7 +90,7 @@
                 e.preventDefault();
 
                 $.ajax({
-                    url: "{{ url('/Admin/register') }}",
+                    url: "{{ url('/admin/register') }}",
                     type: "POST",
                     data: $(this).serialize(),
                     success: function(response) {

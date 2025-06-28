@@ -1,4 +1,4 @@
-@extends('Admin.layout.admin')
+@extends('admin.layout.admin')
 @section('admin-content')
     <!-- Toastr CSS/JS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
