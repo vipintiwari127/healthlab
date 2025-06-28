@@ -156,12 +156,6 @@
                                         </div>
 
                                         <div class="col-sm-4">
-                                            <label>Specimen Requirement</label>
-                                            <input type="text" class="form-control" name="specimen_requirement"
-                                                id="specimen_requirement" readonly>
-                                        </div>
-
-                                        <div class="col-sm-4">
                                             <label>Service Type</label><br>
                                             @foreach (['Lab', 'Home', 'Both'] as $type)
                                                 <label class="me-3">
@@ -172,12 +166,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group mt-3">
+                                    {{-- <div class="form-group mt-3">
                                         <div class="col-sm-12">
                                             <label>Description</label>
                                             <textarea class="form-control" rows="5" name="description" id="description" style="height:200px;"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="form-group mt-3">
                                         <div class="col-sm-12">

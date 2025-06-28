@@ -15,4 +15,9 @@ class Test extends Model
     'test_description',
     'status',
 ];
+public function category()
+{
+    return $this->belongsTo(Testcategories::class, 'test_category');
+}
+
 }

@@ -33,56 +33,61 @@
                 <div class="card">
                     <div class="card-body">
                         <ul class="nav nav-pills nav-pills-danger mb-3" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link active" data-bs-toggle="pill" href="#danger-pills-home" role="tab"
-                                    aria-selected="true">
+                            <li class="nav-item " role="presentation">
+                                <a class="nav-link active" data-bs-toggle="pill" href="#danger-pills-profile" role="tab"
+                                    aria-selected="false">
                                     <div class="d-flex align-items-center">
-                                        {{-- <div class="tab-icon"><ion-icon name="home-sharp" class="me-1"></ion-icon>
-                                        </div> --}}
-                                        <div class="tab-title">Country Management</div>
+                                        {{-- <div class="tab-icon"><ion-icon name="person-sharp" class="me-1"></ion-icon>
+                                        </div>--}}
+                                        <div class="tab-title">State Management</div>
                                     </div>
                                 </a>
                             </li>
                         </ul>
                         <div class="tab-content" id="danger-pills-tabContent">
-                            {{-- country data --}}
-                            <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+                            {{-- state data --}}
+                            <div class="tab-pane fade show active" id="danger-pills-profile" role="tabpanel">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#exampleLargeModal">Add Country</button><br><br>
+                                    data-bs-target="#addStateModal">
+                                    Add State
+                                </button><br><br>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table id="example2" class="table table-striped table-bordered">
+                                            <table id="example3" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th>Sr.no</th>
+                                                        <th>Sr.no.</th>
                                                         <th>Country Name</th>
-                                                        <th>Url </th>
+                                                        <th>State Name</th>
+                                                        <th>State Url</th>
+                                                        <th>State Code</th>
                                                         <th>Status</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($countries as $key => $country)
+                                                    @foreach ($state as $key => $statedata)
                                                         <tr>
                                                             <td>{{ $key + 1 }}</td>
-                                                            <td>{{ $country->country_name }}</td>
-                                                            <td>{{ $country->country_url }}</td>
+                                                            <td>{{ $statedata->country_name }}</td>
+                                                            <td>{{ $statedata->stateName }}</td>
+                                                            <td>{{ $statedata->stateUrl }}</td>
+                                                            <td>{{ $statedata->stateCode }}</td>
                                                             <td>
-                                                                @if ($country->status)
-                                                                    <a href="{{ route('country.toggle', $country->id) }}"
+                                                                @if ($statedata->status)
+                                                                    <a href="{{ route('state.toggle', $statedata->id) }}"
                                                                         class="btn btn-success btn-sm">Active</a>
                                                                 @else
-                                                                    <a href="{{ route('country.toggle', $country->id) }}"
+                                                                    <a href="{{ route('state.toggle', $statedata->id) }}"
                                                                         class="btn btn-danger btn-sm">Inactive</a>
                                                                 @endif
                                                             </td>
-
                                                             <td>
                                                                 <button class="btn btn-sm btn-info"
-                                                                    onclick="editCountry({{ $country->id }})">Edit</button>
-                                                                <button class="btn btn-sm btn-danger country-delete-btn"
-                                                                    data-id="{{ $country->id }}">Delete</button>
+                                                                    onclick="editState({{ $statedata->id }})">Edit</button>
+                                                                <button class="btn btn-sm btn-danger state-delete-btn"
+                                                                    data-id="{{ $statedata->id }}">Delete</button>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -92,37 +97,64 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
-                        {{-- country modal --}}
-                        <div class="modal fade" id="exampleLargeModal" tabindex="-1" aria-hidden="true">
+                        {{-- state modal --}}
+                        <div class="modal fade" id="addStateModal" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Add Country</h5>
+                                        <h5 class="modal-title">Add State</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="card-body p-4">
-                                        <form class="row g-3 needs-validation" novalidate="" id="countryForm">
+                                        <form class="row g-3 needs-validation" novalidate="" id="stateForm">
                                             @csrf
-                                            <input type="hidden" name="country_id" id="country_id">
+                                            <input type="hidden" name="state_id" id="state_id">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="country_name" class="form-label">Country Name</label>
-                                                    <input type="text" name="country_name" class="form-control"
-                                                        id="country_name" placeholder="Country Name" required>
-                                                    <div class="invalid-feedback">
-                                                        Please provide a valid Country Name.
+                                                    <label for="countryName" class="form-label">Country Name</label>
+                                                    {{-- <input type="text" class="form-control" id="countryName"
+                                                        name="countryName" placeholder="Country Name" required> --}}
+                                                    <select name="countryName" id="countryName" class="form-control"
+                                                        required>
+                                                        <option value="">Select Country</option>
+                                                        @foreach ($countries as $country)
+                                                            <option value="{{ $country->id }}">
+                                                                {{ $country->country_name }}</option>
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
+                                                    <div class="invalid-feedback">Please provide a valid Country Name.
                                                     </div>
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <label for="country_url" class="form-label">URL</label>
-                                                    <input type="text" name="country_url" class="form-control"
-                                                        id="country_url" placeholder="URL" required readonly>
-                                                    <div class="invalid-feedback">
-                                                        Please provide a valid URL.
-                                                    </div>
+                                                <div class="col-md-4">
+                                                    <label for="stateName" class="form-label">State Name</label>
+                                                    <input type="text" class="form-control" id="stateName"
+                                                        name="stateName" placeholder="State Name" required>
+                                                    <div class="invalid-feedback">Please provide a valid State Name.</div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="stateCode" class="form-label">State Code</label>
+                                                    <input type="text" class="form-control" id="stateCode"
+                                                        name="stateCode" placeholder="State Code" required>
+                                                    <div class="invalid-feedback">Please provide a valid State Code.</div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="url" class="form-label">URL</label>
+                                                    <input type="text" class="form-control" id="stateUrl"
+                                                        name="stateUrl" placeholder="URL" required readonly>
+                                                    <div class="invalid-feedback">Please provide a valid URL.</div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="aboutState" class="form-label">About State</label>
+                                                    <input type="text" class="form-control" id="aboutState"
+                                                        name="aboutState" placeholder="About State" >
+                                                    <div class="invalid-feedback">Please provide valid details about the
+                                                        state.</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -148,12 +180,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
-        //country form submission
-        $('#countryForm').submit(function(e) {
+
+        //state form submission
+        $('#stateForm').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             $.ajax({
-                url: "{{ route('countries.store') }}",
+                url: "{{ route('state.store') }}",
                 method: "POST",
                 data: formData,
                 contentType: false,
@@ -161,7 +194,7 @@
                 success: function(res) {
                     if (res.status == 'success') {
                         toastr.success(res.message);
-                        $('#exampleLargeModal').modal('hide');
+                        $('#addStateModal').modal('hide');
                         setTimeout(() =>
                             location.reload(), 1000);
                     }
@@ -169,23 +202,26 @@
             });
         });
 
-        //edit country
-        function editCountry(id) {
-            $.get("{{ url('/admin/countries/edit') }}/" + id, function(data) {
-                $('#country_id').val(data.id);
-                $('[name="country_name"]').val(data.country_name);
-                $('[name="country_url"]').val(data.country_url);
-                $('#exampleLargeModal').modal('show');
+        //edit state
+        function editState(id) {
+            $.get("{{ url('/admin/state/edit') }}/" + id, function(data) {
+                $('#state_id').val(data.id);
+                $('[name="countryName"]').val(data.countryName);
+                $('[name="stateName"]').val(data.stateName);
+                $('[name="stateCode"]').val(data.stateCode);
+                $('[name="stateUrl"]').val(data.stateUrl);
+                $('[name="aboutState"]').val(data.aboutState);
+                $('#addStateModal').modal('show');
             });
         }
-
-        // Delete counrty with SweetAlert Confirmation
-        $('.country-delete-btn').on('click', function() {
+    
+        // Delete state with SweetAlert Confirmation
+        $('.state-delete-btn').on('click', function() {
             const id = $(this).data('id');
 
             Swal.fire({
                 title: 'Are you sure?',
-                text: "This Country will be deleted!",
+                text: "This State will be deleted!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -194,13 +230,13 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ url('/admin/countries/delete') }}/" + id,
+                        url: "{{ url('/admin/state/delete') }}/" + id,
                         type: 'DELETE',
                         data: {
                             "_token": "{{ csrf_token() }}"
                         },
                         success: function(response) {
-                            toastr.success("Country deleted successfully!");
+                            toastr.success("State deleted successfully!");
                             setTimeout(() => location.reload(), 1000);
                         },
                         error: function() {
@@ -210,21 +246,23 @@
                 }
             });
         });
+       
 
         function resetForm() {
-            $('#countryForm')[0].reset();
-            $('#country_id').val('');
+            $('#stateForm')[0].reset();
+            $('#state_id').val('');
         }
+
     </script>
     <script>
-        document.getElementById('country_name').addEventListener('input', function() {
+        document.getElementById('stateName').addEventListener('input', function() {
             let name = this.value;
             let slug = name.toLowerCase()
                 .trim()
                 .replace(/[^a-z0-9\s-]/g, '') // remove special chars
                 .replace(/\s+/g, '-') // replace spaces with -
                 .replace(/-+/g, '-'); // remove multiple dashes
-            document.getElementById('country_url').value = slug;
+            document.getElementById('stateUrl').value = slug;
         });
     </script>
 @endsection

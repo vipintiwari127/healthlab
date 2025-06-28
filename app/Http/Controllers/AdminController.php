@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Testcategories;
 use App\Models\Faq;
 use App\Models\Blog;
 use App\Models\Country;
+use Carbon\Carbon;
 use App\Models\Doctor;
 use App\Models\GeneralSetting;
 use App\Models\HomeAnnouncement;
@@ -35,38 +37,63 @@ class adminController extends Controller
     {
         return view('admin.dashboard');
     }
+
     public function showreferredby()
     {
         $doctors = Doctor::all(); // fetch all doctor data
         return view('admin.referred-dr', compact('doctors'));
     }
 
-    public function addreferredby(Request $request)
+    public function storedoctor(Request $request)
     {
+        // Validate request
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|digits_between:10,15',
+            'ProfilePhoto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'email' => 'required|email',
-            'gender' => 'required|in:Male,Female', // must match exactly
-            'zip' => 'required|string',
+            'gender' => 'required|in:Male,Female,Other',
+            'zip' => 'required|string|max:10',
+            'DateofBirth' => 'required|date',
             'address' => 'required|string',
             'specialization' => 'required|string',
+            'Qualification' => 'required|string',
+            'YearsofExperience' => 'required|string|max:50',
+            'City' => 'required|string|max:100',
+            'languages' => 'nullable|array',
+            'languages.*' => 'in:English,Hindi,Other',
         ]);
 
-        \App\Models\Doctor::create([
+        // Handle file upload
+        $fileName = null;
+        if ($request->hasFile('ProfilePhoto')) {
+            $file = $request->file('ProfilePhoto');
+            $fileName = time() . '_' . Str::slug($request->name) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads'), $fileName); // Save to public/uploads
+        }
+
+        // Create new doctor record
+        Doctor::create([
             'name' => $request->name,
             'phone' => $request->phone,
+            'ProfilePhoto' => $fileName,
             'email' => $request->email,
             'gender' => $request->gender,
             'zip' => $request->zip,
+            'DateofBirth' => Carbon::parse($request->DateofBirth)->format('Y-m-d'),
             'address' => $request->address,
             'specialization' => $request->specialization,
+            'Qualification' => $request->Qualification,
+            'YearsofExperience' => $request->YearsofExperience,
+            'City' => $request->City,
+            'languages' => json_encode($request->languages), // Save as JSON
         ]);
 
         return response()->json(['status' => 'success']);
     }
 
-    public function deletereferredby($id)
+
+    public function deletedoctor($id)
     {
         Doctor::destroy($id);
         return response()->json(['message' => 'Deleted successfully']);
@@ -74,13 +101,13 @@ class adminController extends Controller
 
     // DoctorController.php
 
-    public function editreferredby($id)
+    public function editdoctor($id)
     {
         $doctor = Doctor::findOrFail($id);
         return response()->json($doctor);
     }
 
-    public function updatereferredby(Request $request)
+    public function updatedoctor(Request $request, $id)
     {
         $request->validate([
             'name' => 'required',
@@ -90,30 +117,57 @@ class adminController extends Controller
             'zip' => 'required',
             'address' => 'required',
             'specialization' => 'required',
+            'Qualification' => 'required',
+            'YearsofExperience' => 'required',
+            'DateofBirth' => 'required',
+            'City' => 'required',
+            'languages' => 'nullable|array',
+            'ProfilePhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $doctor = Doctor::findOrFail($request->id);
-        $doctor->update($request->only([
-            'name',
-            'phone',
-            'email',
-            'gender',
-            'zip',
-            'address',
-            'specialization'
-        ]));
+        $doctor = Doctor::findOrFail($id);
 
-        return redirect()->back()->with('success', 'Doctor updated successfully!');
+        // Handle ProfilePhoto upload
+        if ($request->hasFile('ProfilePhoto')) {
+            $image = $request->file('ProfilePhoto');
+            $filename = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('uploads'), $filename);
+            $doctor->ProfilePhoto = $filename;
+        }
+
+        // Update other fields
+        $doctor->name = $request->name;
+        $doctor->phone = $request->phone;
+        $doctor->email = $request->email;
+        $doctor->gender = $request->gender;
+        $doctor->zip = $request->zip;
+        $doctor->address = $request->address;
+        $doctor->specialization = $request->specialization;
+        $doctor->Qualification = $request->Qualification;
+        $doctor->YearsofExperience = $request->YearsofExperience;
+        $doctor->DateofBirth = $request->DateofBirth;
+        $doctor->City = $request->City;
+        $doctor->languages = json_encode($request->languages); // Convert array to JSON
+
+        $doctor->save();
+
+        return response()->json(['success' => true, 'message' => 'Doctor updated successfully.']);
     }
 
 
-    public function statusreferredby($id)
+
+    public function doctortoggleStatus($id)
     {
+
         $doctor = Doctor::findOrFail($id);
-        $doctor->status = !$doctor->status;
+        $doctor->status = $doctor->status == 1 ? 0 : 1;
         $doctor->save();
 
-        return response()->json(['message' => 'Status updated', 'status' => $doctor->status]);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'doctor status updated successfully',
+            'new_status' => $doctor->status
+        ]);
     }
 
 
@@ -246,7 +300,16 @@ class adminController extends Controller
         return view('admin.prescription');
     }
     // --------------------------------------------------------Master setup pages--------------------------------------------------------
-    public function MasterSetup()
+    public function Statemanagement()
+    {
+        $countries = Country::latest()->get();
+        $state = State::latest()
+            ->join('countries', 'states.countryName', '=', 'countries.id')
+            ->select('states.*', 'countries.country_name as country_name')
+            ->get();
+        return view('admin.statemanagement', compact('countries', 'state'));
+    }
+    public function Citymanagement()
     {
         $countries = Country::latest()->get();
         $state = State::latest()
@@ -262,7 +325,13 @@ class adminController extends Controller
                 'countries.country_name as country_name'
             )
             ->get();
-        return view('admin.master-setup', compact('countries', 'state', 'cities'));
+        return view('admin.citymanagement', compact('countries', 'state', 'cities'));
+    }
+    public function MasterSetup()
+    {
+        $countries = Country::latest()->get();
+
+        return view('admin.master-setup', compact('countries'));
     }
     // Countries
     public function MasterSetupstore(Request $request)
@@ -309,7 +378,7 @@ class adminController extends Controller
             'stateName' => 'required|string',
             'stateCode' => 'required|string',
             'stateUrl' => 'required|string',
-            'aboutState' => 'required|string',
+            'aboutState' => 'nullable|string',
 
         ]);
 
@@ -355,18 +424,27 @@ class adminController extends Controller
             'city_stateName' => 'required|string',
             'cityUrl' => 'required|string',
             'city_name' => 'required|string',
-            'city_about' => 'required|string',
+            'city_about' => 'nullable|string',
+            'city_image' => $request->city_id ? 'nullable|image|mimes:jpeg,png,jpg,gif' : 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
+
+        $data = $request->only([
+            'city_countryName',
+            'city_stateName',
+            'cityUrl',
+            'city_name',
+            'city_about',
+        ]);
+
+        if ($request->hasFile('city_image')) {
+            $imageName = time() . '.' . $request->city_image->extension();
+            $request->city_image->move(public_path('uploads/cities'), $imageName);
+            $data['city_image'] = 'uploads/cities/' . $imageName;
+        }
 
         City::updateOrCreate(
             ['id' => $request->city_id],
-            [
-                'city_countryName' => $request->city_countryName,
-                'city_stateName' => $request->city_stateName,
-                'cityUrl' => $request->cityUrl,
-                'city_name' => $request->city_name,
-                'city_about' => $request->city_about,
-            ]
+            $data
         );
 
         return response()->json(['status' => 'success', 'message' => 'City saved successfully']);
@@ -480,29 +558,7 @@ class adminController extends Controller
         return view('admin.blog', compact('blogs'));
     }
 
-    // public function storeBlog(Request $request)
-    // {
-    //     $request->validate([
-    //         'posting_date' => 'required|date',
-    //         'title' => 'required',
-    //         'url' => 'required',
-    //         'description' => 'required',
-    //         'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-    //     ]);
 
-    //     $fileName = time() . '.' . $request->image->extension();
-    //     $request->image->move(public_path('uploads/blogs'), $fileName);
-
-    //     Blog::create([
-    //         'posting_date' => $request->posting_date,
-    //         'title' => $request->title,
-    //         'url' => $request->url,
-    //         'description' => $request->description,
-    //         'image' => $fileName
-    //     ]);
-
-    //     return redirect()->route('admin.blog')->with('success', 'Blog added successfully!');
-    // }
     public function storeBlog(Request $request)
     {
         $request->validate([
@@ -1010,8 +1066,9 @@ class adminController extends Controller
     // ✅ Show all tests
     public function allTestPartner()
     {
-        $tests = Test::orderBy('id', 'DESC')->get();
-        return view('admin.all-test', compact('tests'));
+        $tests = Test::with('category')->orderBy('id', 'DESC')->get();
+        $testcategories = Testcategories::orderBy('id', 'DESC')->get();
+        return view('admin.all-test', compact('tests', 'testcategories'));
     }
 
     // ✅ Add a new test
@@ -1109,6 +1166,42 @@ class adminController extends Controller
         }
 
         return redirect()->back()->with('success', 'CSV uploaded successfully!');
+    }
+
+    public function storeTestcategory(Request $request)
+    {
+        $validated = $request->validate([
+            'test_category_name' => 'required|string|max:255',
+        ]);
+
+        Testcategories::create($validated);
+
+        return response()->json(['status' => 'success', 'message' => 'Category Data Added Successfully']);
+    }
+
+    public function updateTestcategory(Request $request, $id)
+    {
+        $category = Testcategories::findOrFail($id);
+
+        $validated = $request->validate([
+            'test_category_name' => 'required|string|max:255',
+        ]);
+
+        $category->update($validated); // ✅ missing line
+
+        return response()->json(['status' => 'success', 'message' => 'Category Data Updated Successfully']);
+    }
+
+    public function editTestcategory($id)
+    {
+        $category = Testcategories::findOrFail($id);
+        return response()->json($category);
+    }
+
+    public function deleteTestcategory($id)
+    {
+        Testcategories::findOrFail($id)->delete();
+        return response()->json(['status' => 'success', 'message' => 'Category Data Deleted Successfully']);
     }
 
     // ---------------------------------------------------------Lab Test management----------------------------------------------------
@@ -1392,7 +1485,7 @@ class adminController extends Controller
         return view('admin.setting');
     }
 
-  public function storeOrUpdate(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $data = $this->validateForm($request);
         $setting = GeneralSetting::find(1); // always use ID = 1
@@ -1515,7 +1608,7 @@ class adminController extends Controller
     }
 
 
- public function MetaSettingstoreOrUpdate(Request $request)
+    public function MetaSettingstoreOrUpdate(Request $request)
     {
         $data = $this->MetaSettingvalidateForm($request);
         $seo = MetaSetting::find(1);
@@ -1551,8 +1644,4 @@ class adminController extends Controller
     {
         return view('admin.page');
     }
-    
 }
-
-
-

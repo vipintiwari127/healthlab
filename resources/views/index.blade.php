@@ -1,5 +1,25 @@
 @extends('website.layout.header')
 @section('main-content')
+    <style>
+        .modal-body-scroll {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        /* Optional: Add custom scrollbar styling */
+        .modal-body-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-body-scroll::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 4px;
+        }
+
+        .modal-body-scroll::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+    </style>
     <!-- Hero Area -->
     <section class="vs-hero-wrapper position-relative">
         <div class="row g-0 d-md-flex align-items-stretch" style="background-color: var(--primary-color);">
@@ -113,26 +133,24 @@
                     <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"
                         style="font-size: 24px; line-height: 1;">&times;</button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body modal-body-scroll"> <!-- Scroll added here -->
                     <div class="mb-2 d-flex gap-2">
                         <input type="text" class="form-control" id="currentLocationInput"
                             placeholder="Enter your current location" />
                         <button class="btn btn-primary">Current location</button>
                     </div>
                     <br>
-                    <!-- Location Options -->
                     <h5>Popular City</h5>
                     <div class="d-flex justify-content-start flex-wrap gap-3">
                         @foreach ($popularCities as $city)
                             <div class="location-card text-center select-location" data-city="{{ $city->city_name }}">
-                                <img src="{{ asset('website/assets/img/logo.svg') }}" alt="{{ $city->city_name }}"
-                                    class="img-fluid" style="width: 60px; height: 60px;" />
+                                <img src="{{ asset($city->city_image ?? 'website/assets/img/default-city.png') }}"
+                                    alt="{{ $city->city_name }}" class="img-fluid" style="width: 40px; height: 40px;" />
                                 <h6>{{ $city->city_name }}</h6>
                             </div>
                         @endforeach
                     </div>
                     <br>
-                    <!-- Suggested Locations -->
                     <h5>All City</h5>
                     <div class="mt-4 d-flex flex-wrap gap-3">
                         @foreach ($allCities as $city)
@@ -145,6 +163,7 @@
             </div>
         </div>
     </div>
+
     <!-- Service Area -->
     <section class="vs-service-wrapper space-top space-md-bottom">
         <div class="parallax" data-parallax-image="{{ asset('website/assets/img/bg/bg-7.jpg') }}"></div>

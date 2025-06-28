@@ -135,8 +135,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
-
+        // Add Category
         $('#categoryForm').on('submit', function(e) {
             e.preventDefault();
 

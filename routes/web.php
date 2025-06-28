@@ -86,13 +86,12 @@ Route::get('/admin/logout', [AdminAuthController::class, 'logout']);
 Route::get('/admin/register', [AdminAuthController::class, 'showRegisterForm']);
 Route::post('/admin/register', [AdminAuthController::class, 'register']);
 //Doctor page
-// Route::get('/admin/doctor', [AdminController::class, 'referredby']);
-Route::get('/admin/doctor', [AdminController::class, 'showreferredby']);
-Route::post('/admin/adddoctor', [AdminController::class, 'addreferredby']);
-Route::get('/admin/editdoctor/{id}', [AdminController::class, 'editreferredby']);
-Route::post('/admin/updatedoctor', [AdminController::class, 'updatereferredby']);
-Route::delete('/admin/deletedoctor/{id}', [AdminController::class, 'deletereferredby']);
-Route::post('/admin/statusdoctor/{id}', [AdminController::class, 'statusreferredby']);
+Route::get('/admin/doctor', [AdminController::class, 'showreferredby'])->name('doctor.management');
+Route::post('/admin/doctormanagement/store', [AdminController::class, 'storedoctor'])->name('doctor.store');
+Route::post('/admin/doctor-management/update/{id}', [AdminController::class, 'updatedoctor'])->name('doctor.update');
+Route::delete('/admin/doctor-management/delete/{id}', [AdminController::class, 'deletedoctor'])->name('doctor.delete');
+Route::get('/admin/doctor-management/edit/{id}', [AdminController::class, 'editdoctor'])->name('doctor.edit');
+Route::post('/admin/doctor-management/status/{id}', [AdminController::class, 'doctortoggleStatus'])->name('doctor.status');
 //Booking page 
 Route::get('/admin/booking', [AdminController::class, 'BookingPage']);
 //Announcement page
@@ -114,6 +113,8 @@ Route::get('/admin/prescription', [AdminController::class, 'prescriptionPage']);
 //----------------------------------------------------------------------master setup start----------------------------------------------------------------------
 //Master setup page
 Route::get('/admin/master-setup', [AdminController::class, 'MasterSetup']); // routes/web.php
+Route::get('/admin/state-management', [AdminController::class, 'Statemanagement']); // routes/web.php
+Route::get('/admin/city-management', [AdminController::class, 'Citymanagement']); // routes/web.php
 
 //countries
 Route::post('/admin/countries/store', [AdminController::class, 'MasterSetupstore'])->name('countries.store');
@@ -234,6 +235,11 @@ Route::prefix('admin')->group(function () {
 
     // For CSV Upload
     Route::post('/upload-all-test-csv', [AdminController::class, 'uploadAllTestCSV'])->name('admin.uploadAllTestCSV');
+    // test category
+    Route::post('/Testcategory/store', [AdminController::class, 'storeTestcategory'])->name('Testcategory.store');
+    Route::post('/Testcategory/update/{id}', [AdminController::class, 'updateTestcategory'])->name('Testcategory.update');
+    Route::delete('/Testcategory/delete/{id}', [AdminController::class, 'deleteTestcategory'])->name('Testcategory.delete');
+    Route::get('/Testcategory/edit/{id}', [AdminController::class, 'editTestcategory'])->name('Testcategory.edit');
 });
 
 
@@ -242,7 +248,8 @@ Route::post('/admin/addalltest', [AdminController::class, 'addalltest']);
 Route::get('/admin/editalltest/{id}', [AdminController::class, 'editalltest']);
 Route::post('/admin/updatealltest', [AdminController::class, 'updatealltest']);
 Route::delete('/admin/deletealltest/{id}', [AdminController::class, 'deletealltest']);
-Route::post('/admin/statusalltest/{id}', [AdminController::class, 'statusalltest']);
+// Route::post('/admin/statusalltest/{id}', [AdminController::class, 'statusalltest']);
+Route::get('/admin/statusalltest/toggle/{id}', [AdminController::class, 'statusalltest'])->name('alltest.toggle');
 
 //LabTest
 Route::get('/admin/lab-test', [AdminController::class, 'LabTest']);
@@ -289,4 +296,3 @@ Route::get('/admin/social-links/get', [AdminController::class, 'Socialget'])->na
 
 Route::post('/admin/default-seo/store-or-update', [AdminController::class, 'MetaSettingstoreOrUpdate'])->name('admin.defaultseo.storeOrUpdate');
 Route::get('/admin/default-seo/get', [AdminController::class, 'MetaSettingget'])->name('admin.defaultseo.get');
-

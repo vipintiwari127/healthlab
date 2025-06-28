@@ -308,7 +308,17 @@
                     <ul>
                         <li>
                             <a href="{{ '/admin/master-setup' }}">
-                                <ion-icon name="ellipse-outline"></ion-icon>Master Setup List
+                                <ion-icon name="ellipse-outline"></ion-icon>Country List
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ '/admin/state-management' }}">
+                                <ion-icon name="ellipse-outline"></ion-icon>State List
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ '/admin/city-management' }}">
+                                <ion-icon name="ellipse-outline"></ion-icon>City List
                             </a>
                         </li>
                     </ul>
