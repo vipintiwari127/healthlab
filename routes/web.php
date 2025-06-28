@@ -158,7 +158,6 @@ Route::prefix('admin')->group(function () {
     Route::delete('/review/delete/{id}', [AdminController::class, 'destroy']);
 });
 
-
 //blogs page
 Route::get('/admin/blog', [AdminController::class, 'Blogs'])->name('admin.blog');
 Route::post('/admin/blog/store', [AdminController::class, 'storeBlog'])->name('admin.blog.store');
