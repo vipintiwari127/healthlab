@@ -36,7 +36,7 @@ class adminController extends Controller
     {
         return view('admin.dashboard');
     }
-    public function showreferredby()
+   public function showreferredby()
     {
         $doctors = Doctor::all(); // fetch all doctor data
         return view('admin.referred-dr', compact('doctors'));

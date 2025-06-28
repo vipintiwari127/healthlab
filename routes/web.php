@@ -86,26 +86,16 @@ Route::get('/admin/logout', [AdminAuthController::class, 'logout']);
 Route::get('/admin/register', [AdminAuthController::class, 'showRegisterForm']);
 Route::post('/admin/register', [AdminAuthController::class, 'register']);
 //Doctor page
-<<<<<<< HEAD
+
 // Route::get('/admin/doctor', [AdminController::class, 'referredby']);
-=======
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
+
 Route::get('/admin/doctor', [AdminController::class, 'showreferredby'])->name('doctor.management');
 Route::post('/admin/doctormanagement/store', [AdminController::class, 'storedoctor'])->name('doctor.store');
 Route::post('/admin/doctor-management/update/{id}', [AdminController::class, 'updatedoctor'])->name('doctor.update');
 Route::delete('/admin/doctor-management/delete/{id}', [AdminController::class, 'deletedoctor'])->name('doctor.delete');
 Route::get('/admin/doctor-management/edit/{id}', [AdminController::class, 'editdoctor'])->name('doctor.edit');
 Route::post('/admin/doctor-management/status/{id}', [AdminController::class, 'doctortoggleStatus'])->name('doctor.status');
-<<<<<<< HEAD
 
-// Route::get('/admin/doctor', [AdminController::class, 'showreferredby']);
-// Route::post('/admin/adddoctor', [AdminController::class, 'addreferredby']);
-// Route::get('/admin/editdoctor/{id}', [AdminController::class, 'editreferredby']);
-// Route::post('/admin/updatedoctor', [AdminController::class, 'updatereferredby']);
-// Route::delete('/admin/deletedoctor/{id}', [AdminController::class, 'deletereferredby']);
-// Route::post('/admin/statusdoctor/{id}', [AdminController::class, 'statusreferredby']);
-=======
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
 //Booking page 
 Route::get('/admin/booking', [AdminController::class, 'BookingPage']);
 //Announcement page

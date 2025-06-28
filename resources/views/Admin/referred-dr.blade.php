@@ -38,11 +38,14 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
+                                    <th>Qualification</th>
+                                    <th>Years of Experience</th>
+                                    <th>City</th>
+                                    <th>Date of Birth</th>
+                                    <th>Gender</th>
+                                    <th>Phone</th>
                                     <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
+                                    <th>Email</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -51,10 +54,13 @@
                                 @foreach ($doctors as $doctor)
                                 <tr>
                                     <td>{{ $doctor->name }}</td>
-                                    <td>{{ $doctor->specialization }}</td>
-                                    <td>{{ $doctor->address }}</td>
+                                    <td>{{ $doctor->Qualification }}</td>
+                                    <td>{{ $doctor->YearsofExperience }}</td>
+                                    <td>{{ $doctor->City }}</td>    
+                                    <td>{{ $doctor->DateofBirth }}</td>
                                     <td>{{ $doctor->gender }}</td>
                                     <td>{{ $doctor->phone }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($doctor->DateofBirth)->age }}</td>
                                     <td>{{ $doctor->email }}</td>
                                     <td>
                                         <div class="form-check form-switch">
@@ -64,11 +70,7 @@
                                             'checked' :
                                             '' }}>
                                         </div>
-                                        {{--
-                                    <td>
-                                        <input class="form-check-input status-toggle" type="checkbox"
-                                            data-id="{{ $doctor->id }}" {{ $doctor->status ? 'checked' : '' }}>
-                                    </td> --}}
+                                       
                                     <td>
                                         <button class="btn btn-sm btn-info"
                                             onclick="editdoctor({{ $doctor->id }})">Edit</button>
@@ -203,11 +205,7 @@
                                     <input type="text" class="form-control" id="DateofBirth" name="DateofBirth"
                                         placeholder="Date of Birth" required>
                                     <div class="invalid-feedback">
-<<<<<<< HEAD
                                         Please enter a valid Zip code.
-=======
-                                        Please enter a valid DOB.
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -215,11 +213,7 @@
                                     <input type="text" class="form-control" id="City" name="City" placeholder="City"
                                         required="">
                                     <div class="invalid-feedback">
-<<<<<<< HEAD
                                         Please enter a valid City code.
-=======
-                                        Please enter a valid City.
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
                                     </div>
                                 </div>
 
@@ -265,35 +259,31 @@
         }
     });
 
-
     // Add or Update Form Submission
     $('#doctorForm').on('submit', function(e) {
         e.preventDefault();
         let id = $('#doctor_id').val();
-<<<<<<< HEAD
-        let url = id ? `/admin/doctor-management/update/${id}` : `/admin/doctormanagement/store`;
+        let url = id
+            ? `/admin/doctor-management/update/${id}`
+            : `{{ route('doctor.store') }}`;
 
-        let formData = new FormData(this); // ⬅️ use FormData for file uploads
-=======
-        let url = id ? /admin/doctor-management/update/${id} : /admin/doctormanagement/store;
-
-        let formData = new FormData(this); // ⬅ use FormData for file uploads
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
+        let formData = new FormData(this);
 
         $.ajax({
-            url: url
-            , method: 'POST'
-            , data: formData
-            , contentType: false
-            , processData: false
-            , success: function(res) {
+            url: url,
+            method: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(res) {
                 toastr.success("Doctor saved successfully.");
                 $('#doctorForm')[0].reset();
                 $('#doctor_id').val('');
+                $('#existingPhoto').html('');
                 $('#addDoctorModal').modal('hide');
                 location.reload();
-            }
-            , error: function(xhr) {
+            },
+            error: function(xhr) {
                 if (xhr.responseJSON && xhr.responseJSON.errors) {
                     let messages = Object.values(xhr.responseJSON.errors).flat().join("<br>");
                     toastr.error(messages);
@@ -304,13 +294,9 @@
         });
     });
 
-    // Edit
+    // Edit Function
     function editdoctor(id) {
-<<<<<<< HEAD
         $.get(`/admin/doctor-management/edit/${id}`, function(data) {
-=======
-        $.get(/admin/doctor-management/edit/${id}, function(data) {
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
             $('#doctor_id').val(data.id);
             $('#name').val(data.name);
             $('#phone').val(data.phone);
@@ -324,32 +310,20 @@
             $('#address').val(data.address);
             $('#specialization').val(data.specialization);
 
-            // Set Languages checkboxes
-            $('input[name="languages[]"]').prop('checked', false); // Reset
-        try {
-            const langs = JSON.parse(data.languages);
-            if (Array.isArray(langs)) {
+            $('input[name="languages[]"]').prop('checked', false);
+            try {
+                const langs = JSON.parse(data.languages || '[]');
                 langs.forEach(lang => {
-<<<<<<< HEAD
                     $(`input[name="languages[]"][value="${lang}"]`).prop('checked', true);
-=======
-                    $(input[name="languages[]"][value="${lang}"]).prop('checked', true);
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
                 });
+            } catch (e) {
+                console.error("Language parse error:", e);
             }
-        } catch (e) {
-            console.error("Invalid languages format", e);
-        }
 
-            // Show existing profile photo preview
             if (data.ProfilePhoto) {
-                $('#existingPhoto').html(
-<<<<<<< HEAD
-                    `<img src="/uploads/${data.ProfilePhoto}" alt="Profile Photo" class="img-thumbnail mt-2" width="100">`
-=======
-                    <img src="/uploads/${data.ProfilePhoto}" alt="Profile Photo" class="img-thumbnail mt-2" width="100">
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
-                );
+                $('#existingPhoto').html(`
+                    <img src="/uploads/${data.ProfilePhoto}" class="img-thumbnail mt-2" width="100" />
+                `);
             } else {
                 $('#existingPhoto').html('');
             }
@@ -358,61 +332,54 @@
         });
     }
 
+    // Delete Function
+    $(document).on('click', '.delete-btn', function() {
+        const id = $(this).data('id');
 
-    $(document).ready(function() {
-        // Delete with SweetAlert confirmation
-        $(document).on('click', '.delete-btn', function() {
-            const id = $(this).data('id');
-
-            Swal.fire({
-                title: 'Are you sure?'
-                , text: "This doctor Data will be deleted!"
-                , icon: 'warning'
-                , showCancelButton: true
-                , confirmButtonColor: '#d33'
-                , cancelButtonColor: '#6c757d'
-                , confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-<<<<<<< HEAD
-                        url: `/admin/doctor-management/delete/${id}`
-=======
-                        url: /admin/doctor-management/delete/${id}
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
-                        , type: 'DELETE'
-                        , headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                        , success: function(response) {
-                            toastr.success(response.message);
-                            setTimeout(() => location.reload(), 1000);
-                        }
-                        , error: function(xhr) {
-                            toastr.error("Something went wrong!");
-                            console.error(xhr.responseText);
-                        }
-                    });
-                }
-            });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This doctor will be deleted!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/admin/doctor-management/delete/${id}`,
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        toastr.success(response.message);
+                        setTimeout(() => location.reload(), 1000);
+                    },
+                    error: function(xhr) {
+                        toastr.error("Something went wrong!");
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
         });
     });
 
-
+    // Status Toggle
     function toggleStatus(id) {
         $.ajax({
-            url: '/admin/doctor-management/status/' + id
-            , type: 'POST'
-            , success: function(res) {
+            url: `/admin/doctor-management/status/${id}`,
+            type: 'POST',
+            success: function(res) {
                 toastr.success(res.message);
-            }
-            , error: function(xhr) {
+            },
+            error: function(xhr) {
                 console.log(xhr.responseText);
                 toastr.error("Status update failed.");
             }
         });
     }
-
 </script>
+
 
 @endsection
