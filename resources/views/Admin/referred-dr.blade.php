@@ -203,7 +203,11 @@
                                     <input type="text" class="form-control" id="DateofBirth" name="DateofBirth"
                                         placeholder="Date of Birth" required>
                                     <div class="invalid-feedback">
+<<<<<<< HEAD
                                         Please enter a valid Zip code.
+=======
+                                        Please enter a valid DOB.
+>>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -211,7 +215,11 @@
                                     <input type="text" class="form-control" id="City" name="City" placeholder="City"
                                         required="">
                                     <div class="invalid-feedback">
+<<<<<<< HEAD
                                         Please enter a valid City code.
+=======
+                                        Please enter a valid City.
+>>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
                                     </div>
                                 </div>
 
@@ -262,9 +270,15 @@
     $('#doctorForm').on('submit', function(e) {
         e.preventDefault();
         let id = $('#doctor_id').val();
+<<<<<<< HEAD
         let url = id ? `/admin/doctor-management/update/${id}` : `/admin/doctormanagement/store`;
 
         let formData = new FormData(this); // ⬅️ use FormData for file uploads
+=======
+        let url = id ? /admin/doctor-management/update/${id} : /admin/doctormanagement/store;
+
+        let formData = new FormData(this); // ⬅ use FormData for file uploads
+>>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
 
         $.ajax({
             url: url
@@ -292,7 +306,11 @@
 
     // Edit
     function editdoctor(id) {
+<<<<<<< HEAD
         $.get(`/admin/doctor-management/edit/${id}`, function(data) {
+=======
+        $.get(/admin/doctor-management/edit/${id}, function(data) {
+>>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
             $('#doctor_id').val(data.id);
             $('#name').val(data.name);
             $('#phone').val(data.phone);
@@ -312,7 +330,11 @@
             const langs = JSON.parse(data.languages);
             if (Array.isArray(langs)) {
                 langs.forEach(lang => {
+<<<<<<< HEAD
                     $(`input[name="languages[]"][value="${lang}"]`).prop('checked', true);
+=======
+                    $(input[name="languages[]"][value="${lang}"]).prop('checked', true);
+>>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
                 });
             }
         } catch (e) {
@@ -322,7 +344,11 @@
             // Show existing profile photo preview
             if (data.ProfilePhoto) {
                 $('#existingPhoto').html(
+<<<<<<< HEAD
                     `<img src="/uploads/${data.ProfilePhoto}" alt="Profile Photo" class="img-thumbnail mt-2" width="100">`
+=======
+                    <img src="/uploads/${data.ProfilePhoto}" alt="Profile Photo" class="img-thumbnail mt-2" width="100">
+>>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
                 );
             } else {
                 $('#existingPhoto').html('');
@@ -349,7 +375,11 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
+<<<<<<< HEAD
                         url: `/admin/doctor-management/delete/${id}`
+=======
+                        url: /admin/doctor-management/delete/${id}
+>>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
                         , type: 'DELETE'
                         , headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

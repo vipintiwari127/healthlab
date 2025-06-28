@@ -167,7 +167,6 @@
                                 <a href="#" class="d-inline-block d-lg-none"><i class="fas fa-map-marker-alt"
                                         style="font-size: 20px; margin-top: 10px; "></i></a>
                                 <h6 class="d-lg-none selected-location">Select City</h6>
-
                                 </button>
                             </div>
                             <div
@@ -427,63 +426,24 @@
             locationModal.show();
         });
     </script>
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const locationCards = document.querySelectorAll('.select-location');
-            const locationTexts = document.querySelectorAll('.selected-location');
-            const modalEl = document.getElementById('locationModal');
-            let modalInstance;
-
-            // Check if modal is already initialized
-            if (bootstrap.Modal.getInstance(modalEl)) {
-                modalInstance = bootstrap.Modal.getInstance(modalEl);
-            } else {
-                modalInstance = new bootstrap.Modal(modalEl);
-            }
-
-            const savedLocation = localStorage.getItem('selectedCity');
-
-            if (savedLocation) {
-                locationTexts.forEach(el => el.textContent = savedLocation);
-            } else {
-                // Show the modal only if no location is saved
-                modalInstance.show();
-            }
-
-            // On city click
-            locationCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const selectedCity = this.getAttribute('data-city');
-
-                    // Update text
-                    locationTexts.forEach(el => el.textContent = selectedCity);
-
-                    // Save to localStorage
-                    localStorage.setItem('selectedCity', selectedCity);
-
-                    // Hide the modal
-                    modalInstance.hide();
-                });
-            });
-        });
-    </script> --}}
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const locationCards = document.querySelectorAll('.select-location');
             const locationTexts = document.querySelectorAll('.selected-location');
+            const locationDisplayElements = document.querySelectorAll(
+                '#locationDisplay, .d-lg-none.selected-location');
             const modalEl = document.getElementById('locationModal');
             const savedLocation = localStorage.getItem('selectedCity');
 
-            // ✅ Show saved location everywhere
+            // Show saved location everywhere
             if (savedLocation) {
                 locationTexts.forEach(el => el.textContent = savedLocation);
             }
 
-            // ✅ If modal does not exist (on other pages), skip rest
+            // If modal does not exist, skip the rest
             if (!modalEl) return;
 
-            // ✅ Initialize Bootstrap modal if available
+            // Initialize Bootstrap modal if available
             let modalInstance;
             if (bootstrap.Modal.getInstance(modalEl)) {
                 modalInstance = bootstrap.Modal.getInstance(modalEl);
@@ -491,12 +451,12 @@
                 modalInstance = new bootstrap.Modal(modalEl);
             }
 
-            // ✅ Show modal if no location saved
+            // Show modal if no location saved
             if (!savedLocation) {
                 modalInstance.show();
             }
 
-            // ✅ On city click inside modal
+            // On city click inside modal
             locationCards.forEach(card => {
                 card.addEventListener('click', function() {
                     const selectedCity = this.getAttribute('data-city');
@@ -509,6 +469,14 @@
 
                     // Hide modal
                     modalInstance.hide();
+                });
+            });
+
+            // On location display click, show modal again
+            locationDisplayElements.forEach(element => {
+                element.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent any default action
+                    modalInstance.show(); // Show the modal
                 });
             });
         });

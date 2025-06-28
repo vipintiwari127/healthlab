@@ -1,4 +1,4 @@
-@extends('Admin.layout.admin')
+@extends('admin.layout.admin')
 
 @section('admin-content')
     <!--start wrapper-->

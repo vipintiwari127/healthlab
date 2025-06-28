@@ -25,4 +25,8 @@ class Doctor extends Model
         'specialization',
         'status',
     ];
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7

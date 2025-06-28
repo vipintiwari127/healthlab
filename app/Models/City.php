@@ -15,5 +15,6 @@ class City extends Model
         'city_name',
         'city_about',
         'status',
+        'city_image',
     ];
 }

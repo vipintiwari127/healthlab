@@ -7,18 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- loader-->
-    <link href="{{ asset('Admin/assets/css/pace.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('Admin/assets/js/pace.min.js') }}"></script>
+    <link href="{{ asset('admin/assets/css/pace.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('admin/assets/js/pace.min.js') }}"></script>
 
     <!--plugins-->
-    <link href="{{ asset('Admin/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
 
     <!-- CSS Files -->
-    <link href="{{ asset('Admin/assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('Admin/assets/css/bootstrap-extended.css') }}" rel="stylesheet">
-    <link href="{{ asset('Admin/assets/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('Admin/assets/css/icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('Admin/assets/css2?family=Roboto:wght@400;500&display=swap') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/css/bootstrap-extended.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/css/icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/css2?family=Roboto:wght@400;500&display=swap') }}" rel="stylesheet">
 
     <title>Login</title>
 </head>
@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-12 text-center">
-                                    <p class="mb-0">Don't have an account? <a href="{{ url('/Admin/register') }}">Sign
+                                    <p class="mb-0">Don't have an account? <a href="{{ url('/admin/register') }}">Sign
                                             up</a></p>
                                 </div>
                             </form>
@@ -74,7 +74,7 @@
 
 
 
-    <script src="{{ asset('Admin/assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -96,7 +96,7 @@
                             toastr.success(response.message || 'Login successful');
                             // Optionally redirect
                             setTimeout(() => {
-                                window.location.href = "{{ url('/Admin/dashboard') }}";
+                                window.location.href = "{{ url('/admin/dashboard') }}";
                             }, 1500);
                         } else {
                             toastr.error(response.message || 'Invalid credentials');

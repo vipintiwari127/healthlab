@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Testcategories;
 use App\Models\Faq;
 use App\Models\Blog;
 use App\Models\Country;
+use Carbon\Carbon;
 use App\Models\Doctor;
 use App\Models\GeneralSetting;
 use App\Models\HomeAnnouncement;
@@ -36,6 +38,7 @@ class adminController extends Controller
     {
         return view('admin.dashboard');
     }
+
     public function showreferredby()
     {
         $doctors = Doctor::all(); // fetch all doctor data
@@ -166,7 +169,10 @@ class adminController extends Controller
             'message' => 'doctor status updated successfully',
             'new_status' => $doctor->status
         ]);
+<<<<<<< HEAD
 
+=======
+>>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
     }
 
 
@@ -299,7 +305,16 @@ class adminController extends Controller
         return view('admin.prescription');
     }
     // --------------------------------------------------------Master setup pages--------------------------------------------------------
-    public function MasterSetup()
+    public function Statemanagement()
+    {
+        $countries = Country::latest()->get();
+        $state = State::latest()
+            ->join('countries', 'states.countryName', '=', 'countries.id')
+            ->select('states.*', 'countries.country_name as country_name')
+            ->get();
+        return view('admin.statemanagement', compact('countries', 'state'));
+    }
+    public function Citymanagement()
     {
         $countries = Country::latest()->get();
         $state = State::latest()
@@ -315,7 +330,13 @@ class adminController extends Controller
                 'countries.country_name as country_name'
             )
             ->get();
-        return view('admin.master-setup', compact('countries', 'state', 'cities'));
+        return view('admin.citymanagement', compact('countries', 'state', 'cities'));
+    }
+    public function MasterSetup()
+    {
+        $countries = Country::latest()->get();
+
+        return view('admin.master-setup', compact('countries'));
     }
     // Countries
 // public function MasterSetupstore(Request $request)
@@ -418,7 +439,7 @@ public function MasterSetupstore(Request $request)
             'stateName' => 'required|string',
             'stateCode' => 'required|string',
             'stateUrl' => 'required|string',
-            'aboutState' => 'required|string',
+            'aboutState' => 'nullable|string',
 
         ]);
 
@@ -464,18 +485,27 @@ public function MasterSetupstore(Request $request)
             'city_stateName' => 'required|string',
             'cityUrl' => 'required|string',
             'city_name' => 'required|string',
-            'city_about' => 'required|string',
+            'city_about' => 'nullable|string',
+            'city_image' => $request->city_id ? 'nullable|image|mimes:jpeg,png,jpg,gif' : 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
+
+        $data = $request->only([
+            'city_countryName',
+            'city_stateName',
+            'cityUrl',
+            'city_name',
+            'city_about',
+        ]);
+
+        if ($request->hasFile('city_image')) {
+            $imageName = time() . '.' . $request->city_image->extension();
+            $request->city_image->move(public_path('uploads/cities'), $imageName);
+            $data['city_image'] = 'uploads/cities/' . $imageName;
+        }
 
         City::updateOrCreate(
             ['id' => $request->city_id],
-            [
-                'city_countryName' => $request->city_countryName,
-                'city_stateName' => $request->city_stateName,
-                'cityUrl' => $request->cityUrl,
-                'city_name' => $request->city_name,
-                'city_about' => $request->city_about,
-            ]
+            $data
         );
 
         return response()->json(['status' => 'success', 'message' => 'City saved successfully']);
@@ -589,29 +619,7 @@ public function MasterSetupstore(Request $request)
         return view('admin.blog', compact('blogs'));
     }
 
-    // public function storeBlog(Request $request)
-    // {
-    //     $request->validate([
-    //         'posting_date' => 'required|date',
-    //         'title' => 'required',
-    //         'url' => 'required',
-    //         'description' => 'required',
-    //         'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-    //     ]);
 
-    //     $fileName = time() . '.' . $request->image->extension();
-    //     $request->image->move(public_path('uploads/blogs'), $fileName);
-
-    //     Blog::create([
-    //         'posting_date' => $request->posting_date,
-    //         'title' => $request->title,
-    //         'url' => $request->url,
-    //         'description' => $request->description,
-    //         'image' => $fileName
-    //     ]);
-
-    //     return redirect()->route('admin.blog')->with('success', 'Blog added successfully!');
-    // }
     public function storeBlog(Request $request)
     {
         $request->validate([
@@ -1119,8 +1127,9 @@ public function MasterSetupstore(Request $request)
     // ✅ Show all tests
     public function allTestPartner()
     {
-        $tests = Test::orderBy('id', 'DESC')->get();
-        return view('admin.all-test', compact('tests'));
+        $tests = Test::with('category')->orderBy('id', 'DESC')->get();
+        $testcategories = Testcategories::orderBy('id', 'DESC')->get();
+        return view('admin.all-test', compact('tests', 'testcategories'));
     }
 
     // ✅ Add a new test
@@ -1218,6 +1227,42 @@ public function MasterSetupstore(Request $request)
         }
 
         return redirect()->back()->with('success', 'CSV uploaded successfully!');
+    }
+
+    public function storeTestcategory(Request $request)
+    {
+        $validated = $request->validate([
+            'test_category_name' => 'required|string|max:255',
+        ]);
+
+        Testcategories::create($validated);
+
+        return response()->json(['status' => 'success', 'message' => 'Category Data Added Successfully']);
+    }
+
+    public function updateTestcategory(Request $request, $id)
+    {
+        $category = Testcategories::findOrFail($id);
+
+        $validated = $request->validate([
+            'test_category_name' => 'required|string|max:255',
+        ]);
+
+        $category->update($validated); // ✅ missing line
+
+        return response()->json(['status' => 'success', 'message' => 'Category Data Updated Successfully']);
+    }
+
+    public function editTestcategory($id)
+    {
+        $category = Testcategories::findOrFail($id);
+        return response()->json($category);
+    }
+
+    public function deleteTestcategory($id)
+    {
+        Testcategories::findOrFail($id)->delete();
+        return response()->json(['status' => 'success', 'message' => 'Category Data Deleted Successfully']);
     }
 
     // ---------------------------------------------------------Lab Test management----------------------------------------------------
@@ -1660,6 +1705,7 @@ public function MasterSetupstore(Request $request)
     {
         return view('admin.page');
     }
+<<<<<<< HEAD
 
 
     // testCategorystore
@@ -1683,7 +1729,6 @@ public function testCategorystore(Request $request)
 
 
 
+=======
+>>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
 }
-
-
-
