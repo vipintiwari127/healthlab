@@ -20,6 +20,8 @@ class Doctor extends Model
         'gender',
         'zip',
         'DateofBirth',
+        'age',
+        'DateofBirth',
         'City',
         'address',
         'specialization',

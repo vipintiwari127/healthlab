@@ -1,172 +1,31 @@
 @extends('admin.layout.admin')
 @section('admin-content')
-@if (session('success'))
-<script>
-    toastr.success("{{ session('success') }}");
-</script>
-@endif
+    @if (session('success'))
+        <script>
+            toastr.success("{{ session('success') }}");
+        </script>
+    @endif
 
-<div class="page-content-wrapper">
-    <!-- start page content-->
-    <div class="page-content">
+    <div class="page-content-wrapper">
+        <!-- start page content-->
+        <div class="page-content">
 
-        <!--start breadcrumb-->
-        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Health lab</div>
-            <div class="ps-3">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0 p-0 align-items-center">
-                        <li class="breadcrumb-item"><a href="javascript:;">
-                                <ion-icon name="home-outline"></ion-icon>
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Master Setup</li>
-                    </ol>
-                </nav>
+            <!--start breadcrumb-->
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">Health lab</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0 align-items-center">
+                            <li class="breadcrumb-item"><a href="javascript:;">
+                                    <ion-icon name="home-outline"></ion-icon>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Master Setup</li>
+                        </ol>
+                    </nav>
+                </div>
             </div>
-        </div>
-        <!--end breadcrumb-->
-
-
-<<<<<<< HEAD
-        <!--start shop cart-->
-        <section class="shop-page">
-            {{-- <h6 class="mb-0 text-uppercase">Danger Nav Pills</h6> --}}
-            <hr>
-            <div class="card">
-                <div class="card-body">
-                    <ul class="nav nav-pills nav-pills-danger mb-3" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" data-bs-toggle="pill" href="#danger-pills-home" role="tab"
-                                aria-selected="true">
-                                <div class="d-flex align-items-center">
-                                    {{-- <div class="tab-icon">
-                                        <ion-icon name="home-sharp" class="me-1"></ion-icon>
-                                    </div> --}}
-                                    <div class="tab-title">Country Management</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="pill" href="#danger-pills-profile" role="tab"
-                                aria-selected="false">
-                                <div class="d-flex align-items-center">
-                                    {{-- <div class="tab-icon">
-                                        <ion-icon name="person-sharp" class="me-1"></ion-icon>
-                                    </div> --}}
-                                    <div class="tab-title">State Management</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="pill" href="#danger-pills-contact" role="tab"
-                                aria-selected="false">
-                                <div class="d-flex align-items-center">
-                                    {{-- <div class="tab-icon">
-                                        <ion-icon name="call-sharp" class="me-1"></ion-icon>
-                                    </div> --}}
-                                    <div class="tab-title">City Management</div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="danger-pills-tabContent">
-                        {{-- country data --}}
-                        <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#exampleLargeModal">Add Country</button><br><br>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table id="example2" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Sr.no</th>
-                                                    <th>Country Name</th>
-                                                    <th>Url </th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($countries as $key => $country)
-                                                <tr>
-                                                    <td>{{ $key + 1 }}</td>
-                                                    <td>{{ $country->country_name }}</td>
-                                                    <td>{{ $country->country_url }}</td>
-                                                    <td>
-                                                        @if ($country->status)
-                                                        <a href="{{ route('country.toggle', $country->id) }}"
-                                                            class="btn btn-success btn-sm">Active</a>
-                                                        @else
-                                                        <a href="{{ route('country.toggle', $country->id) }}"
-                                                            class="btn btn-danger btn-sm">Inactive</a>
-                                                        @endif
-                                                    </td>
-
-                                                    <td>
-                                                        <button class="btn btn-sm btn-info"
-                                                            onclick="editCountry({{ $country->id }})">Edit</button>
-                                                        <button class="btn btn-sm btn-danger country-delete-btn"
-                                                            data-id="{{ $country->id }}">Delete</button>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- state data --}}
-                        <div class="tab-pane fade" id="danger-pills-profile" role="tabpanel">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#addStateModal">
-                                Add State
-                            </button><br><br>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table id="example3" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Sr.no.</th>
-                                                    <th>Country Name</th>
-                                                    <th>State Name</th>
-                                                    <th>State Url</th>
-                                                    <th>State Code</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($state as $key => $statedata)
-                                                <tr>
-                                                    <td>{{ $key + 1 }}</td>
-                                                    <td>{{ $statedata->country_name }}</td>
-                                                    <td>{{ $statedata->stateName }}</td>
-                                                    <td>{{ $statedata->stateUrl }}</td>
-                                                    <td>{{ $statedata->stateCode }}</td>
-                                                    <td>
-                                                        @if ($statedata->status)
-                                                        <a href="{{ route('state.toggle', $statedata->id) }}"
-                                                            class="btn btn-success btn-sm">Active</a>
-                                                        @else
-                                                        <a href="{{ route('state.toggle', $statedata->id) }}"
-                                                            class="btn btn-danger btn-sm">Inactive</a>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-info"
-                                                            onclick="editState({{ $statedata->id }})">Edit</button>
-                                                        <button class="btn btn-sm btn-danger state-delete-btn"
-                                                            data-id="{{ $statedata->id }}">Delete</button>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-=======
+            <!--end breadcrumb-->
             <!--start shop cart-->
             <section class="shop-page">
                 {{-- <h6 class="mb-0 text-uppercase">Danger Nav Pills</h6> --}}
@@ -273,12 +132,10 @@
                                                 </div>
                                             </div>
                                         </form>
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
                                     </div>
                                 </div>
                             </div>
                         </div>
-<<<<<<< HEAD
                         {{-- city data --}}
                         <div class="tab-pane fade" id="danger-pills-contact" role="tabpanel">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -302,28 +159,28 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($cities as $key => $city)
-                                                <tr>
-                                                    <td>{{ $key + 1 }}</td>
-                                                    <td>{{ $city->country_name }}</td>
-                                                    <td>{{ $city->state_name }}</td>
-                                                    <td>{{ $city->cityUrl }}</td>
-                                                    <td>{{ $city->city_name }}</td>
-                                                    <td>
-                                                        @if ($city->status)
-                                                        <a href="{{ route('city.toggle', $city->id) }}"
-                                                            class="btn btn-success btn-sm">Active</a>
-                                                        @else
-                                                        <a href="{{ route('city.toggle', $city->id) }}"
-                                                            class="btn btn-danger btn-sm">Inactive</a>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-info"
-                                                            onclick="editcity({{ $city->id }})">Edit</button>
-                                                        <button class="btn btn-sm btn-danger city-delete-btn"
-                                                            data-id="{{ $city->id }}">Delete</button>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>{{ $key + 1 }}</td>
+                                                        <td>{{ $city->country_name }}</td>
+                                                        <td>{{ $city->state_name }}</td>
+                                                        <td>{{ $city->cityUrl }}</td>
+                                                        <td>{{ $city->city_name }}</td>
+                                                        <td>
+                                                            @if ($city->status)
+                                                                <a href="{{ route('city.toggle', $city->id) }}"
+                                                                    class="btn btn-success btn-sm">Active</a>
+                                                            @else
+                                                                <a href="{{ route('city.toggle', $city->id) }}"
+                                                                    class="btn btn-danger btn-sm">Inactive</a>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-info"
+                                                                onclick="editcity({{ $city->id }})">Edit</button>
+                                                            <button class="btn btn-sm btn-danger city-delete-btn"
+                                                                data-id="{{ $city->id }}">Delete</button>
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -331,8 +188,6 @@
                                 </div>
                             </div>
                         </div>
-=======
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
                     </div>
 
                     {{-- country modal --}}
@@ -360,7 +215,7 @@
                                             <div class="col-md-8">
                                                 <label for="bsValidation4" class="form-label">Url </label>
                                                 <input type="text" name="country_url" class="form-control"
-                                                    id="bsValidation4" placeholder="Url " >
+                                                    id="bsValidation4" placeholder="Url ">
                                                 <div class="invalid-feedback">
                                                     Please provide a valid Url .
                                                 </div>
@@ -399,9 +254,9 @@
                                                     required>
                                                     <option value="">Select Country</option>
                                                     @foreach ($countries as $country)
-                                                    <option value="{{ $country->id }}">
-                                                        {{ $country->country_name }}</option>
-                                                    </option>
+                                                        <option value="{{ $country->id }}">
+                                                            {{ $country->country_name }}</option>
+                                                        </option>
                                                     @endforeach
                                                 </select>
 
@@ -410,20 +265,20 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="stateName" class="form-label">State Name</label>
-                                                <input type="text" class="form-control" id="stateName" name="stateName"
-                                                    placeholder="State Name" required>
+                                                <input type="text" class="form-control" id="stateName"
+                                                    name="stateName" placeholder="State Name" required>
                                                 <div class="invalid-feedback">Please provide a valid State Name.</div>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="stateCode" class="form-label">State Code</label>
-                                                <input type="text" class="form-control" id="stateCode" name="stateCode"
-                                                    placeholder="State Code" required>
+                                                <input type="text" class="form-control" id="stateCode"
+                                                    name="stateCode" placeholder="State Code" required>
                                                 <div class="invalid-feedback">Please provide a valid State Code.</div>
                                             </div>
                                             <div class="col-md-12">
                                                 <label for="url" class="form-label">URL</label>
-                                                <input type="text" class="form-control" id="url" name="stateUrl"
-                                                    placeholder="URL" required>
+                                                <input type="text" class="form-control" id="url"
+                                                    name="stateUrl" placeholder="URL" required>
                                                 <div class="invalid-feedback">Please provide a valid URL.</div>
                                             </div>
                                             <div class="col-md-12">
@@ -466,8 +321,8 @@
                                                     required>
                                                     <option value="">Select State</option>
                                                     @foreach ($state as $states)
-                                                    <option value="{{ $states->id }}">{{ $states->stateName }}
-                                                    </option>
+                                                        <option value="{{ $states->id }}">{{ $states->stateName }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 <div class="invalid-feedback">Please select a valid State Name.</div>
@@ -479,8 +334,8 @@
                                                     name="city_countryName" required>
                                                     <option value="">Select Country</option>
                                                     @foreach ($countries as $country)
-                                                    <option value="{{ $country->id }}">
-                                                        {{ $country->country_name }}</option>
+                                                        <option value="{{ $country->id }}">
+                                                            {{ $country->country_name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <div class="invalid-feedback">Please select a valid Country Name.</div>
@@ -489,14 +344,14 @@
 
                                             <div class="col-md-6 mt-3">
                                                 <label for="cityName" class="form-label">City Name</label>
-                                                <input type="text" class="form-control" id="city_name" name="city_name"
-                                                    placeholder="City Name" required>
+                                                <input type="text" class="form-control" id="city_name"
+                                                    name="city_name" placeholder="City Name" required>
                                                 <div class="invalid-feedback">Please provide a valid City Name.</div>
                                             </div>
                                             <div class="col-md-6 mt-3">
                                                 <label for="state" class="form-label">City Image</label>
-                                                <input type="file" class="form-control" id="cityimage" name="cityimage"
-                                                    placeholder="City image" required>
+                                                <input type="file" class="form-control" id="cityimage"
+                                                    name="cityimage" placeholder="City image" required>
                                                 <div class="invalid-feedback">Please provide a valid City Url.</div>
                                             </div>
                                             <div class="col-md-12 mt-3">
@@ -526,36 +381,36 @@
                         </div>
                     </div>
                 </div>
-            </div>
+        </div>
         </section>
         <!--end shop cart-->
     </div>
     <!-- end page content-->
-</div>
+    </div>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script>
-    //country form submission
-       $('#countryForm').submit(function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
-    $.ajax({
-        url: "{{ route('countries.store') }}",
-        method: "POST",
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(res) {
-            if (res.status == 'success') {
-                toastr.success(res.message);
-                $('#exampleLargeModal').modal('hide');
-                setTimeout(() => location.reload(), 1000);
-            }
-        }
-    });
-});
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        //country form submission
+        $('#countryForm').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: "{{ route('countries.store') }}",
+                method: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(res) {
+                    if (res.status == 'success') {
+                        toastr.success(res.message);
+                        $('#exampleLargeModal').modal('hide');
+                        setTimeout(() => location.reload(), 1000);
+                    }
+                }
+            });
+        });
 
 
         //edit country
@@ -604,7 +459,6 @@
             $('#countryForm')[0].reset();
             $('#country_id').val('');
         }
-<<<<<<< HEAD
 
         function resetForm() {
             $('#stateForm')[0].reset();
@@ -615,9 +469,6 @@
             $('#cityForm')[0].reset();
             $('#city_id').val('');
         }
-</script>
-@endsection
-=======
     </script>
     <script>
         document.getElementById('country_name').addEventListener('input', function() {
@@ -631,4 +482,3 @@
         });
     </script>
 @endsection
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7

@@ -42,7 +42,7 @@
 
     <!-- Summernote CSS/JS -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
-    <title>Health admin</title>
+    <title>Health UserPanel</title>
 </head>
 
 <body>
@@ -55,7 +55,7 @@
                     <img src="{{ asset('admin/assets/images/logo-icon-2.png') }}" class="logo-icon" alt="logo icon" />
                 </div>
                 <div>
-                    <h4 class="logo-text">Health Lab</h4>
+                    <h4 class="logo-text">Health Lab UserPanel</h4>
                 </div>
             </div>
             <!--navigation-->
@@ -74,12 +74,12 @@
                         <div class="parent-icon">
                             <ion-icon name="bag-handle-outline"></ion-icon>
                         </div>
-                        <div class="menu-title">Booking Manage</div>
+                        <div class="menu-title">Showing Latest bookings</div>
                     </a>
                     <ul>
                         <li>
                             <a href="{{ '/admin/booking' }}">
-                                <ion-icon name="ellipse-outline"></ion-icon>Booking List
+                                <ion-icon name="ellipse-outline"></ion-icon>Showing Latest bookings
                             </a>
                         </li>
                     </ul>
@@ -113,12 +113,12 @@
                     <ul>
                         <li>
                             <a href="{{ '/admin/home-announcement' }}">
-                                <ion-icon name="ellipse-outline"></ion-icon>Website Announcement List
+                                <ion-icon name="ellipse-outline"></ion-icon>Home Announcement List
                             </a>
                         </li>
                         <li>
                             <a href="{{ '/admin/website-announcement' }}">
-                                <ion-icon name="ellipse-outline"></ion-icon>Admin Announcement List
+                                <ion-icon name="ellipse-outline"></ion-icon>Website Announcement List
                             </a>
                         </li>
                     </ul>

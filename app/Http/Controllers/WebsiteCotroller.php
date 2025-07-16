@@ -7,6 +7,9 @@ use App\Models\Blog;
 use App\Models\Faq;
 use App\Models\Package; // Add this at the top if not already
 use App\Models\LabTest;
+use App\Models\Callback;
+use App\Models\LabCartRequest;
+use App\Models\HomeQuery;
 
 use Illuminate\Http\Request;
 
@@ -28,7 +31,8 @@ class WebsiteCotroller extends Controller
 
         //blog
         $blogs = Blog::latest()->get();
-        return view('index', compact('popularCities', 'allCities', 'blogs', 'labTests','packages'));
+
+        return view('index', compact('popularCities', 'allCities', 'blogs', 'labTests', 'packages'));
     }
 
     public function about()
@@ -118,5 +122,110 @@ class WebsiteCotroller extends Controller
     {
         $labTest = LabTest::with('partner')->where('id', $id)->firstOrFail();
         return view('website.single-details', compact('labTest'));
+    }
+
+    public function submitCallback(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'mobile' => 'required|string|max:20',
+            'location' => 'required|string|max:255',
+        ]);
+
+        Callback::create($request->only('name', 'mobile', 'location'));
+
+        return back()->with('success', 'Callback request submitted!');
+    }
+
+
+    public function submitLabCart(Request $request)
+    {
+        $request->validate([
+            'type' => 'required|in:lab,home',
+            'date' => 'required|date',
+            'time' => 'required',
+            'pincode' => 'nullable|required_if:type,home',
+            'address' => 'nullable|required_if:type,home',
+            'patient_name' => 'required|string|max:255',
+            'age' => 'required|integer|min:0|max:150',
+            'gender' => 'required|in:Male,Female,Other',
+            'lab_name' => 'nullable|string',
+            'lab_address' => 'nullable|string',
+            'lab_net_price' => 'nullable|string',
+            'lab_offer_price' => 'nullable|string',
+            'lab_report_time' => 'nullable|string',
+        ]);
+
+        // Generate order ID
+        $orderId = 'ORD' . now()->format('YmdHis') . random_int(100, 999);
+
+        LabCartRequest::create([
+            'order_id' => $orderId,
+            'type' => $request->type,
+            'date' => $request->date,
+            'time' => $request->time,
+            'pincode' => $request->pincode,
+            'address' => $request->address,
+            'patient_name' => $request->patient_name,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'lab_name' => $request->lab_name,
+            'lab_address' => $request->lab_address,
+            'lab_net_price' => $request->lab_net_price,
+            'lab_offer_price' => $request->lab_offer_price,
+            'lab_report_time' => $request->lab_report_time,
+        ]);
+
+        return back()->with('success', 'Lab Test Request saved!');
+    }
+
+    public function landingPage()
+    {
+
+        return view('website.landing');
+    }
+
+    public function submitQueryForm(Request $request)
+    {
+        // Validation (optional based on enabled fields)
+        $request->validate([
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:20',
+            'message' => 'nullable|string|max:1000',
+        ]);
+
+        // Save to DB
+        HomeQuery::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'message' => $request->input('message'),
+        ]);
+
+        return redirect()->back()->with('success', 'Your query has been submitted successfully!');
+    }
+    public function getHomeAnnouncement()
+    {
+        $data = \App\Models\HomeAnnouncement::where('status', 1)->latest()->first();
+
+        if ($data) {
+            $data->image_url = $data->image ? asset('uploads/home_announcement/' . $data->image) : asset('website/assets/img/default.jpg');
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $data
+            ]);
+        }
+
+        return response()->json(['status' => 'error', 'message' => 'No announcement found']);
+    }
+
+    public function annoucementsubmitQueryForm(Request $request)
+    {
+        // Validation logic
+        // Save to database or send mail
+
+        return back()->with('success', 'Query submitted successfully.');
     }
 }

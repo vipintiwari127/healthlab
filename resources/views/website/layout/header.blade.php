@@ -179,7 +179,7 @@
 
                             <div class="col-auto gap-2 d-none d-lg-flex">
                                 <a href="cart.html" class="icon-btn has-badge d-none d-xxl-inline-block"><i
-                                        class="far fa-shopping-cart"></i><span class="badge">3</span></a>
+                                        class="far fa-shopping-cart"></i><span class="badge"></span></a>
                                 <ol class="login" id="locationDisplay">
                                     <i class="far fa-map-marker-alt"></i>
                                     <span class="selected-location">Select City</span>
@@ -294,11 +294,14 @@
                 <!-- Contact and Social -->
                 <div class="col-md-6 col-lg-3">
                     <div class="widget footer-widget">
-                        <h3 class="widget_title">Contact Info</h3>
-                        <ul class="menu">
-                            <li>Contact: +91 9205394886</li>
-                            <li>Email: support@hospital.com</li>
-                        </ul>
+                        <h3 class="widget_title">Subscription With Us</h3>
+                      <input type="email" name="email" placeholder="Enter your email" required
+                        style="padding: 12px 20px; width: 300px; border: 1px solid #ccc; border-radius: 10px; font-size: 16px;margin-bottom:5px;">
+                    <br>
+                    <button type="submit"
+                        style="padding: 12px 25px; border: none; background-color: #28a745; color: white; border-radius: 10px; font-size: 16px; cursor: pointer;">
+                        Subscribe
+                    </button>
                     </div>
                     <div class="footer-social mt-3 text-center text-lg-start">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -330,10 +333,10 @@
 
             <!-- Mobile Footer Navbar -->
             <div class="mobile-footer-nav d-md-none d-flex justify-content-around mt-3 pb-3 border-top pt-3">
-                <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+                <a href="{{'/'}}"><i class="fas fa-home"></i><span>Home</span></a>
                 <a href="https://wa.me/XXXXXXXXXXX"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
                 <a href="tel:XXXXXXXXXXX"><i class="fas fa-phone"></i><span>Call</span></a>
-                <a href="login.html"><i class="fas fa-user"></i><span>Account</span></a>
+                <a href="#"><i class="fas fa-user"></i><span>Account</span></a>
                 <a href="#" class="vs-menu-toggle"><i class="fas fa-bars"></i><span>Menu</span></a>
             </div>
         </div>

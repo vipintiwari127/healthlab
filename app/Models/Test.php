@@ -9,15 +9,19 @@ class Test extends Model
 {
     use HasFactory;
     protected $fillable = [
-    'test_name',
-    'test_category',
-    'specimen_requirement',
-    'test_description',
-    'status',
-];
-public function category()
-{
-    return $this->belongsTo(Testcategories::class, 'test_category');
-}
+        'test_name',
+        'test_category',
+        'specimen_requirement',
+        'test_description',
+        'status',
+        'profile_name',
+        'parameter_type',
+        'multi_test_name',
+    ];
+    // app/Models/Test.php
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }

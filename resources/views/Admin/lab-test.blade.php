@@ -1,5 +1,37 @@
 @extends('admin.layout.admin')
 @section('admin-content')
+    <style>
+        .multiselect-container {
+            position: relative;
+        }
+
+        .multiselect-dropdown {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            max-height: 200px;
+            overflow-y: auto;
+            width: 100%;
+            z-index: 999;
+        }
+
+        .multiselect-dropdown label {
+            display: block;
+            padding: 5px 10px;
+        }
+
+        .multiselect-dropdown input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .multiselect-selected {
+            padding: 8px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+        }
+    </style>
     <div class="wrapper">
         <div class="page-content-wrapper">
             <div class="page-content">
@@ -44,8 +76,8 @@
                                     @foreach ($labtestData as $key => $item)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $item->labPartner->name ?? 'N/A' }}</td>
                                             <td>{{ $item->test->test_name ?? 'N/A' }}</td>
+                                            <td>{{ $item->labPartner->name ?? 'N/A' }}</td>
                                             <td>{{ $item->lab_mrp_price }}</td>
                                             <td>
                                                 <div class="form-check form-switch">
@@ -118,13 +150,19 @@
 
                                         <div class="col-sm-4">
                                             <label>Category</label>
-                                            <select class="form-control" name="category" id="category" required>
-                                                <option disabled selected>Select Category</option>
-                                                @foreach ($test_categories as $test)
-                                                    <option value="{{ $test->id }}">{{ $test->test_category }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                            <div class="multiselect-container" id="category-multiselect">
+                                                <div class="multiselect-selected" onclick="toggleDropdown()">Select Category
+                                                </div>
+                                                <div class="multiselect-dropdown" id="category-dropdown">
+                                                    @foreach ($test_categories as $test)
+                                                        <label>
+                                                            <input type="checkbox" name="category[]"
+                                                                value="{{ $test->id }}">
+                                                            {{ $test->category_name }}
+                                                        </label>
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -155,15 +193,11 @@
                                                 id="reporting_time">
                                         </div>
 
-<<<<<<< HEAD
                                         {{-- <div class="col-sm-4"> --}}
-                                            {{-- <label>Specimen Requirement</label> --}}
-                                            <input type="hidden" class="form-control" name="specimen_requirement"
-                                                id="specimen_requirement" value="none" readonly>
+                                        {{-- <label>Specimen Requirement</label> --}}
+                                        <input type="hidden" class="form-control" name="specimen_requirement"
+                                            id="specimen_requirement" value="none" readonly>
                                         {{-- </div> --}}
-
-=======
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
                                         <div class="col-sm-4">
                                             <label>Service Type</label><br>
                                             @foreach (['Lab', 'Home', 'Both'] as $type)
@@ -175,21 +209,14 @@
                                         </div>
                                     </div>
 
-<<<<<<< HEAD
-                                    {{-- <div class="form-group mt-3"> --}}
-=======
-                                    {{-- <div class="form-group mt-3">
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
-                                        <div class="col-sm-12">
-                                            {{-- <label>Description</label> --}}
-                                            <textarea class="form-control" rows="5"  name="description" id="description" value="none"  style="height:200px; display: none;"></textarea>
-                                        </div>
-<<<<<<< HEAD
-                                    {{-- </div> --}}
-=======
-                                    </div> --}}
->>>>>>> c0b38d2ff01c3a14ed2ce800b9062d0d5f2c00e7
 
+                                    {{-- <div class="form-group mt-3"> --}}
+                                    <div class="col-sm-12">
+                                        {{-- <label>Description</label> --}}
+                                        <textarea class="form-control" rows="5" name="description" id="description" value="none"
+                                            style="height:200px; display: none;"></textarea>
+                                    </div>
+                                    {{-- </div> --}}
                                     <div class="form-group mt-3">
                                         <div class="col-sm-12">
                                             <button type="submit" class="btn btn-primary">Save Lab Test</button>
@@ -286,5 +313,19 @@
                 toastr.error("Feature update failed.");
             });
         }
+    </script>
+    <script>
+        function toggleDropdown() {
+            var dropdown = document.getElementById("category-dropdown");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        // Close dropdown on outside click
+        document.addEventListener("click", function(e) {
+            var multiselect = document.getElementById("category-multiselect");
+            if (!multiselect.contains(e.target)) {
+                document.getElementById("category-dropdown").style.display = "none";
+            }
+        });
     </script>
 @endsection

@@ -1,5 +1,11 @@
 @extends('website.layout.header')
 @section('main-content')
+    @if (session('success'))
+        <script>
+            toastr.success("{{ session('success') }}");
+        </script>
+    @endif
+
     <style>
         .modal-body-scroll {
             max-height: 400px;
@@ -23,7 +29,7 @@
     <!-- Hero Area -->
     <section class="vs-hero-wrapper position-relative">
         <div class="row g-0 d-md-flex align-items-stretch" style="background-color: var(--primary-color);">
-            <div class="col-lg-4 my-auto">
+            <div class="col-lg-4 my-auto order-2 order-md-1">
                 <div class="container">
                     <h1 class="header-title hide-on-mobile" style="color: red;"><span>Drive</span> Your Health</h1>
                     <div class="search-card">
@@ -47,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-8 order-1 order-md-2">
                 <div class="vs-hero-carousel flex-grow-1" data-navprevnext="true" data-height="800" data-container="1900"
                     data-slidertype="responsive">
                     <!-- Slide 1 -->
@@ -144,7 +150,7 @@
                     <div class="d-flex justify-content-start flex-wrap gap-3">
                         @foreach ($popularCities as $city)
                             <div class="location-card text-center select-location" data-city="{{ $city->city_name }}">
-                                <img src="{{ asset($city->city_image ?? 'website/assets/img/default-city.png') }}"
+                                <img src="{{ asset($city->city_image ? 'uploads/city/' . $city->city_image : 'website/assets/img/default-city.png') }}"
                                     alt="{{ $city->city_name }}" class="img-fluid" style="width: 40px; height: 40px;" />
                                 <h6>{{ $city->city_name }}</h6>
                             </div>
@@ -160,6 +166,14 @@
                         @endforeach
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dynamic Modal for Query or Announcement -->
+    <div class="modal fade" id="announcementQueryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog" style="margin-top: 181px;">
+            <div class="modal-content" id="dynamicContent">
+                <!-- Content will be injected via JS -->
             </div>
         </div>
     </div>
@@ -202,9 +216,13 @@
                                     <del style="color: red; font-size: 18px">₹{{ $test->lab_mrp_price }}</del>
                                     <span style="font-size: 22px">₹{{ $test->offer_price }}</span>
                                     </h6><br><br>
-                                    <a href="{{ url('/lab-details/' . $test->id) }}"><button><i
+                                    {{-- <a href="{{ url('/lab-details/' . $test->id) }}"><button><i
                                                 class="fas fa-eye"></i></button></a>
-                                    <button><i class="fas fa-cart-plus"></i></button>
+                                    <!-- Cart Button -->
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button> --}}
+
                                 </div>
                                 <a href="{{ url('/lab-details/' . $test->id) }}" class="icon-btn style4"><i
                                         class="far fa-long-arrow-alt-right"
@@ -215,6 +233,7 @@
                 @endforeach
                 <!-- Repeat for other service boxes -->
             </div>
+
         </div>
     </section>
 
@@ -402,4 +421,65 @@
             </div>
         </div>
     </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const locationModal = document.getElementById('locationModal');
+
+            locationModal.addEventListener('hidden.bs.modal', function() {
+                // Ajax call to fetch active home announcement
+                fetch("{{ route('get.home.announcement') }}")
+                    .then(response => response.json())
+                    .then(data => {
+                        const contentContainer = document.getElementById("dynamicContent");
+                        const imageTemplate =
+                            `<img src="__IMAGE_URL__" alt="Announcement Image" class="img-fluid mb-3" />`;
+                        const fixedImageUrl = data.data.image_url.replace("uploads/home_announcement/",
+                            ""); // clean the path
+                        const imageTag = imageTemplate.replace('__IMAGE_URL__', fixedImageUrl);
+
+                        if (data.status === 'success') {
+                            let html = '';
+
+                            // If announcement type
+                            if (data.data.display_announcement == 1) {
+                                html += `
+                            <div class="modal-header">
+                                <h5 class="modal-title">${data.data.title}</h5>
+                                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                            </div>
+                            <div class="modal-body text-center">
+                                ${imageTag}
+                                <div><a href="${data.data.link}" target="_blank" class="btn btn-primary">Link</a></div>
+                            </div>`;
+                            }
+                            // If query form type
+                            else if (data.data.display_query_form == 1) {
+                                html += `
+                            <div class="modal-header">
+                                <h5 class="modal-title">${data.data.title}</h5>
+                                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('submit.query.form') }}" method="POST">
+                                    @csrf
+                                    ${data.data.show_name_field ? `<div class="mb-2"><input type="text" name="name" class="form-control" placeholder="Name"></div>` : ''}
+                                    ${data.data.show_email_field ? `<div class="mb-2"><input type="email" name="email" class="form-control" placeholder="Email"></div>` : ''}
+                                    ${data.data.show_phone_field ? `<div class="mb-2"><input type="text" name="phone" class="form-control" placeholder="Phone"></div>` : ''}
+                                    ${data.data.show_message_field ? `<div class="mb-2"><textarea name="message" class="form-control" placeholder="Message"></textarea></div>` : ''}
+                                    <button type="submit" class="btn btn-success">${data.data.button_name || 'Submit'}</button>
+                                </form>
+                            </div>`;
+                            }
+
+                            contentContainer.innerHTML = html;
+
+                            // Show the modal
+                            const queryModal = new bootstrap.Modal(document.getElementById(
+                                'announcementQueryModal'));
+                            queryModal.show();
+                        }
+                    });
+            });
+        });
+    </script>
 @endsection

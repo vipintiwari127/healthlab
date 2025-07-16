@@ -7,6 +7,7 @@ use App\Models\Faq;
 use App\Models\Blog;
 use App\Models\Country;
 use App\Models\Doctor;
+use App\Models\Testcategories;
 use App\Models\GeneralSetting;
 use App\Models\HomeAnnouncement;
 use App\Models\Announcement;
@@ -29,17 +30,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Models\Callback;
+use App\Models\LabCartRequest;
+use App\Models\LabPartnertwo;
+use App\Models\LabBooking;
 
-class adminController extends Controller
+class AdminController extends Controller
 {
     function dashboard()
     {
         return view('admin.dashboard');
     }
-   public function showreferredby()
+    // --------------------------------------------------------Doctor page--------------------------------------------------------
+    public function showreferredby()
     {
         $doctors = Doctor::all(); // fetch all doctor data
-        return view('admin.referred-dr', compact('doctors'));
+        $cities = City::where('status', 1)->orderBy('city_name')->get();
+        return view('admin.referred-dr', compact('doctors', 'cities'));
     }
 
     public function storedoctor(Request $request)
@@ -55,6 +62,7 @@ class adminController extends Controller
             'DateofBirth' => 'required|date',
             'address' => 'required|string',
             'specialization' => 'required|string',
+            'about_doctor' => 'required|string',
             'Qualification' => 'required|string',
             'YearsofExperience' => 'required|string|max:50',
             'City' => 'required|string|max:100',
@@ -81,30 +89,33 @@ class adminController extends Controller
             'DateofBirth' => Carbon::parse($request->DateofBirth)->format('Y-m-d'),
             'address' => $request->address,
             'specialization' => $request->specialization,
-            'Qualification' => $request->Qualification,
+            'about_doctor' => $request->about_doctor,
             'YearsofExperience' => $request->YearsofExperience,
-            'City' => $request->City,
-            'languages' => json_encode($request->languages), // Save as JSON
+            'City' => json_encode($request->City),
+            'Qualification' => $request->Qualification === 'Other' ? $request->other_qualification : $request->Qualification,
+            'languages' => json_encode(
+                collect($request->languages)->map(function ($lang) use ($request) {
+                    return $lang === 'Other' ? $request->other_language : $lang;
+                })
+            ),
+            'age' => Carbon::parse($request->DateofBirth)->age,
+
         ]);
 
         return response()->json(['status' => 'success']);
     }
-
 
     public function deletedoctor($id)
     {
         Doctor::destroy($id);
         return response()->json(['message' => 'Deleted successfully']);
     }
-
     // DoctorController.php
-
     public function editdoctor($id)
     {
         $doctor = Doctor::findOrFail($id);
         return response()->json($doctor);
     }
-
     public function updatedoctor(Request $request, $id)
     {
         $request->validate([
@@ -115,12 +126,15 @@ class adminController extends Controller
             'zip' => 'required',
             'address' => 'required',
             'specialization' => 'required',
+            'about_doctor' => 'required',
             'Qualification' => 'required',
             'YearsofExperience' => 'required',
-            'DateofBirth' => 'required',
+            'DateofBirth' => 'required|date',
             'City' => 'required',
             'languages' => 'nullable|array',
             'ProfilePhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'other_qualification' => 'nullable|string|max:255',
+            'other_language' => 'nullable|string|max:255',
         ]);
 
         $doctor = Doctor::findOrFail($id);
@@ -133,7 +147,21 @@ class adminController extends Controller
             $doctor->ProfilePhoto = $filename;
         }
 
-        // Update other fields
+        // Qualification logic
+        $qualification = $request->Qualification === 'Other'
+            ? $request->other_qualification
+            : $request->Qualification;
+
+        // Languages logic
+        $languages = collect($request->languages)->map(function ($lang) use ($request) {
+            return $lang === 'Other' ? $request->other_language : $lang;
+        });
+
+        // Age Calculation
+        $dob = Carbon::parse($request->DateofBirth);
+        $age = $dob->age;
+
+        // Update fields
         $doctor->name = $request->name;
         $doctor->phone = $request->phone;
         $doctor->email = $request->email;
@@ -141,18 +169,18 @@ class adminController extends Controller
         $doctor->zip = $request->zip;
         $doctor->address = $request->address;
         $doctor->specialization = $request->specialization;
-        $doctor->Qualification = $request->Qualification;
+        $doctor->about_doctor = $request->about_doctor;
+        $doctor->Qualification = $qualification;
         $doctor->YearsofExperience = $request->YearsofExperience;
-        $doctor->DateofBirth = $request->DateofBirth;
-        $doctor->City = $request->City;
-        $doctor->languages = json_encode($request->languages); // Convert array to JSON
+        $doctor->DateofBirth = $dob->format('Y-m-d');
+        $doctor->age = $age; // ensure age column exists in DB
+        $doctor->City = json_encode($request->City);
+        $doctor->languages = json_encode($languages);
 
         $doctor->save();
 
         return response()->json(['success' => true, 'message' => 'Doctor updated successfully.']);
     }
-
-
 
     public function doctortoggleStatus($id)
     {
@@ -166,21 +194,92 @@ class adminController extends Controller
             'message' => 'doctor status updated successfully',
             'new_status' => $doctor->status
         ]);
-
     }
+    // --------------------------------------------------------end doctor page--------------------------------------------------------
+    // --------------------------------------------------------Booking  page--------------------------------------------------------
 
-
-    function BookingPage()
+    public function BookingPage()
     {
-        return view('admin.booking');
+        $LabTestDataF = LabCartRequest::where('status', 0)->orderBy('created_at', 'desc')->get();
+        $LabTestDataC = LabCartRequest::where('status', 1)->orderBy('created_at', 'desc')->get();
+        $LabTestDataB = LabBooking::with('labPartner')->where('status', 0)->orderBy('created_at', 'desc')->get();
+        $CallEnquiry = Callback::orderBy('created_at', 'desc')->get();
+        $labpartners = PartnerLab::all();
+        $tests = Test::all();
+        $test_categories = Category::all();
+        $labtestData = LabTest::with(['labPartner', 'test'])->get();
+        return view('admin.booking', compact('LabTestDataF', 'LabTestDataB', 'LabTestDataC', 'CallEnquiry', 'labpartners', 'tests', 'test_categories', 'labtestData'));
     }
 
+    public function updateLabCartStatus($id)
+    {
+
+        $labTestData = LabCartRequest::findOrFail($id);
+        $labTestData->status = $labTestData->status == 1 ? 0 : 1;
+        $labTestData->save();
+
+        return redirect()->back()->with('success', ' status updated successfully.');
+    }
+    public function updateBookingStatus($id)
+    {
+
+        $labTestData = LabBooking::findOrFail($id);
+        $labTestData->status = $labTestData->status == 1 ? 0 : 1;
+        $labTestData->save();
+
+        return redirect()->back()->with('success', ' status updated successfully.');
+    }
+    public function bookingstore(Request $request)
+    {
+        $request->validate([
+            'lab_partner_id' => 'required',
+            'test_id' => 'required',
+            'category' => 'required',
+            'lab_mrp_price' => 'required|numeric',
+            'lab_net_price' => 'nullable|numeric',
+            'offer_price' => 'nullable|numeric',
+            'reporting_time' => 'nullable|string',
+            'service_type' => 'required',
+            'patient_name' => 'required|string',
+            'age' => 'nullable|numeric',
+            'gender' => 'required|string',
+            'pin_code' => 'nullable|numeric',
+            'address' => 'nullable|string',
+            'lab_time' => 'nullable',
+            'specimen_requirement' => 'nullable|string',
+        ]);
+
+        // 🔐 Generate order_id (e.g., ORD-202507131135-XY7)
+        $order_id = 'ORD' . now()->format('YmdHis');
+
+        LabBooking::create([
+            'order_id' => $order_id, // ✅ Add this line
+            'lab_partner_id' => $request->lab_partner_id,
+            'test_id' => $request->test_id,
+            'category_id' => $request->category,
+            'lab_mrp_price' => $request->lab_mrp_price,
+            'lab_net_price' => $request->lab_net_price,
+            'offer_price' => $request->offer_price,
+            'reporting_time' => $request->reporting_time,
+            'service_type' => $request->service_type,
+            'patient_name' => $request->patient_name,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'pin_code' => $request->pin_code,
+            'address' => $request->address,
+            'lab_time' => $request->lab_time,
+            'specimen_requirement' => $request->specimen_requirement ?? 'none',
+        ]);
+
+        return response()->json(['status' => 'success']);
+    }
+
+    // --------------------------------------------------------end Booking page--------------------------------------------------------
     public function HomeAnnouncementPage()
     {
         $HomeAnnouncements = HomeAnnouncement::all(); // fetch all HomeAnnouncement data
         return view('admin.home-announcement', compact('HomeAnnouncements'));
     }
-
 
     public function addHomeAnnouncementPage(Request $request)
     {
@@ -189,13 +288,23 @@ class adminController extends Controller
             'button_name' => 'required|string|max:255',
             'link' => 'required|url',
             'message' => 'required|string',
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('uploads/home-announcements'), $imageName);
+            $imagePath = 'uploads/home-announcements/' . $imageName;
+        }
+
         HomeAnnouncement::create([
-            'title' => $request->input('title'),
-            'button_name' => $request->input('button_name'),
-            'link' => $request->input('link'),
-            'message' => $request->input('message'),
+            'title' => $request->title,
+            'button_name' => $request->button_name,
+            'link' => $request->link,
+            'message' => $request->message,
             'display_announcement' => $request->has('display_announcement'),
             'display_query_form' => $request->has('display_query_form'),
             'show_name_field' => $request->has('show_name_field'),
@@ -203,10 +312,13 @@ class adminController extends Controller
             'show_phone_field' => $request->has('show_phone_field'),
             'show_message_field' => $request->has('show_message_field'),
             'status' => 1,
+            'image' => $imagePath,
         ]);
+
 
         return response()->json(['success' => true, 'message' => 'Announcement created successfully.']);
     }
+
     public function statusHomeAnnouncementPage($id)
     {
         $HomeAnnouncement = HomeAnnouncement::findOrFail($id);
@@ -235,15 +347,26 @@ class adminController extends Controller
             'button_name' => 'required|string|max:255',
             'link' => 'required|url',
             'message' => 'required|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
+
+        $announcement = HomeAnnouncement::find($request->id);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('uploads/home-announcements'), $imageName);
+            $announcement->image = 'uploads/home-announcements/' . $imageName;
+        }
+
 
         $announcement = HomeAnnouncement::find($request->id);
         if ($announcement) {
             $announcement->update([
-                'title' => $request->input('title'),
-                'button_name' => $request->input('button_name'),
-                'link' => $request->input('link'),
-                'message' => $request->input('message'),
+                'title' => $request->title,
+                'button_name' => $request->button_name,
+                'link' => $request->link,
+                'message' => $request->message,
                 'display_announcement' => $request->has('display_announcement'),
                 'display_query_form' => $request->has('display_query_form'),
                 'show_name_field' => $request->has('show_name_field'),
@@ -251,6 +374,7 @@ class adminController extends Controller
                 'show_phone_field' => $request->has('show_phone_field'),
                 'show_message_field' => $request->has('show_message_field'),
             ]);
+
 
             return response()->json(['success' => true, 'message' => 'Announcement updated successfully.']);
         }
@@ -315,77 +439,79 @@ class adminController extends Controller
                 'countries.country_name as country_name'
             )
             ->get();
-        return view('admin.master-setup', compact('countries', 'state', 'cities'));
+        return view('admin.master-setup', compact('state', 'countries', 'cities'));
     }
-    // Countries
-// public function MasterSetupstore(Request $request)
-// {
-//     $request->validate([
-//         'country_name' => 'required|string',
-//     ]);
-// // app/Http/Helpers.php
-
-// if (!function_exists('generateUrlSlug')) {
-//     function generateUrlSlug($string) {
-//         // Convert to lowercase
-//         $string = strtolower($string);
-
-//         // Replace spaces with hyphens
-//         $string = str_replace(' ', '-', $string);
-
-//         // Remove special characters
-//         $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
-
-//         return $string;
-//     }
-// }
-
-//     $countryUrl = generateUrlSlug($request->country_name);
-
-//     Country::updateOrCreate(
-//         ['id' => $request->country_id],
-//         [
-//             'country_name' => $request->country_name,
-//             'url' => $countryUrl
-//         ]
-//     );
-
-//     return response()->json(['status' => 'success', 'message' => 'Country saved successfully']);
-// }
-
-public function MasterSetupstore(Request $request)
-{
-    $request->validate([
-        'country_name' => 'required|string',
-    ]);
-
-    if (!function_exists('generateUrlSlug')) {
-    function generateUrlSlug($string) {
-        // Convert to lowercase
-        $string = strtolower($string);
-
-        // Replace spaces with hyphens
-        $string = str_replace(' ', '-', $string);
-
-        // Remove special characters
-        $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
-
-        return $string;
+    public function Statemanagement()
+    {
+        $countries = Country::latest()->get();
+        $state = State::latest()
+            ->join('countries', 'states.countryName', '=', 'countries.id')
+            ->select('states.*', 'countries.country_name as country_name')
+            ->get();
+        $cities = City::latest()
+            ->join('states', 'cities.city_stateName', '=', 'states.id')
+            ->join('countries', 'cities.city_countryName', '=', 'countries.id')
+            ->select(
+                'cities.*',
+                'states.stateName as state_name',
+                'countries.country_name as country_name'
+            )
+            ->get();
+        return view('admin.statemanagement', compact('state', 'countries', 'cities'));
     }
-}
+    public function Citymanagement()
+    {
+        $countries = Country::latest()->get();
+        $state = State::latest()
+            ->join('countries', 'states.countryName', '=', 'countries.id')
+            ->select('states.*', 'countries.country_name as country_name')
+            ->get();
+        $cities = City::latest()
+            ->join('states', 'cities.city_stateName', '=', 'states.id')
+            ->join('countries', 'cities.city_countryName', '=', 'countries.id')
+            ->select(
+                'cities.*',
+                'states.stateName as state_name',
+                'countries.country_name as country_name'
+            )
+            ->get();
+        return view('admin.citymanagement', compact('state', 'cities', 'countries'));
+    }
 
-    $countryUrl = generateUrlSlug($request->country_name);
+    public function MasterSetupstore(Request $request)
+    {
+        $request->validate([
+            'country_name' => 'required|string',
+        ]);
 
-    Country::updateOrCreate(
-        ['id' => $request->country_id],
-        [
-            'country_name' => $request->country_name,
-            'country_url' => $countryUrl
-        ]
-    );
+        if (!function_exists('generateUrlSlug')) {
+            function generateUrlSlug($string)
+            {
+                // Convert to lowercase
+                $string = strtolower($string);
 
-    return response()->json(['status' => 'success', 'message' => 'Country saved successfully']);
-}
+                // Replace spaces with hyphens
+                $string = str_replace(' ', '-', $string);
+
+                // Remove special characters
+                $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
+
+                return $string;
+            }
+        }
+
+        $countryUrl = generateUrlSlug($request->country_name);
+
+        Country::updateOrCreate(
+            ['id' => $request->country_id],
+            [
+                'country_name' => $request->country_name,
+                'country_url' => $countryUrl
+            ]
+        );
+
+        return response()->json(['status' => 'success', 'message' => 'Country saved successfully']);
+    }
 
 
 
@@ -465,7 +591,27 @@ public function MasterSetupstore(Request $request)
             'cityUrl' => 'required|string',
             'city_name' => 'required|string',
             'city_about' => 'required|string',
+            'city_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // image validation
         ]);
+
+        // Initialize file name variable
+        $fileName = null;
+
+        if ($request->hasFile('city_image')) {
+            $file = $request->file('city_image');
+            $ext = $file->getClientOriginalExtension();
+            $fileName = 'city_' . Str::random(10) . '.' . $ext;
+
+            // Optional: Delete old image if updating
+            if ($request->city_id) {
+                $existing = City::find($request->city_id);
+                if ($existing && File::exists(public_path('uploads/city/' . $existing->city_image))) {
+                    File::delete(public_path('uploads/city/' . $existing->city_image));
+                }
+            }
+
+            $file->move(public_path('uploads/city/'), $fileName);
+        }
 
         City::updateOrCreate(
             ['id' => $request->city_id],
@@ -475,6 +621,7 @@ public function MasterSetupstore(Request $request)
                 'cityUrl' => $request->cityUrl,
                 'city_name' => $request->city_name,
                 'city_about' => $request->city_about,
+                'city_image' => $fileName, // Save image name
             ]
         );
 
@@ -589,29 +736,7 @@ public function MasterSetupstore(Request $request)
         return view('admin.blog', compact('blogs'));
     }
 
-    // public function storeBlog(Request $request)
-    // {
-    //     $request->validate([
-    //         'posting_date' => 'required|date',
-    //         'title' => 'required',
-    //         'url' => 'required',
-    //         'description' => 'required',
-    //         'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-    //     ]);
 
-    //     $fileName = time() . '.' . $request->image->extension();
-    //     $request->image->move(public_path('uploads/blogs'), $fileName);
-
-    //     Blog::create([
-    //         'posting_date' => $request->posting_date,
-    //         'title' => $request->title,
-    //         'url' => $request->url,
-    //         'description' => $request->description,
-    //         'image' => $fileName
-    //     ]);
-
-    //     return redirect()->route('admin.blog')->with('success', 'Blog added successfully!');
-    // }
     public function storeBlog(Request $request)
     {
         $request->validate([
@@ -918,7 +1043,7 @@ public function MasterSetupstore(Request $request)
 
     public function labpartner()
     {
-        $labPartners = PartnerLab::latest()->get(); // Fetch all lab partners
+        $labPartners = LabPartnertwo::latest()->get(); // Fetch all lab partners
         $cities = City::all();
         $state = State::all();
         return view('admin.lab-partner', compact('labPartners', 'cities', 'state'));
@@ -1034,10 +1159,10 @@ public function MasterSetupstore(Request $request)
     }
 
     // Payment toggle
-    public function togglePayment($id, Request $request)
+    public function togglePaymenttwo($id, Request $request)
     {
-        $partner = PartnerLab::findOrFail($id);
-        $partner->payment_mode = $request->payment_mode; // e.g., "Online" or NULL
+        $partner = LabPartnertwo::findOrFail($id);
+        $partner->payment_status = $request->payment_status; // e.g., "Online" or NULL
         $partner->save();
 
         return response()->json(['success' => true]);
@@ -1119,29 +1244,35 @@ public function MasterSetupstore(Request $request)
     // ✅ Show all tests
     public function allTestPartner()
     {
-        $tests = Test::orderBy('id', 'DESC')->get();
-        return view('admin.all-test', compact('tests'));
+        $tests = Test::with('category')->orderBy('id', 'DESC')->get();
+        $testcategories = Category::orderBy('id', 'DESC')->get();
+        return view('admin.all-test', compact('tests', 'testcategories'));
     }
+
 
     // ✅ Add a new test
     public function addAllTest(Request $request)
     {
         $request->validate([
             'test_name' => 'required|string|max:255',
-            'test_category' => 'required|string|max:255',
+            'test_category' => 'required|array', // ✅ Must be array
             'specimen_requirement' => 'required|string|max:255',
             'test_description' => 'required|string',
         ]);
 
         Test::create([
             'test_name' => $request->test_name,
-            'test_category' => $request->test_category,
+            'multi_test_name' => $request->multi_test_name,
+            'test_category' => json_encode($request->test_category), // ✅ Save as JSON
             'specimen_requirement' => $request->specimen_requirement,
             'test_description' => $request->test_description,
+            'profile_name' => $request->parameter_type === 'Profile' ? $request->profile_name : null,
+            'parameter_type' => $request->parameter_type,
         ]);
 
         return redirect()->back()->with('success', 'Test added successfully!');
     }
+
 
     // ✅ Edit test
     public function editAllTest($id)
@@ -1156,7 +1287,7 @@ public function MasterSetupstore(Request $request)
         $request->validate([
             'id' => 'required|exists:tests,id',
             'test_name' => 'required|string|max:255',
-            'test_category' => 'required|string|max:255',
+            'test_category' => 'required|array', // ✅ validate as array
             'specimen_requirement' => 'required|string|max:255',
             'test_description' => 'required|string',
         ]);
@@ -1165,13 +1296,17 @@ public function MasterSetupstore(Request $request)
 
         $test->update([
             'test_name' => $request->test_name,
-            'test_category' => $request->test_category,
+            'multi_test_name' => $request->multi_test_name,
+            'test_category' => json_encode($request->test_category), // ✅ save updated values as JSON
             'specimen_requirement' => $request->specimen_requirement,
             'test_description' => $request->test_description,
+            'profile_name' => $request->parameter_type === 'Profile' ? $request->profile_name : null,
+            'parameter_type' => $request->parameter_type,
         ]);
 
         return redirect()->back()->with('success', 'Test updated successfully!');
     }
+
 
     // ✅ Delete test
     public function deleteAllTest($id)
@@ -1219,14 +1354,49 @@ public function MasterSetupstore(Request $request)
 
         return redirect()->back()->with('success', 'CSV uploaded successfully!');
     }
+// ========================================================================================================================================
+    public function storeTestcategory(Request $request)
+    {
+        $validated = $request->validate([
+            'test_category_name' => 'required|string|max:255',
+        ]);
 
+        Testcategories::create($validated);
+
+        return response()->json(['status' => 'success', 'message' => 'Category Data Added Successfully']);
+    }
+
+    public function updateTestcategory(Request $request, $id)
+    {
+        $category = Testcategories::findOrFail($id);
+
+        $validated = $request->validate([
+            'test_category_name' => 'required|string|max:255',
+        ]);
+
+        $category->update($validated); // ✅ missing line
+
+        return response()->json(['status' => 'success', 'message' => 'Category Data Updated Successfully']);
+    }
+
+    public function editTestcategory($id)
+    {
+        $category = Testcategories::findOrFail($id);
+        return response()->json($category);
+    }
+
+    public function deleteTestcategory($id)
+    {
+        Testcategories::findOrFail($id)->delete();
+        return response()->json(['status' => 'success', 'message' => 'Category Data Deleted Successfully']);
+    }
     // ---------------------------------------------------------Lab Test management----------------------------------------------------
     function LabTest()
     {
         $labtestData = LabTest::latest()->get();
         $labpartners = PartnerLab::all();
         $tests = Test::all();
-        $test_categories = Test::all();
+        $test_categories = Category::all();
         $labtestData = LabTest::with(['labPartner', 'test'])->get();
 
         return view('admin.lab-test', compact('labtestData', 'labpartners', 'tests', 'test_categories'));
@@ -1664,26 +1834,114 @@ public function MasterSetupstore(Request $request)
 
     // testCategorystore
 
-public function testCategorystore(Request $request)
-{
-    $validated = $request->validate([
-        'Categoryname' => 'required|string|max:255',
-    ]);
+    public function testCategorystore(Request $request)
+    {
+        $validated = $request->validate([
+            'Categoryname' => 'required|string|max:255',
+        ]);
 
-    // REMOVE this:
-    // dd($validated);
+        // REMOVE this:
+        // dd($validated);
 
-    $category = TestCategory::create([
-        'Categoryname' => $validated['Categoryname'],
-        'status' => 1,
-    ]);
+        $category = TestCategory::create([
+            'Categoryname' => $validated['Categoryname'],
+            'status' => 1,
+        ]);
 
-    return response()->json(['status' => 'success', 'message' => 'Category Added Successfully', 'data' => $category]);
+        return response()->json(['status' => 'success', 'message' => 'Category Added Successfully', 'data' => $category]);
+    }
+
+
+    public function addlabpartnertwo(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'url' => 'nullable|url',
+            'website_link' => 'nullable|url',
+            'email' => 'required|email',
+            'mobile' => 'required|string',
+            'contact_person' => 'required|string|max:255',
+            'contact_person_number' => 'required|string',
+            'cc' => 'nullable|string',
+            'bcc' => 'nullable|string',
+            'ambulance_service' => 'required|in:Yes,No',
+            'state_id' => 'required|exists:states,id',
+            'city_id' => 'required|exists:cities,id',
+            'pincode' => 'nullable|string',
+            'address' => 'nullable|string',
+            'services' => 'nullable|string',
+            'certification' => 'nullable|string',
+            'ultrasound_time' => 'nullable|date_format:H:i',
+            'offday' => 'nullable|string',
+            'lab_timing' => 'nullable|string',
+            'sunday_lab_timing' => 'nullable|string',
+            'payment_mode' => 'required|in:Cash,Online',
+            'description' => 'nullable|string',
+            'trust_matter' => 'nullable|string',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'document' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'lab_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'location' => 'nullable|string',
+            'rating' => 'nullable|numeric|min:1|max:5',
+            'center_phone_number' => 'nullable|string',
+            'home_collection_facility' => 'required|in:Available,Not Available',
+            'home_collection_charges' => 'required|numeric|min:0',
+            'home_collection_number' => 'required|string',
+            'about_us' => 'nullable|string',
+            'home_collection_timing' => 'required|string',
+            'home_collection_sunday_timing' => 'required|string',
+            'our_branches' => 'required|string',
+            'facility' => 'required|string',
+            'services' => 'required|string',
+            'payment_mode' => 'required|in:Cash,Card,UPI,Net Banking,All',
+            'navigation' => 'nullable|string',
+            'testimonial_rating' => 'nullable|array',
+            'testimonial_description' => 'nullable|array',
+            'testimonial_name' => 'nullable|array',
+            'testimonials_Designation' => 'nullable|array',
+            'info_title' => 'nullable|array',
+            'info_link' => 'nullable|array',
+        ]);
+        // Generate URL from name if not provided
+        if (empty($validatedData['url']) && isset($validatedData['name'])) {
+            $validatedData['url'] = Str::slug($validatedData['name']);
+        }
+
+
+        // Convert array fields to JSON strings
+        if (isset($validatedData['testimonial_rating'])) {
+            $validatedData['testimonial_rating'] = json_encode($validatedData['testimonial_rating']);
+        }
+        if (isset($validatedData['testimonial_description'])) {
+            $validatedData['testimonial_description'] = json_encode($validatedData['testimonial_description']);
+        }
+        if (isset($validatedData['testimonial_name'])) {
+            $validatedData['testimonial_name'] = json_encode($validatedData['testimonial_name']);
+        }
+        if (isset($validatedData['testimonials_Designation'])) {
+            $validatedData['testimonials_Designation'] = json_encode($validatedData['testimonials_Designation']);
+        }
+        if (isset($validatedData['info_title'])) {
+            $validatedData['info_title'] = json_encode($validatedData['info_title']);
+        }
+        if (isset($validatedData['info_link'])) {
+            $validatedData['info_link'] = json_encode($validatedData['info_link']);
+        }
+
+        // Handle file uploads
+        if ($request->hasFile('logo')) {
+            $validatedData['logo'] = $request->file('logo')->store('logos', 'public');
+        }
+        if ($request->hasFile('document')) {
+            $validatedData['document'] = $request->file('document')->store('documents', 'public');
+        }
+        if ($request->hasFile('lab_photo')) {
+            $validatedData['lab_photo'] = $request->file('lab_photo')->store('lab_photos', 'public');
+        }
+
+        // Create a new LabPartner instance and store the data
+        $labPartner = LabPartnertwo::create($validatedData);
+
+        return response()->json(['status' => 'success', 'message' => 'Lab Partner Added Successfully', 'data' => $labPartner]);
+    }
 }
-
-
-
-}
-
-
-

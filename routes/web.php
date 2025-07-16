@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WebsiteCotroller;
+use App\Http\Controllers\UserpanelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminAuthController;
 
@@ -69,9 +70,24 @@ Route::get('/health-package-details/{slug}', [WebsiteCotroller::class, 'healthPa
 Route::get('/lab', [WebsiteCotroller::class, 'labs']);
 // Lab details page
 Route::get('/lab-details/{id}', [WebsiteCotroller::class, 'labDetails']);
+//landing page
+Route::get('/landing-page', [WebsiteCotroller::class, 'landingPage']);
 
 
+// Callback form submission
+Route::post('/submit-callback', [WebsiteCotroller::class, 'submitCallback'])->name('submit.callback');
+// Callback form submission
+Route::post('/submit-lab-cart', [WebsiteCotroller::class, 'submitLabCart'])->name('submit.labcart');
+Route::get('/get-home-announcement', [WebsiteCotroller::class, 'getHomeAnnouncement'])->name('get.home.announcement');
+Route::post('/submit-query-form', [WebsiteCotroller::class, 'annoucementsubmitQueryForm'])->name('submit.query.form');
 
+
+// ===========================================================================================================================
+// user Panel Routes
+Route::get('/userpanel/dashboard', [UserpanelController::class, 'userDashboard']);
+// ===========================================================================================================================
+
+// ===========================================================================================================================
 
 // admin routes
 
@@ -98,6 +114,11 @@ Route::post('/admin/doctor-management/status/{id}', [AdminController::class, 'do
 
 //Booking page 
 Route::get('/admin/booking', [AdminController::class, 'BookingPage']);
+Route::post('/admin/booking/status/{id}', [AdminController::class, 'updateLabCartStatus'])->name('booking.toggle');
+Route::post('/admin/addbooking/status/{id}', [AdminController::class, 'LabBookingStatus'])->name('addbooking.toggle');
+Route::post('/admin/booking/store', [AdminController::class, 'bookingstore'])->name('booking.store');
+
+
 //Announcement page
 Route::get('/admin/home-announcement', [AdminController::class, 'HomeAnnouncementPage']);
 Route::post('/admin/addhome/announcement', [AdminController::class, 'addHomeAnnouncementPage']);
@@ -105,6 +126,7 @@ Route::get('/admin/edithome-announcement/{id}', [AdminController::class, 'editHo
 Route::post('/admin/updatehome-announcement', [AdminController::class, 'updateHomeAnnouncement']);
 Route::delete('/admin/deletehome-announcement/{id}', [AdminController::class, 'deleteHomeAnnouncementPage']);
 Route::post('/admin/statushome-announcement/{id}', [AdminController::class, 'statusHomeAnnouncementPage']);
+
 
 //WebsiteAnnouncementPage page
 Route::get('/admin/website-announcement', [AdminController::class, 'showWebsiteAnnouncement']);
@@ -222,6 +244,14 @@ Route::post('/admin/statuslabpartner/{id}', [AdminController::class, 'statuslabp
 Route::post('/admin/ambulance-toggle/{id}', [AdminController::class, 'toggleAmbulance']);
 Route::post('/admin/payment-toggle/{id}', [AdminController::class, 'togglePayment']);
 
+Route::post('/admin/addlabpartnertwo', [AdminController::class, 'addlabpartnertwo']);
+Route::get('/admin/editlabpartnertwo/{id}', [AdminController::class, 'editlabpartnertwo']);
+Route::post('/admin/updatelabpartnertwo', [AdminController::class, 'updatelabpartnertwo']);
+Route::delete('/admin/deletelabpartnertwo/{id}', [AdminController::class, 'deletelabpartnertwo']);
+Route::post('/admin/statuslabpartnertwo/{id}', [AdminController::class, 'statuslabpartnertwo']);
+Route::post('/admin/ambulance-toggletwo/{id}', [AdminController::class, 'toggleAmbulancetwo']);
+Route::post('/admin/payment-toggletwo/{id}', [AdminController::class, 'togglePaymenttwo']);
+
 // AllTestPartner
 Route::prefix('admin')->group(function () {
     Route::get('/all-test', [AdminController::class, 'allTestPartner'])->name('admin.allTest');
@@ -250,13 +280,13 @@ Route::get('/admin/testCategory/edit/{id}', [AdminController::class, 'testCatego
 Route::delete('/admin/testCategory/delete/{id}', [AdminController::class, 'testCategorydestroy'])->name('testCategory.delete');
 Route::get('/admin/testCategory/toggle/{id}', [AdminController::class, 'testCategorytoggleStatus'])->name('testCategory.toggle');
 
-Route::get('/admin/all-test', [AdminController::class, 'AllTestPartner']);
-Route::post('/admin/addalltest', [AdminController::class, 'addalltest']);
-Route::get('/admin/editalltest/{id}', [AdminController::class, 'editalltest']);
-Route::post('/admin/updatealltest', [AdminController::class, 'updatealltest']);
-Route::delete('/admin/deletealltest/{id}', [AdminController::class, 'deletealltest']);
-// Route::post('/admin/statusalltest/{id}', [AdminController::class, 'statusalltest']);
-Route::get('/admin/statusalltest/toggle/{id}', [AdminController::class, 'statusalltest'])->name('alltest.toggle');
+// Route::get('/admin/all-test', [AdminController::class, 'AllTestPartner']);
+// Route::post('/admin/addalltest', [AdminController::class, 'addalltest']);
+// Route::get('/admin/editalltest/{id}', [AdminController::class, 'editalltest']);
+// Route::post('/admin/updatealltest', [AdminController::class, 'updatealltest']);
+// Route::delete('/admin/deletealltest/{id}', [AdminController::class, 'deletealltest']);
+// // Route::post('/admin/statusalltest/{id}', [AdminController::class, 'statusalltest']);
+// Route::get('/admin/statusalltest/toggle/{id}', [AdminController::class, 'statusalltest'])->name('alltest.toggle');
 
 //LabTest
 Route::get('/admin/lab-test', [AdminController::class, 'LabTest']);

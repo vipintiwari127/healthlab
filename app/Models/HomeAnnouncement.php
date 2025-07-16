@@ -13,6 +13,7 @@ class HomeAnnouncement extends Model
         'title',
         'button_name',
         'link',
+        'image',
         'message',
         'display_announcement',
         'display_query_form',
